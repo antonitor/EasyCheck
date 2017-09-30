@@ -24,12 +24,12 @@ public class QRScanner extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qrscanner2);
+        setContentView(R.layout.activity_qrscanner);
 
         mCameraView = (SurfaceView) findViewById(R.id.camera);
 
         mBarcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE | Barcode.EAN_13 | Barcode.EAN_8).build();
-        mCameraSource = new CameraSource.Builder(this, mBarcodeDetector).setRequestedPreviewSize(1080, 720).setAutoFocusEnabled(true).build();
+        mCameraSource = new CameraSource.Builder(this, mBarcodeDetector).setFacing(CameraSource.CAMERA_FACING_BACK).setRequestedPreviewSize(1600, 1024).setAutoFocusEnabled(true).build();
 
         mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override

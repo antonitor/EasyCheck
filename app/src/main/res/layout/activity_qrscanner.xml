@@ -5,5 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.marcarni.easycheck.QRScanner">
-
+    <SurfaceView
+        android:layout_width="640sp"
+        android:layout_height="480sp"
+        android:id="@+id/camera"/>
 </android.support.constraint.ConstraintLayout>
