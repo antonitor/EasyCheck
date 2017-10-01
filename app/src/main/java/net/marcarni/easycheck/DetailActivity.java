@@ -11,6 +11,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        ((TextView)findViewById(R.id.code_readed)).setText(getIntent().getStringExtra("QR"));
+        ((TextView)findViewById(R.id.code_readed)).setText(getIntent().getStringExtra(getString(R.string.scanner_result)));
     }
 }

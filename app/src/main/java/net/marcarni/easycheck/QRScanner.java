@@ -75,7 +75,7 @@ public class QRScanner extends AppCompatActivity {
 
                 if (barcodes.size() != 0) {
                     Intent intent = new Intent(QRScanner.this, DetailActivity.class);
-                    intent.putExtra("QR", barcodes.valueAt(0).displayValue);
+                    intent.putExtra(getString(R.string.scanner_result), barcodes.valueAt(0).displayValue);
                     startActivity(intent);
                 }
             }

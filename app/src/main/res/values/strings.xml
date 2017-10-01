@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">EasyCheck</string>
+    <string name="menu_booking">Reserves</string>
+    <string name="menu_settings">Configuració</string>
+
+    <string name="detector_no_operational">No s\'han pogut descarregar les llibreries necessaries per efectuar l\'escanejat</string>
+
+    <string name="scanner_result">xScanningResult</string>
+
 </resources>
