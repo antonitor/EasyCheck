@@ -3,8 +3,13 @@
 
     <!-- MENU -->
 
-    <string name="menu_booking">Reserves</string>
+    <string name="menu_qr">Lector QRCode</string>
+    <string name="menu_dni">Buscador DNI</string>
+    <string name="menu_loc">Buscador Localitzador</string>
+    <string name="menu_services">Servicis Pendents</string>
+    <string name="menu_replacement">Substitucions</string>
     <string name="menu_settings">Configuració</string>
+    <string name="menu_logout">Log out</string>
 
     <!-- PREFERENCES -->
 
