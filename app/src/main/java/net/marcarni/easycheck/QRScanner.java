@@ -1,8 +1,10 @@
 package net.marcarni.easycheck;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -39,12 +41,16 @@ public class QRScanner extends AppCompatActivity {
 
         if (!mBarcodeDetector.isOperational()) {
             mCameraStatusTextView = (TextView) findViewById(R.id.camera_status);
-            mCameraStatusTextView.setText("No s'han pogut descarregar les llibreries necessaries per efectuar la lectura de codis");
+            mCameraStatusTextView.setText(getString(R.string.detector_no_operational));
             mCameraStatusTextView.setVisibility(View.VISIBLE);
             return;
         }
 
-        mCameraSource = new CameraSource.Builder(this, mBarcodeDetector).setFacing(CameraSource.CAMERA_FACING_BACK).setRequestedPreviewSize(1600, 1024).setAutoFocusEnabled(true).build();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean autoFocus = sharedPreferences.getBoolean(getString(R.string.pref_autofocus_key), getResources().getBoolean(R.bool.pref_autofocus_default));
+        boolean flashEnabled = sharedPreferences.getBoolean(getString(R.string.pref_flash_enabled_key), getResources().getBoolean(R.bool.pref_flash_enabled_default));
+
+        mCameraSource = new CameraSource.Builder(this, mBarcodeDetector).setFacing(CameraSource.CAMERA_FACING_BACK).setRequestedPreviewSize(1600, 1024).setAutoFocusEnabled(autoFocus).build();
 
         mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
