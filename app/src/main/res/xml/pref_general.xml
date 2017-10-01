@@ -21,7 +21,8 @@
             android:title="@string/pref_manager_default_label"
             android:entryValues="@array/pref_manager_defaults_values"
             android:entries="@array/pref_manager_defaults_labels"
-            android:defaultValue="pref_manager_default_qr_value"/>
+            android:defaultValue="pref_manager_default_qr_value"
+            android:summary="%s"/>
 
     </PreferenceCategory>
 
