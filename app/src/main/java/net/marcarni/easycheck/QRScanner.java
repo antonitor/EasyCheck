@@ -40,7 +40,7 @@ public class QRScanner extends AppCompatActivity {
         mBarcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE | Barcode.EAN_13 | Barcode.EAN_8).build();
 
         if (!mBarcodeDetector.isOperational()) {
-            mCameraStatusTextView = (TextView) findViewById(R.id.camera_status);
+            mCameraStatusTextView = findViewById(R.id.camera_status);
             mCameraStatusTextView.setText(getString(R.string.detector_no_operational));
             mCameraStatusTextView.setVisibility(View.VISIBLE);
             return;
@@ -48,7 +48,6 @@ public class QRScanner extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean autoFocus = sharedPreferences.getBoolean(getString(R.string.pref_autofocus_key), getResources().getBoolean(R.bool.pref_autofocus_default));
-        boolean flashEnabled = sharedPreferences.getBoolean(getString(R.string.pref_flash_enabled_key), getResources().getBoolean(R.bool.pref_flash_enabled_default));
 
         mCameraSource = new CameraSource.Builder(this, mBarcodeDetector).setFacing(CameraSource.CAMERA_FACING_BACK).setRequestedPreviewSize(1600, 1024).setAutoFocusEnabled(autoFocus).build();
 

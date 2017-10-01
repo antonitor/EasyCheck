@@ -10,8 +10,6 @@
 
     <string name="pref_autofocus_label">Auto-Focus</string>
     <string name="pref_autofocus_key" translatable="false">kAutoFocus</string>
-    <string name="pref_flash_enabled_label">Flash</string>
-    <string name="pref_flash_enabled_key" translatable="false">kFlashEnabled</string>
     <string name="pref_show_true">Engegat</string>
     <string name="pref_show_false">Apagat</string>
 

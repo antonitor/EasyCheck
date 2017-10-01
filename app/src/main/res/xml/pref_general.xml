@@ -11,11 +11,4 @@
         android:summaryOn="@string/pref_show_true"
         android:summaryOff="@string/pref_show_false"/>
 
-    <CheckBoxPreference
-        android:defaultValue="@bool/pref_flash_enabled_default"
-        android:key="@string/pref_flash_enabled_key"
-        android:title="@string/pref_flash_enabled_label"
-        android:summaryOn="@string/pref_show_true"
-        android:summaryOff="@string/pref_show_false"/>
-
 </PreferenceScreen>

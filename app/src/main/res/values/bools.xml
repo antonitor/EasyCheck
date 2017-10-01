@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="pref_flash_enabled_default">false</bool>
     <bool name="pref_autofocus_default">true</bool>
 </resources>
