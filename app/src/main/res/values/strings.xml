@@ -1,10 +1,24 @@
 <resources>
     <string name="app_name">EasyCheck</string>
+
+    <!-- MENU -->
+
     <string name="menu_booking">Reserves</string>
     <string name="menu_settings">Configuració</string>
+
+    <!-- PREFERENCES -->
+
+    <string name="pref_autofocus_label">Auto-Focus</string>
+    <string name="pref_autofocus_key" translatable="false">kAutoFocus</string>
+    <string name="c">Flash Engegat</string>
+    <string name="pref_flash_enabled_key" translatable="false">kFlashEnabled</string>
+
+
 
     <string name="detector_no_operational">No s\'han pogut descarregar les llibreries necessaries per efectuar l\'escanejat</string>
 
     <string name="scanner_result">xScanningResult</string>
+
+
 
 </resources>

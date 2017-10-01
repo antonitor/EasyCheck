@@ -3,6 +3,7 @@
     package="net.marcarni.easycheck">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -26,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".QRScanner" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".settings.SettingsActivity"></activity>
     </application>
 
 </manifest>
