@@ -12,6 +12,19 @@
     <string name="pref_autofocus_key" translatable="false">kAutoFocus</string>
     <string name="pref_show_true">Engegat</string>
     <string name="pref_show_false">Apagat</string>
+    <string name="pref_camera_category">Configuració de la camara</string>
+    <string name="pref_bookings_category">Configuració del gestor de reserves</string>
+
+    <!-- LIST PREFERENCES -->
+
+    <string name="pref_manager_default_label">Gestor de reserves per defecte</string>
+    <string name="pref_manager_default_key" translatable="false">defaultmanager</string>
+    <string name="pref_manager_default_qr_label">QRCode Scanner</string>
+    <string name="pref_manager_default_dni_label">Búsqueda DNI</string>
+    <string name="pref_manager_default_loc_label">Búsqueda Localitzador</string>
+    <string name="pref_manager_default_qr_value" translatable="false">qrscanner</string>
+    <string name="pref_manager_default_dni_value" translatable="false">dni_serach</string>
+    <string name="pref_manager_default_loc_value" translatable="false">loc_serach</string>
 
 
     <string name="detector_no_operational">No s\'han pogut descarregar les llibreries necessaries per efectuar l\'escanejat</string>

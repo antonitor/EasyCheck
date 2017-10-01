@@ -4,11 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <PreferenceCategory android:title="@string/pref_camera_category">
+
     <CheckBoxPreference
         android:defaultValue="@bool/pref_autofocus_default"
         android:key="@string/pref_autofocus_key"
         android:title="@string/pref_autofocus_label"
         android:summaryOn="@string/pref_show_true"
         android:summaryOff="@string/pref_show_false"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_bookings_category">
+
+        <ListPreference
+            android:key="@string/pref_manager_default_key"
+            android:title="@string/pref_manager_default_label"
+            android:entryValues="@array/pref_manager_defaults_values"
+            android:entries="@array/pref_manager_defaults_labels"
+            android:defaultValue="pref_manager_default_qr_value"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
