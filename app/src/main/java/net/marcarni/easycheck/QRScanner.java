@@ -30,7 +30,7 @@ import java.io.IOException;
 
 public class QRScanner extends AppCompatActivity {
 
-    private static final int REQUEST_CAMERA_PERMISSIONS = 2;
+
     private SurfaceView mCameraView;
     private CameraSource mCameraSource;
     private BarcodeDetector mBarcodeDetector;
@@ -40,31 +40,10 @@ public class QRScanner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscanner);
 
-        int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (rc == PackageManager.PERMISSION_DENIED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSIONS);
-            }
-        } else {
-            startScanning();
-        }
+        startScanning();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CAMERA_PERMISSIONS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startScanning();
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-        }
-    }
+
 
     public void startScanning() {
         mCameraView = (SurfaceView) findViewById(R.id.camera);

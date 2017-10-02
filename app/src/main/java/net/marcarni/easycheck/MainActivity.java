@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         TextView defaultMethodTextView = findViewById(R.id.defecte);
-        String defaultMethod = sharedPreferences.getString(getString(R.string.pref_manager_default_key), "");
+        String defaultMethod = sharedPreferences.getString(getString(R.string.pref_manager_default_key), getString(R.string.pref_manager_default_qr_value));
         if (defaultMethod.equals(getString(R.string.pref_manager_default_qr_value)) ) {
             defaultMethodTextView.setText(getString(R.string.pref_manager_default_qr_label));
         } else if (defaultMethod.equals(getString(R.string.pref_manager_default_dni_value))) {
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         ((Button)findViewById(R.id.scan)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, QRScanner.class));
+                startActivity(new Intent(MainActivity.this, CheckCameraPermissionsActivity.class));
             }
         });
     }
