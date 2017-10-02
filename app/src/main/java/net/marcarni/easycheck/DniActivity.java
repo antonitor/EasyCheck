@@ -47,12 +47,12 @@ public class DniActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(),DetallActivity.class);
                 if (cadena.equalsIgnoreCase("DNI")){
                     Toast.makeText(getBaseContext(), "Enviaments dades DNI.", Toast.LENGTH_SHORT).show();
-                    intent.putExtra("DNI",editTextDni.getText());
-                    intent.putExtra("DATA",editTextData.getText());
-                    intent.putExtra("HORA",editTextHora.getText());
+                    intent.putExtra("DNI",editTextDni.getText().toString());
+                    intent.putExtra("DATA",editTextData.getText().toString());
+                    intent.putExtra("HORA",editTextHora.getText().toString());
                 } else{
                     Toast.makeText(getBaseContext(), "Enviaments dades Localitzador", Toast.LENGTH_SHORT).show();
-                    intent.putExtra("LOCALITZADOR",editTextLocaltizador.getText());
+                    intent.putExtra("LOCALITZADOR",editTextLocaltizador.getText().toString());
                 }
                 startActivity(intent);
             }
