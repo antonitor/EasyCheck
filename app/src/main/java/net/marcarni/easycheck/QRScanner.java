@@ -35,12 +35,12 @@ public class QRScanner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscanner);
 
-        mCameraView = (SurfaceView) findViewById(R.id.camera);
+        mCameraView = findViewById(R.id.camera);
 
         mBarcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE | Barcode.EAN_13 | Barcode.EAN_8).build();
 
         if (!mBarcodeDetector.isOperational()) {
-            mCameraStatusTextView = (TextView) findViewById(R.id.camera_status);
+            mCameraStatusTextView = findViewById(R.id.camera_status);
             mCameraStatusTextView.setText(getString(R.string.detector_no_operational));
             mCameraStatusTextView.setVisibility(View.VISIBLE);
             return;
