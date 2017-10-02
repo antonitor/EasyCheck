@@ -55,7 +55,6 @@ public class DetailActivity extends AppCompatActivity {
         if (defaultMethod.equals(getString(R.string.pref_manager_default_qr_value)) ) {
             Intent startQrActivity = new Intent(this, QRScanner.class);
             startActivity(startQrActivity);
-            return;
         } else if (defaultMethod.equals(getString(R.string.pref_manager_default_dni_value))) {
             String dniManagerMethod = getString(R.string.pref_manager_default_dni_label);
             Toast.makeText(this,dniManagerMethod + ": no implementat.",Toast.LENGTH_LONG).show();
@@ -64,4 +63,5 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this,dniManagerMethod + ": no implementat.",Toast.LENGTH_LONG).show();
         }
     }
+
 }
