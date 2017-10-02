@@ -106,6 +106,7 @@ public class QRScanner extends AppCompatActivity {
                 if (barcodes.size() != 0) {
                     Intent intent = new Intent(QRScanner.this, DetailActivity.class);
                     intent.putExtra(getString(R.string.scanner_result), barcodes.valueAt(0).displayValue);
+                    finish();
                     startActivity(intent);
                 }
             }
@@ -130,11 +131,6 @@ public class QRScanner extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }*/
 
     @Override
     protected void onDestroy() {

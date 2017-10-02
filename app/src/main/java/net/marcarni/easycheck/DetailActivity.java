@@ -54,6 +54,7 @@ public class DetailActivity extends AppCompatActivity {
         String defaultMethod = sharedPreferences.getString(getString(R.string.pref_manager_default_key), "");
         if (defaultMethod.equals(getString(R.string.pref_manager_default_qr_value)) ) {
             Intent startQrActivity = new Intent(this, QRScanner.class);
+            finish();
             startActivity(startQrActivity);
         } else if (defaultMethod.equals(getString(R.string.pref_manager_default_dni_value))) {
             String dniManagerMethod = getString(R.string.pref_manager_default_dni_label);
