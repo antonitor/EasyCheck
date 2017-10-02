@@ -104,6 +104,7 @@ public class QRScanner extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if (barcodes.size() != 0) {
+                    mBarcodeDetector.release();
                     Intent intent = new Intent(QRScanner.this, DetailActivity.class);
                     intent.putExtra(getString(R.string.scanner_result), barcodes.valueAt(0).displayValue);
                     finish();
