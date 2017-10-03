@@ -39,17 +39,15 @@ public class QRScanner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscanner);
-
-        startScanning();
+        Intent intentThatStartedThisActivity = getIntent();
+        boolean autoFocus = intentThatStartedThisActivity.getBooleanExtra(getString(R.string.auto_focus_extra),true);
+        startScanning(autoFocus);
     }
 
-
-
-    public void startScanning() {
+    public void startScanning(boolean autoFocus) {
         mCameraView = (SurfaceView) findViewById(R.id.camera);
         mBarcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE | Barcode.EAN_13 | Barcode.EAN_8).build();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean autoFocus = sharedPreferences.getBoolean(getString(R.string.pref_autofocus_key), getResources().getBoolean(R.bool.pref_autofocus_default));
         mCameraSource = new CameraSource.Builder(this, mBarcodeDetector).setFacing(CameraSource.CAMERA_FACING_BACK).setRequestedPreviewSize(1600, 1024).setAutoFocusEnabled(autoFocus).build();
         mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -85,7 +83,7 @@ public class QRScanner extends AppCompatActivity {
                 if (barcodes.size() != 0) {
                     mBarcodeDetector.release();
                     Intent intent = new Intent(QRScanner.this, DetallActivity.class);
-                    intent.putExtra(getString(R.string.scanner_result), barcodes.valueAt(0).displayValue);
+                    intent.putExtra(getString(R.string.scanner_result_extra), barcodes.valueAt(0).displayValue);
                     finish();
                     startActivity(intent);
                 }

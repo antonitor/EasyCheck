@@ -41,7 +41,7 @@ public class DetallActivity extends AppCompatActivity {
                 startActivity(startSettingsActivity);
                 return true;
             case R.id.action_qr:
-                Intent startQrActivity = new Intent(this, QRScanner.class);
+                Intent startQrActivity = new Intent(this, CheckCameraPermissionsActivity.class);
                 startActivity(startQrActivity);
                 return true;
             case R.id.action_dni:

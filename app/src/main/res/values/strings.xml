@@ -39,7 +39,8 @@
     <string name="button_next">Següent</string>
     <string name="camera_permission_denied">Permissos insuficients</string>
 
-    <string name="scanner_result" translatable="false">xScanningResult</string>
+    <string name="scanner_result_extra" translatable="false">xScanningResult</string>
+    <string name="auto_focus_extra" translatable="false">xAutoFocus</string>
 
 
 </resources>
