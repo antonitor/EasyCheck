@@ -116,6 +116,7 @@ public class QRScanner extends AppCompatActivity {
                 startLocActivity.putExtra("DATO", "LOCALITZADOR");
                 finish();
                 startActivity(startLocActivity);
+                return true;
             case R.id.action_logout:
                 Intent startLogout = new Intent(this, MainActivity.class);
                 finish();
