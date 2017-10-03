@@ -10,7 +10,7 @@
         android:id="@+id/permissos_necessaris"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Permissos Denegats"
+        android:text="@string/camera_permission_denied"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@android:color/white"
         android:visibility="invisible" />

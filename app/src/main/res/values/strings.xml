@@ -34,7 +34,7 @@
     <!-- -->
 
     <string name="button_next">Següent</string>
-    <string name="detector_no_operational">No s\'han pogut descarregar les llibreries necessaries per efectuar l\'escanejat</string>
+    <string name="camera_permission_denied">Permissos insuficients</string>
 
     <string name="scanner_result" translatable="false">xScanningResult</string>
 
