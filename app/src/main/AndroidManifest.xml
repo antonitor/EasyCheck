@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -28,9 +27,29 @@
             </intent-filter>
         </activity>
         <activity android:name=".QRScanner" />
-        <activity android:name=".DetailActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".CheckCameraPermissionsActivity"></activity>
+        <activity android:name=".DniActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DNIACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DetallActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DETALLACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CalendarActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.CALENDARACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

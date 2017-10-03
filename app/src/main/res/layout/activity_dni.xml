@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.marcarni.easycheck.DniActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="162dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/editTextDni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="28dp"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_toRightOf="@+id/textView"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Dni"/>
+
+    <EditText
+        android:id="@+id/editTextHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Hora"
+        android:layout_below="@+id/buttonData"
+        android:layout_alignLeft="@+id/buttonData"
+        android:layout_alignStart="@+id/buttonData" />
+
+    <EditText
+        android:id="@+id/editTextLocalitzador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Localitzador"
+        android:layout_alignBaseline="@+id/editTextDni"
+        android:layout_alignBottom="@+id/editTextDni"
+        android:layout_alignLeft="@+id/editTextDni"
+        android:layout_alignStart="@+id/editTextDni" />
+
+    <Button
+        android:id="@+id/buttonCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="51dp"
+        android:text="Check-In"
+        android:layout_below="@+id/editTextHora"
+        android:layout_toRightOf="@+id/buttonData"
+        android:layout_toEndOf="@+id/buttonData" />
+
+    <Button
+        android:id="@+id/buttonData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextDni"
+        android:layout_alignStart="@+id/editTextDni"
+        android:layout_below="@+id/editTextDni"
+        android:text="Data" />
+
+    <TextView
+        android:id="@+id/textViewData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data"
+        android:layout_alignBaseline="@+id/buttonData"
+        android:layout_alignBottom="@+id/buttonData"
+        android:layout_toRightOf="@+id/buttonData"
+        android:layout_toEndOf="@+id/buttonData"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp" />
+</RelativeLayout>
