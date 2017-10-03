@@ -44,6 +44,7 @@ public class DetailActivity extends AppCompatActivity {
             case R.id.action_logout:
                 Intent logout = new Intent(this, MainActivity.class);
                 startActivity(logout);
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

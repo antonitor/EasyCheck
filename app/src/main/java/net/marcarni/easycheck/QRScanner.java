@@ -107,6 +107,10 @@ public class QRScanner extends AppCompatActivity {
                 Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
                 startActivity(startSettingsActivity);
                 return true;
+            case R.id.action_logout:
+                Intent startLogout = new Intent(this, MainActivity.class);
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

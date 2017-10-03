@@ -87,6 +87,7 @@ public class CheckCameraPermissionsActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 Intent logout = new Intent(this, MainActivity.class);
+                finish();
                 startActivity(logout);
                 return true;
         }
