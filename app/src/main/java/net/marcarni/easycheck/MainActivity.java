@@ -11,28 +11,47 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button mLoginButton;
+    Intent mDniIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mLoginButton = (Button) findViewById(R.id.login_button);
 
+        //Recull el gestor per defecte de SharedPreferences, que per defecte es QR
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        TextView defaultMethodTextView = findViewById(R.id.defecte);
         String defaultMethod = sharedPreferences.getString(getString(R.string.pref_manager_default_key), getString(R.string.pref_manager_default_qr_value));
+
+        //Si el gestor per fefecte és QR, el botó login llença l'escaner
         if (defaultMethod.equals(getString(R.string.pref_manager_default_qr_value)) ) {
-            defaultMethodTextView.setText(getString(R.string.pref_manager_default_qr_label));
+            mLoginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(MainActivity.this, CheckCameraPermissionsActivity.class));
+                }
+            });
+        //Si el gestor per defecte és DNI, el botó login llença dniactivity amb dni
         } else if (defaultMethod.equals(getString(R.string.pref_manager_default_dni_value))) {
-            defaultMethodTextView.setText(getString(R.string.pref_manager_default_dni_label));
+            mDniIntent = new Intent(this, DniActivity.class);
+            mDniIntent.putExtra("DATO", "DNI");
+            mLoginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(mDniIntent);
+                }
+            });
+        //Si el gestor per defecte és Loc, el botó login llença dniactivity amb Loc
         } else {
-            defaultMethodTextView.setText(getString(R.string.pref_manager_default_loc_label));
+            mDniIntent = new Intent(this, DniActivity.class);
+            mDniIntent.putExtra("DATO", "LOCALITZADOR");
+            mLoginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(mDniIntent);
+                }
+            });
         }
-
-
-        ((Button)findViewById(R.id.scan)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CheckCameraPermissionsActivity.class));
-            }
-        });
     }
 }

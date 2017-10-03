@@ -26,9 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Toni Activity -->
         <activity android:name=".QRScanner" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".CheckCameraPermissionsActivity"></activity>
+
+
+        <!-- Carlos Activity-->
         <activity android:name=".DniActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DNIACTIVITY" />

@@ -6,21 +6,9 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/scan"
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LOGIN" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MÈTODE GESTOR PER DEFECTE:"
-        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
-
-    <TextView
-        android:id="@+id/defecte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
 </LinearLayout>
