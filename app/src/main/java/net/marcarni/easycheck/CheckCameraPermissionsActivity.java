@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.R;
+import net.marcarni.easycheck.settings.SettingsActivity;
 
 public class CheckCameraPermissionsActivity extends AppCompatActivity {
 
@@ -71,6 +73,24 @@ public class CheckCameraPermissionsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id) {
+            case R.id.action_settings:
+                Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
+                startActivity(startSettingsActivity);
+                return true;
+            case R.id.action_qr:
+                return true;
+            case R.id.action_logout:
+                Intent logout = new Intent(this, MainActivity.class);
+                startActivity(logout);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

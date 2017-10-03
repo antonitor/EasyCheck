@@ -13,6 +13,13 @@
         android:summaryOn="@string/pref_show_true"
         android:summaryOff="@string/pref_show_false"/>
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_auto_checkin"
+            android:key="@string/pref_auto_ckeckin_key"
+            android:title="@string/pref_auto_ckeckin_label"
+            android:summaryOn="@string/pref_show_true"
+            android:summaryOff="@string/pref_show_false"/>
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_bookings_category">
 
