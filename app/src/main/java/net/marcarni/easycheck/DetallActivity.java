@@ -12,6 +12,8 @@ import net.marcarni.easycheck.settings.SettingsActivity;
 public class DetallActivity extends AppCompatActivity {
     TextView textViewDni;
     TextView textViewData;
+    //afegit per toni per mostrar qrcode
+    TextView mQRCodeTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,11 @@ public class DetallActivity extends AppCompatActivity {
         String data = getIntent().getExtras().getString("DATA");
         textViewDni.setText(dni);
         textViewData.setText(data);
+
+        //Afegit per toni per mostrar qrccode
+        mQRCodeTextView = (TextView) findViewById(R.id.textViewQrCode);
+        String qrResult = getIntent().getStringExtra(getString(R.string.scanner_result_extra));
+        mQRCodeTextView.setText(qrResult);
     }
 
 
