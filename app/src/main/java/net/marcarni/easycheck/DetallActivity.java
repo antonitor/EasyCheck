@@ -49,16 +49,16 @@ public class DetallActivity extends AppCompatActivity {
         } else if (getIntent().hasExtra(getString(R.string.scanner_result))) {
             String qrCode = getIntent().getStringExtra(getString(R.string.scanner_result));
             RetornaReservaQR(qrCode);
-        } else if(getIntent().hasExtra("DNI") || getIntent().hasExtra("DATA")) {
+        } else if(getIntent().hasExtra("DNI") && getIntent().hasExtra("DATA")) {
             String dni = getIntent().getExtras().getString("DNI");
             String data = getIntent().getExtras().getString("DATA");
-            if (data.trim().equals("")) {
-                RetornaReservaDNI(dni);
-            } else if (dni.trim().equals("")) {
-                RetornaReservaDATA(data);
-            } else {
-                RetornaReservaDNI_DATA(dni, data);
-            }
+            RetornaReservaDNI_DATA(dni, data);
+        } else if (getIntent().hasExtra("DATA")) {
+            String data = getIntent().getExtras().getString("DATA");
+            RetornaReservaDATA(data);
+        } else if (getIntent().hasExtra("DNI")){
+            String dni = getIntent().getExtras().getString("DNI");
+            RetornaReservaDNI(dni);
         } else {
             //NO S'HAURÍA D'ARRIBAR A AQUEST PUNT!!!
             Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG);

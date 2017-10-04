@@ -53,9 +53,9 @@ public class DniActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(DniActivity.this,DetallActivity.class);
                 if (cadena.equalsIgnoreCase("DNI")){
-                    if (editTextDni.getText().toString().trim() != "")
+                    if (editTextDni.getText().toString().length() > 0)
                         intent.putExtra("DNI",editTextDni.getText().toString());
-                    if (textViewData.getText() != "")
+                    if (textViewData.getText().length() > 0)
                         intent.putExtra("DATA",textViewData.getText());
                 } else if(cadena.equalsIgnoreCase("LOCALITZADOR")){
                     intent.putExtra("LOCALITZADOR",editTextLocaltizador.getText().toString());
