@@ -58,7 +58,7 @@ public class DniActivity extends AppCompatActivity {
                 if (cadena.equalsIgnoreCase("DNI")){
                     if (editTextDni.getText().toString().length() > 0)
                         if (validaDni.validarDni(editTextDni.getText().toString())){
-                            intent.putExtra("DNI",editTextDni.getText().toString());
+                            intent.putExtra("DNI",editTextDni.getText().toString().toUpperCase());
                             startActivity(intent);
                         }
                         else  Toast.makeText(DniActivity.this, "Format DNI invàlid", Toast.LENGTH_LONG).show();
