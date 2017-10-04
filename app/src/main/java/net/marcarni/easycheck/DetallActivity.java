@@ -61,7 +61,7 @@ public class DetallActivity extends AppCompatActivity {
             RetornaReservaDNI(dni);
         } else {
             //NO S'HAURÍA D'ARRIBAR A AQUEST PUNT!!!
-            Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG);
+            Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
         }
     }
 
