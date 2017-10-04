@@ -2,9 +2,6 @@ package net.marcarni.easycheck;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.eines.ValidaDNI;
-import net.marcarni.easycheck.settings.SettingsActivity;
+import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 
-public class DniActivity extends AppCompatActivity {
+public class DniActivity extends MenuAppCompatActivity {
     static final int ACTIVITAT_DATA = 1;
     TextView textView;
     EditText editTextDni;
@@ -104,42 +101,7 @@ public class DniActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch(id) {
-            case R.id.action_settings:
-                Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
-                startActivity(startSettingsActivity);
-                return true;
-            case R.id.action_qr:
-                Intent startQrActivity = new Intent(this, QRScanner.class);
-                startActivity(startQrActivity);
-                return true;
-            case R.id.action_dni:
-                Intent startDniActivity = new Intent(this, DniActivity.class);
-                startDniActivity.putExtra("DATO", "DNI");
-                finish();
-                startActivity(startDniActivity);
-                return true;
-            case R.id.action_loc:
-                Intent startLocActivity = new Intent(this, DniActivity.class);
-                startLocActivity.putExtra("DATO", "LOCALITZADOR");
-                finish();
-                startActivity(startLocActivity);
-                return true;
-            case R.id.action_logout:
-                Intent logout = new Intent(this, MainActivity.class);
-                startActivity(logout);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
+
 }

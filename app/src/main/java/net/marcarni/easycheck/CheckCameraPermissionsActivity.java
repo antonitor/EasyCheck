@@ -18,9 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.R;
+import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 import net.marcarni.easycheck.settings.SettingsActivity;
 
-public class CheckCameraPermissionsActivity extends AppCompatActivity {
+public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
 
     private static final int REQUEST_CAMERA_PERMISSIONS = 2;
     private ImageButton mButton;
@@ -74,42 +75,4 @@ public class CheckCameraPermissionsActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch(id) {
-            case R.id.action_settings:
-                Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
-                startActivity(startSettingsActivity);
-                return true;
-            case R.id.action_dni:
-                Intent startDniActivity = new Intent(this, DniActivity.class);
-                startDniActivity.putExtra("DATO", "DNI");
-                finish();
-                startActivity(startDniActivity);
-                return true;
-            case R.id.action_qr:
-                return true;
-            case R.id.action_loc:
-                Intent startLocActivity = new Intent(this, DniActivity.class);
-                startLocActivity.putExtra("DATO", "LOCALITZADOR");
-                finish();
-                startActivity(startLocActivity);
-                return true;
-            case R.id.action_logout:
-                Intent startLogout = new Intent(this, MainActivity.class);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
 }
