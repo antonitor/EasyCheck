@@ -46,10 +46,10 @@ public class DetallActivity extends AppCompatActivity {
     public void verifica(){
         if (myDataset.isEmpty()){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Dada no trobada!")
+            builder.setMessage("Reserva no trobada!")
                     .setTitle("Atenció!!")
                     .setCancelable(false)
-                    .setNeutralButton("Aceptar",
+                    .setPositiveButton("Acceptar",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
@@ -58,6 +58,7 @@ public class DetallActivity extends AppCompatActivity {
                             });
             AlertDialog alert = builder.create();
             alert.show();
+
         }
     }
     public void consultes(){
