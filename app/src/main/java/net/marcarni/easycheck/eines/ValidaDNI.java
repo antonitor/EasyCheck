@@ -10,7 +10,7 @@ public class ValidaDNI {
         if (totOK) {
             //     Toast.makeText(ValidaDNI.this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
         } else {
-            //       Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
+             //       Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
         }
         return totOK;
     }
