@@ -68,6 +68,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
         switch (item.getItemId()) {
             case R.id.action_qr:
                 Intent startQrActivity = new Intent(this, CheckCameraPermissionsActivity.class);
+                finish();
                 startActivity(startQrActivity);
                 return true;
             case R.id.action_dni:
