@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_manager_defaults_labels">
+        <item>@string/pref_manager_default_qr_label</item>
+        <item>@string/pref_manager_default_dni_label</item>
+        <item>@string/pref_manager_default_loc_label</item>
+    </array>
+
+    <array name="pref_manager_defaults_values">
+        <item>@string/pref_manager_default_qr_value</item>
+        <item>@string/pref_manager_default_dni_value</item>
+        <item>@string/pref_manager_default_loc_value</item>
+    </array>
+</resources>

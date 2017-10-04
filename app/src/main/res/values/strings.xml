@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">EasyCheck</string>
+
+    <!-- MENU -->
+
+    <string name="menu_qr">Lector QRCode</string>
+    <string name="menu_dni">Buscador DNI</string>
+    <string name="menu_loc">Buscador Localitzador</string>
+    <string name="menu_services">Servicis Pendents</string>
+    <string name="menu_replacement">Substitucions</string>
+    <string name="menu_settings">Configuració</string>
+    <string name="menu_logout">Logout</string>
+
+    <!-- PREFERENCES -->
+
+    <string name="pref_autofocus_label">Auto-Focus</string>
+    <string name="pref_autofocus_key" translatable="false">kAutoFocus</string>
+    <string name="pref_show_true">Engegat</string>
+    <string name="pref_show_false">Apagat</string>
+    <string name="pref_camera_category">Configuració de la camara</string>
+    <string name="pref_bookings_category">Configuració del gestor de reserves</string>
+
+    <string name="pref_auto_ckeckin_label">Check-in Automàtic</string>
+    <string name="pref_auto_ckeckin_key">autocheckin</string>
+
+    <!-- LIST PREFERENCES -->
+
+    <string name="pref_manager_default_label">Gestor de reserves per defecte</string>
+    <string name="pref_manager_default_key" translatable="false">defaultmanager</string>
+    <string name="pref_manager_default_qr_label">QRCode Scanner</string>
+    <string name="pref_manager_default_dni_label">Búsqueda DNI</string>
+    <string name="pref_manager_default_loc_label">Búsqueda Localitzador</string>
+    <string name="pref_manager_default_qr_value" translatable="false">qrscanner</string>
+    <string name="pref_manager_default_dni_value" translatable="false">dni_serach</string>
+    <string name="pref_manager_default_loc_value" translatable="false">loc_serach</string>
+
+    <!-- -->
+
+    <string name="button_next">Següent</string>
+    <string name="camera_permission_denied">Permissos insuficients</string>
+
+    <string name="scanner_result" translatable="false">xScanningResult</string>
+    <string name="auto_focus_extra" translatable="false">xAutoFocus</string>
+
+
 </resources>
