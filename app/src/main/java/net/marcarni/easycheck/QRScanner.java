@@ -93,6 +93,30 @@ public class QRScanner extends MenuAppCompatActivity {
     }
 
     @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_qr:
+                return true;
+            case R.id.action_dni:
+                Intent startDniActivity = new Intent(this, DniActivity.class);
+                startDniActivity.putExtra("DATO", "DNI");
+                finish();
+                startActivity(startDniActivity);
+                return true;
+            case R.id.action_loc:
+                Intent startLocActivity = new Intent(this, DniActivity.class);
+                startLocActivity.putExtra("DATO", "LOCALITZADOR");
+                finish();
+                startActivity(startLocActivity);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mCameraSource.release();

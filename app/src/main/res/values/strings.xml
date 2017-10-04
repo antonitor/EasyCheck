@@ -10,6 +10,7 @@
     <string name="menu_replacement">Substitucions</string>
     <string name="menu_settings">Configuració</string>
     <string name="menu_logout">Logout</string>
+    <string name="menu_filter">Filtrar Serveis</string>
 
     <!-- PREFERENCES -->
 

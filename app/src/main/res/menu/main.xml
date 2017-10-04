@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/action_qr"
-        android:title="@string/menu_qr"/>
-    <item
-        android:id="@+id/action_dni"
-        android:title="@string/menu_dni"/>
-    <item
-        android:id="@+id/action_loc"
-        android:title="@string/menu_loc"/>
-    <item
-        android:id="@+id/action_services"
-        android:title="@string/menu_services"/>
-    <item
-        android:id="@+id/action_replacement"
-        android:title="@string/menu_replacement"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_settings"
         android:title="@string/menu_settings"/>
     <item
         android:id="@+id/action_logout"
         android:title="@string/menu_logout"/>
-
-
+    <item
+        android:id="@+id/menu_consultes"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="submenu"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_gestor"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="submenu"
+        app:showAsAction="always"/>
 </menu>
