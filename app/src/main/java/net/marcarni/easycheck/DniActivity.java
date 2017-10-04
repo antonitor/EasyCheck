@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.marcarni.easycheck.SQLite.ValidaDNI;
+import net.marcarni.easycheck.eines.ValidaDNI;
 import net.marcarni.easycheck.settings.SettingsActivity;
 
 public class DniActivity extends AppCompatActivity {

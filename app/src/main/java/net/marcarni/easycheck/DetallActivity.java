@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.Header;
@@ -83,14 +82,14 @@ public class DetallActivity extends AppCompatActivity {
     public void CrearReserva(){
         db.obre();
         db.Esborra();
-        //LOC                   DATA                                                                                        QR            DNI
-        db.InserirReserva("001","123456","16/1/2017","29/10/2017","12345","Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","1","123","01");
-        db.InserirReserva("002","123446","16/3/2017","19/11/2017","12345","Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","45R545WE45","2","1111111R","01");
-        db.InserirReserva("003","55546","3/3/2017","3/1/2018","12995","Pere","Fernandez","Pujol","22342998","perean@gmail.com","14","French","854HFHH945","2","358778884T","02");
-        db.InserirReserva("004","54446","10/3/2017","23/2/2018","12995","Pamela","Sanchez","Grau","14445998","raimn@gmail.com","14","Spanish","66FHHF45","2","35873454Y","02");
-        db.InserirReserva("005","5746","9/3/2017","31/1/2018","12995","Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","2","354358884K","02");
-        db.InserirReserva("006","55666","10/3/2017","19/1/2018","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","2","35456684T","02");
-        db.InserirReserva("006","55666","10/3/2017","19/11/2017","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","2","123","02");
+                                  //LOC                   DATA                                                                                      QR            DNI
+        db.InserirReserva("001","123456","16/1/2017","29/10/2017","12345","Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","1","41471860P","01");
+        db.InserirReserva("002","123446","16/3/2017","19/11/2017","12345","Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","45R545WE45","2","38039532Q","01");
+        db.InserirReserva("003","55546","3/3/2017","3/1/2018","12995","Pere","Fernandez","Pujol","22342998","perean@gmail.com","14","French","854HFHH945","2","99392359K","02");
+        db.InserirReserva("004","54446","10/3/2017","23/2/2018","12995","Pamela","Sanchez","Grau","14445998","raimn@gmail.com","14","Spanish","66FHHF45","2","72339884P","02");
+        db.InserirReserva("005","5746","9/3/2017","31/1/2018","12995","Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","2","20841817E","02");
+        db.InserirReserva("006","55666","10/3/2017","19/1/2018","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","2","97620922K","02");
+        db.InserirReserva("006","55666","10/3/2017","19/11/2017","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","2","17370830B","02");
 
         db.tanca();
     }

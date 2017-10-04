@@ -1,4 +1,4 @@
-package net.marcarni.easycheck.SQLite;
+package net.marcarni.easycheck.eines;
 
 /**
  * Created by Carlos on 04/10/2017.
