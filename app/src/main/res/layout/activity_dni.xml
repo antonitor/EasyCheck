@@ -24,7 +24,6 @@
             android:id="@+id/editTextLocalitzador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Localitzador"
             android:inputType="textPersonName" />
 
         <EditText
