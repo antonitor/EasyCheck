@@ -57,7 +57,7 @@ public class DniActivity extends AppCompatActivity {
                         intent.putExtra("DNI",editTextDni.getText().toString());
                     if (textViewData.getText() != "")
                         intent.putExtra("DATA",textViewData.getText());
-                } else {
+                } else if(cadena.equalsIgnoreCase("LOCALITZADOR")){
                     intent.putExtra("LOCALITZADOR",editTextLocaltizador.getText().toString());
                 }
                 startActivity(intent);
