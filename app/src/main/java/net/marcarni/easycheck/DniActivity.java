@@ -65,7 +65,7 @@ public class DniActivity extends AppCompatActivity {
                     if (textViewData.getText().length() > 0){
                         intent.putExtra("DATA",textViewData.getText());
                         startActivity(intent);
-                    }
+                    } else if (editTextDni.getText().toString().length() == 0) Toast.makeText(DniActivity.this, "Introdueix DNI!", Toast.LENGTH_LONG).show();
 
                 } else if(cadena.equalsIgnoreCase("LOCALITZADOR")){
                     if (editTextLocaltizador.getText().toString().length() > 0){
