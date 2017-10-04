@@ -1,5 +1,7 @@
 package net.marcarni.easycheck;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -39,8 +41,25 @@ public class DetallActivity extends AppCompatActivity {
 
         CrearReserva();
         consultes();
+        verifica();
     }
-
+    public void verifica(){
+        if (myDataset.isEmpty()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Dada no trobada!")
+                    .setTitle("Atenció!!")
+                    .setCancelable(false)
+                    .setNeutralButton("Aceptar",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    finish();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
     public void consultes(){
         if (getIntent().hasExtra("LOCALITZADOR")){
             String loc = getIntent().getExtras().getString("LOCALITZADOR");
@@ -144,6 +163,7 @@ public class DetallActivity extends AppCompatActivity {
                         , cursor.getString(10)));
 
             }while(cursor.moveToNext());
+
         }
 
     }
