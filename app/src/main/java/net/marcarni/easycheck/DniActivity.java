@@ -18,7 +18,6 @@ public class DniActivity extends AppCompatActivity {
     TextView textView;
     EditText editTextDni;
     TextView textViewData;
-    EditText editTextHora;
     EditText editTextLocaltizador;
     Button buttonCheckIn;
     Button buttonData;
@@ -31,7 +30,6 @@ public class DniActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
         editTextDni = (EditText) findViewById(R.id.editTextDni);
         textViewData = (TextView) findViewById(R.id.textViewData);
-        editTextHora = (EditText) findViewById(R.id.editTextHora);
         editTextLocaltizador = (EditText) findViewById(R.id.editTextLocalitzador);
         buttonCheckIn = (Button) findViewById(R.id.buttonCheckIn);
         buttonData = (Button) findViewById(R.id.buttonData);
@@ -40,12 +38,11 @@ public class DniActivity extends AppCompatActivity {
         if (bundle != null){
             cadena = (String) bundle.get("DATO");
             if (cadena.equalsIgnoreCase("DNI")){
-                editTextLocaltizador.setVisibility(View.INVISIBLE);
+                editTextLocaltizador.setVisibility(View.GONE);
             } else {
-                buttonData.setVisibility(View.INVISIBLE);
-                editTextDni.setVisibility(View.INVISIBLE);
-                textViewData.setVisibility(View.INVISIBLE);
-                editTextHora.setVisibility(View.INVISIBLE);
+                buttonData.setVisibility(View.GONE);
+                editTextDni.setVisibility(View.GONE);
+                textViewData.setVisibility(View.GONE);
             }
             textView.setText(cadena);
             String data = intent.getStringExtra("DATA");
@@ -56,15 +53,13 @@ public class DniActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(DniActivity.this,DetallActivity.class);
                 if (cadena.equalsIgnoreCase("DNI")){
-                    Toast.makeText(getBaseContext(), "Enviaments dades DNI.", Toast.LENGTH_SHORT).show();
                     intent.putExtra("DNI",editTextDni.getText().toString());
                     intent.putExtra("DATA",textViewData.getText().toString());
-                    intent.putExtra("HORA",editTextHora.getText().toString());
-                } else{
-                    Toast.makeText(getBaseContext(), "Enviaments dades Localitzador", Toast.LENGTH_SHORT).show();
+                } else {
                     intent.putExtra("LOCALITZADOR",editTextLocaltizador.getText().toString());
                 }
                 startActivity(intent);
+
             }
         });
         buttonData.setOnClickListener(new View.OnClickListener(){
@@ -84,8 +79,9 @@ public class DniActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK)
             {
                 //Recollim el text escollit al calendar (format data)
-                 String data = intent.getStringExtra("DATA");
-                 textViewData.setText(data);
+                String data = intent.getStringExtra("DATA");
+                textViewData.setText(data);
+
             }
         }
     }
@@ -106,7 +102,7 @@ public class DniActivity extends AppCompatActivity {
                 startActivity(startSettingsActivity);
                 return true;
             case R.id.action_qr:
-                Intent startQrActivity = new Intent(this, CheckCameraPermissionsActivity.class);
+                Intent startQrActivity = new Intent(this, QRScanner.class);
                 startActivity(startQrActivity);
                 return true;
             case R.id.action_dni:
@@ -120,7 +116,6 @@ public class DniActivity extends AppCompatActivity {
                 startLocActivity.putExtra("DATO", "LOCALITZADOR");
                 finish();
                 startActivity(startLocActivity);
-                return true;
             case R.id.action_logout:
                 Intent logout = new Intent(this, MainActivity.class);
                 startActivity(logout);

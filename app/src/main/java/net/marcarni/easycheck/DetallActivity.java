@@ -1,37 +1,153 @@
 package net.marcarni.easycheck;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import net.marcarni.easycheck.RecyclerView.Header;
+import net.marcarni.easycheck.RecyclerView.HeaderAdapter;
+import net.marcarni.easycheck.SQLite.DBInterface;
 import net.marcarni.easycheck.settings.SettingsActivity;
 
+import java.util.ArrayList;
+
 public class DetallActivity extends AppCompatActivity {
-    TextView textViewDni;
-    TextView textViewData;
-    //afegit per toni per mostrar qrcode
-    TextView mQRCodeTextView;
+
+    DBInterface db;
+    private HeaderAdapter headerAdapter;
+    ArrayList<Header> myDataset;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detall);
 
-        textViewDni = (TextView) findViewById(R.id.textViewDni);
-        textViewData = (TextView) findViewById(R.id.textViewData);
-        String dni = getIntent().getExtras().getString("DNI");
-        String data = getIntent().getExtras().getString("DATA");
-        textViewDni.setText(dni);
-        textViewData.setText(data);
+        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
 
-        //Afegit per toni per mostrar qrccode
-        mQRCodeTextView = (TextView) findViewById(R.id.textViewQrCode);
-        String qrResult = getIntent().getStringExtra(getString(R.string.scanner_result_extra));
-        mQRCodeTextView.setText(qrResult);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        myDataset=new ArrayList<>();
+        headerAdapter= new HeaderAdapter(myDataset);
+        recyclerView.setAdapter(headerAdapter);
+        db = new DBInterface(this);
+
+        CrearReserva();
+        consultes();
     }
 
+    public void consultes(){
+        if (getIntent().hasExtra("LOCALITZADOR")){
+            String loc = getIntent().getExtras().getString("LOCALITZADOR");
+            RetornaReservaLoc(loc);
+        } else if (getIntent().hasExtra(getString(R.string.scanner_result))) {
+            String qrCode = getIntent().getStringExtra(getString(R.string.scanner_result));
+            RetornaReservaQR(qrCode);
+        } else if(getIntent().hasExtra("DNI") && getIntent().hasExtra("DATA")){
+            String dni = getIntent().getExtras().getString("DNI");
+            String data = getIntent().getExtras().getString("DATA");
+            RetornaReservaDNI_DATA(dni,data);
+        } else if(getIntent().hasExtra("DNI")) {
+            String dni = getIntent().getExtras().getString("DNI");
+            RetornaReservaDNI(dni);
+        } else if(getIntent().hasExtra("DATA")) {
+            String data = getIntent().getExtras().getString("DATA");
+            RetornaReservaDATA(data);
+        } else {
+            //NO S'HAURÍA D'ARRIBAR A AQUEST PUNT!!!
+            Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG);
+        }
+    }
+
+    private void RetornaReservaDNI(String dni) {
+        db.obre();
+        Cursor cursor=db.RetornaReservaDNI(dni);
+        if(cursor.moveToFirst()){
+            do {
+                myDataset.add(new Header(cursor.getString(6)+" "+cursor.getString(7)+" "+cursor.getString(8),
+                        "DNI: "+cursor.getString(15)+"  "+"Data Servei:" +cursor.getString(4),
+                        "QR: "+cursor.getString(13)+"   Localització: "+cursor.getString(2)
+                        , cursor.getString(10)));
+
+            }while(cursor.moveToNext());
+        }
+        db.tanca();
+    }
+
+    public void CrearReserva(){
+        db.obre();
+        db.Esborra();
+        //LOC                   DATA                                                                                        QR            DNI
+        db.InserirReserva("001","123456","16/1/2017","29/10/2017","12345","Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","1","111111","01");
+        db.InserirReserva("002","123446","16/3/2017","19/11/2017","12345","Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","454YU54545","2","1111111R","01");
+        db.InserirReserva("003","55546","3/3/2017","3/1/2018","12995","Pere","Fernandez","Pujol","22342998","perean@gmail.com","14","French","854HFHH945","2","358778884T","02");
+        db.InserirReserva("004","54446","10/3/2017","23/2/2018","12995","Pamela","Sanchez","Grau","14445998","raimn@gmail.com","14","Spanish","66FHHF45","2","35873454Y","02");
+        db.InserirReserva("005","5746","9/3/2017","31/1/2018","12995","Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","2","354358884K","02");
+        db.InserirReserva("006","55666","10/3/2017","19/1/2018","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","2","35456684T","02");
+        db.InserirReserva("006","55666","10/3/2017","19/11/2017","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","2","35456684T","02");
+
+        db.tanca();
+    }
+
+
+    public void RetornaReservaDNI_DATA(String dni,String data){
+
+        db.obre();
+        Cursor cursor=db.RetornaReservaDNI_DATA(dni,data);
+        CursorBD(cursor);
+        db.tanca();
+    }
+    public void RetornaReservaDATA(String data){
+
+        db.obre();
+        Cursor cursor=db.RetornaReservaData(data);
+        CursorBD(cursor);
+        db.tanca();
+    }
+    private void RetornaReservaLoc(String loc) {
+        Toast.makeText(getBaseContext(), loc, Toast.LENGTH_SHORT).show();
+        db.obre();
+        Cursor cursor=db.RetornaReservaLocalitzador(loc);
+        CursorBD(cursor);
+        db.tanca();
+    }
+
+    public void RetornaReserva(String dni, String data){
+        db.obre();
+        Cursor cursor=db.RetornaTotesLesReserves();
+        CursorBD(cursor);
+        db.tanca();
+    }
+
+    /**
+     * Afegit per toni
+     * @param qrCode
+     */
+    public void RetornaReservaQR(String qrCode){
+        db.obre();
+        Cursor cursor=db.RetornaReservaQR(qrCode);
+        CursorBD(cursor);
+        db.tanca();
+    }
+
+    public void CursorBD(Cursor cursor){
+        if(cursor.moveToFirst()){
+            do {
+                myDataset.add(new Header(cursor.getString(6)+" "+cursor.getString(7)+" "+cursor.getString(8),
+                        "DNI: "+cursor.getString(15)+"  "+"Data Servei:" +cursor.getString(4),
+                        "QR: "+cursor.getString(13)+"   Localització"+cursor.getString(2)
+                        , cursor.getString(10)));
+
+            }while(cursor.moveToNext());
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,7 +164,7 @@ public class DetallActivity extends AppCompatActivity {
                 startActivity(startSettingsActivity);
                 return true;
             case R.id.action_qr:
-                Intent startQrActivity = new Intent(this, CheckCameraPermissionsActivity.class);
+                Intent startQrActivity = new Intent(this, QRScanner.class);
                 startActivity(startQrActivity);
                 return true;
             case R.id.action_dni:

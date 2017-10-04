@@ -83,7 +83,7 @@ public class QRScanner extends AppCompatActivity {
                 if (barcodes.size() != 0) {
                     mBarcodeDetector.release();
                     Intent intent = new Intent(QRScanner.this, DetallActivity.class);
-                    intent.putExtra(getString(R.string.scanner_result_extra), barcodes.valueAt(0).displayValue);
+                    intent.putExtra(getString(R.string.scanner_result), barcodes.valueAt(0).displayValue);
                     finish();
                     startActivity(intent);
                 }
