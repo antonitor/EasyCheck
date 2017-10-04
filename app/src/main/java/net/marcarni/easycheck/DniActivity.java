@@ -8,9 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.marcarni.easycheck.SQLite.ValidaDNI;
 import net.marcarni.easycheck.settings.SettingsActivity;
 
 public class DniActivity extends AppCompatActivity {
@@ -20,8 +22,9 @@ public class DniActivity extends AppCompatActivity {
     TextView textViewData;
     EditText editTextLocaltizador;
     Button buttonCheckIn;
-    Button buttonData;
+    ImageButton buttonData;
     String cadena = null;
+    ValidaDNI validaDni = new ValidaDNI();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +35,7 @@ public class DniActivity extends AppCompatActivity {
         textViewData = (TextView) findViewById(R.id.textViewData);
         editTextLocaltizador = (EditText) findViewById(R.id.editTextLocalitzador);
         buttonCheckIn = (Button) findViewById(R.id.buttonCheckIn);
-        buttonData = (Button) findViewById(R.id.buttonData);
+        buttonData = (ImageButton) findViewById(R.id.imageButton);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null){
@@ -54,13 +57,26 @@ public class DniActivity extends AppCompatActivity {
                 Intent intent = new Intent(DniActivity.this,DetallActivity.class);
                 if (cadena.equalsIgnoreCase("DNI")){
                     if (editTextDni.getText().toString().length() > 0)
-                        intent.putExtra("DNI",editTextDni.getText().toString());
-                    if (textViewData.getText().length() > 0)
+                        if (validaDni.validarDni(editTextDni.getText().toString())){
+                            intent.putExtra("DNI",editTextDni.getText().toString());
+                            startActivity(intent);
+                        }
+                        else  Toast.makeText(DniActivity.this, "Format DNI invàlid", Toast.LENGTH_LONG).show();
+                    if (textViewData.getText().length() > 0){
                         intent.putExtra("DATA",textViewData.getText());
+                        startActivity(intent);
+                    }
+
                 } else if(cadena.equalsIgnoreCase("LOCALITZADOR")){
-                    intent.putExtra("LOCALITZADOR",editTextLocaltizador.getText().toString());
+                    if (editTextLocaltizador.getText().toString().length() > 0){
+                        intent.putExtra("LOCALITZADOR",editTextLocaltizador.getText().toString());
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(DniActivity.this, "Introdueix Localitzador!", Toast.LENGTH_LONG).show();
+                    }
+
                 }
-                startActivity(intent);
+
 
             }
         });
@@ -83,7 +99,6 @@ public class DniActivity extends AppCompatActivity {
                 //Recollim el text escollit al calendar (format data)
                 String data = intent.getStringExtra("DATA");
                 textViewData.setText(data);
-
             }
         }
     }
