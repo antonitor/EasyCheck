@@ -89,12 +89,23 @@ public class CheckCameraPermissionsActivity extends AppCompatActivity {
                 Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
                 startActivity(startSettingsActivity);
                 return true;
+            case R.id.action_dni:
+                Intent startDniActivity = new Intent(this, DniActivity.class);
+                startDniActivity.putExtra("DATO", "DNI");
+                finish();
+                startActivity(startDniActivity);
+                return true;
             case R.id.action_qr:
                 return true;
-            case R.id.action_logout:
-                Intent logout = new Intent(this, MainActivity.class);
+            case R.id.action_loc:
+                Intent startLocActivity = new Intent(this, DniActivity.class);
+                startLocActivity.putExtra("DATO", "LOCALITZADOR");
                 finish();
-                startActivity(logout);
+                startActivity(startLocActivity);
+                return true;
+            case R.id.action_logout:
+                Intent startLogout = new Intent(this, MainActivity.class);
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

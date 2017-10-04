@@ -10,10 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import static android.content.ContentValues.TAG;
-import static net.marcarni.easycheck.DBInterface.BD_CREATE;
-import static net.marcarni.easycheck.DBInterface.BD_NOM;
-import static net.marcarni.easycheck.DBInterface.BD_TAULA;
-import static net.marcarni.easycheck.DBInterface.VERSIO;
+import static net.marcarni.easycheck.SQLite.DBInterface.BD_CREATE;
+import static net.marcarni.easycheck.SQLite.DBInterface.BD_NOM;
+import static net.marcarni.easycheck.SQLite.DBInterface.BD_TAULA;
+import static net.marcarni.easycheck.SQLite.DBInterface.VERSIO;
 
 /*****************************************************************************************
  *********************************  CREACIÓ DE BASE DE DADES *****************************

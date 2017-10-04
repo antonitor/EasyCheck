@@ -1,86 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.marcarni.easycheck.DniActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="162dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true">
 
-    <EditText
-        android:id="@+id/editTextDni"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="28dp"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Dni"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:text="" />
 
-    <EditText
-        android:id="@+id/editTextHora"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Hora"
-        android:layout_below="@+id/buttonData"
-        android:layout_alignLeft="@+id/buttonData"
-        android:layout_alignStart="@+id/buttonData" />
+        <EditText
+            android:id="@+id/editTextLocalitzador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Localitzador"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editTextLocalitzador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Localitzador"
-        android:layout_alignBaseline="@+id/editTextDni"
-        android:layout_alignBottom="@+id/editTextDni"
-        android:layout_alignLeft="@+id/editTextDni"
-        android:layout_alignStart="@+id/editTextDni" />
+        <EditText
+            android:id="@+id/editTextDni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dni"
+            android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/buttonCheckIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="51dp"
-        android:text="Check-In"
-        android:layout_below="@+id/editTextHora"
-        android:layout_toRightOf="@+id/buttonData"
-        android:layout_toEndOf="@+id/buttonData" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/buttonData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextDni"
-        android:layout_alignStart="@+id/editTextDni"
-        android:layout_below="@+id/editTextDni"
-        android:text="Data" />
+            <Button
+                android:id="@+id/buttonData"
+                style="@android:style/Widget.DeviceDefault.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="Data" />
 
-    <TextView
-        android:id="@+id/textViewData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data"
-        android:layout_alignBaseline="@+id/buttonData"
-        android:layout_alignBottom="@+id/buttonData"
-        android:layout_toRightOf="@+id/buttonData"
-        android:layout_toEndOf="@+id/buttonData"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp" />
+            <TextView
+                android:id="@+id/textViewData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:text="Data" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonCheckIn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check-In" />
+
+    </LinearLayout>
 </RelativeLayout>

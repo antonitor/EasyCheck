@@ -111,6 +111,8 @@ public class QRScanner extends AppCompatActivity {
                 finish();
                 startActivity(startDniActivity);
                 return true;
+            case R.id.action_qr:
+                return true;
             case R.id.action_loc:
                 Intent startLocActivity = new Intent(this, DniActivity.class);
                 startLocActivity.putExtra("DATO", "LOCALITZADOR");
