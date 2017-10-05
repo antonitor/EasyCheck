@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.Header;
@@ -36,7 +35,7 @@ public class DetallActivity extends MenuAppCompatActivity {
         recyclerView.setAdapter(headerAdapter);
         db = new DBInterface(this);
 
-        CrearReserva();
+       // CrearReserva();
         consultes();
         verifica();
     }
@@ -146,13 +145,6 @@ public class DetallActivity extends MenuAppCompatActivity {
         Cursor cursor=db.RetornaReservaQR(qrCode);
         CursorBD(cursor);
         db.tanca();
-    }
-    public void ferCheckIn(String dni){
-      //  db.obre();
-        //db.ActalitzaCheckInReserva(dni);
-       // db.tanca();
-        Log.d("proba", "ferCheckIn: "+dni);
-
     }
 
     public void CursorBD(Cursor cursor){

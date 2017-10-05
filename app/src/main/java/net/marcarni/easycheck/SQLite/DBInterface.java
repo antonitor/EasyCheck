@@ -166,15 +166,15 @@ public class DBInterface {
     }
     public void ActalitzaCheckInReserva (String dni){
 
-        String checkIn="1";
-        bd.rawQuery("update Reserva set checkIn = ? ",new String[]{checkIn});
-
+        //String checkIn="1";
         //bd.rawQuery("update Reserva set checkIn = '"+checkIn+"' where dniTitular = ? ",new String[]{dni});
-       /* ContentValues valores = new ContentValues();
+        Log.d("proba",Boolean.toString(bd.isOpen()));
+        ContentValues valores = new ContentValues();
         valores.put("checkIn","1");
         String where ="dniTitular like ? ";
         String[] selection={dni};
-        bd.update("Reserva", valores,where, selection); */
+        bd.update("Reserva", valores,where, selection);
+        Log.d("proba","Actualitzat");
 
     }
     public void proba (){

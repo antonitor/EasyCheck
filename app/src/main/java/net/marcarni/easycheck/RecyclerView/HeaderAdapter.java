@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.marcarni.easycheck.DetallActivity;
 import net.marcarni.easycheck.R;
+import net.marcarni.easycheck.SQLite.DBInterface;
 
 import java.util.ArrayList;
 
@@ -40,13 +40,8 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
             data = (TextView) v.findViewById(R.id.data);
             check = (TextView) v.findViewById(R.id.check);
             check.setVisibility(View.INVISIBLE);
-
-
             v.setOnClickListener(this);
-            comprobar();
-        }
-        public void comprobar(){
-            if (check.getText().toString().equalsIgnoreCase("0")) v.setBackgroundColor(Color.rgb(165, 246, 149));
+
         }
         @Override
         public void onClick(View view) {
@@ -70,15 +65,19 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
                                         Toast.makeText(v.getContext(), "Check-in Realitzat", Toast.LENGTH_LONG).show();
                                         check.setText("1");
                                         Log.d("proba", "onClick: "+responsableName.getText().toString().substring(5,14));
-                                        DetallActivity d = new DetallActivity();
-                                        d.ferCheckIn(responsableName.getText().toString().substring(5,14));
+
+                                        String dni=responsableName.getText().toString().substring(5,14);
+                                        DBInterface db=new DBInterface(v.getContext());
+                                        db.obre();
+                                        db.ActalitzaCheckInReserva(dni);
+                                        db.tanca();
                                     }
                                 }
                         );
                 AlertDialog alert = builder.create();
                 alert.show();
             } else {
-                Toast.makeText(v.getContext(), "No pots fer check-in 2 cops!", Toast.LENGTH_LONG).show();
+                Toast.makeText(v.getContext(), "Aquesta reserva ja te check-in!", Toast.LENGTH_LONG).show();
             }
         }
     }
