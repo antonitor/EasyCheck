@@ -1,8 +1,11 @@
 package net.marcarni.easycheck.RecyclerView;
 
 
+import net.marcarni.easycheck.SQLite.DBInterface;
+
 public class Header {
     String dni,data,check;
+    DBInterface db;
 
     public String getData() {
         return data;
@@ -51,6 +54,7 @@ public class Header {
     }
 
     public void setCheck(String check) {
+
         this.check = check;
     }
 

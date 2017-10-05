@@ -22,7 +22,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
 
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // each data item is just a string in this case
         TextView headerCode;
         TextView responsableName;
@@ -38,15 +38,18 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
             data = (TextView) v.findViewById(R.id.data);
             check = (TextView) v.findViewById(R.id.check);
             check.setVisibility(View.INVISIBLE);
+
+
             v.setOnClickListener(this);
-
+            comprobar();
         }
-
+        public void comprobar(){
+            if (check.getText().toString().equalsIgnoreCase("0")) v.setBackgroundColor(Color.rgb(165, 246, 149));
+        }
         @Override
         public void onClick(View view) {
-
             v = view;
-            if  (check.getText().toString().equalsIgnoreCase("0")) {
+            if  (check.getText().toString().equalsIgnoreCase("0")) {   // Si NO TE el check-in FET
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setMessage("Vols Confirmar el Check-IN?")
                         .setTitle("Atenció!!")
@@ -68,6 +71,8 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
                         );
                 AlertDialog alert = builder.create();
                 alert.show();
+            } else {
+                Toast.makeText(v.getContext(), "No pots fer check-in 2 cops!", Toast.LENGTH_LONG).show();
             }
         }
     }
