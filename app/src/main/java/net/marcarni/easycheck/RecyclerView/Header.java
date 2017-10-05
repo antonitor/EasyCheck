@@ -1,11 +1,21 @@
 package net.marcarni.easycheck.RecyclerView;
 
 
-import net.marcarni.easycheck.SQLite.DBInterface;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
-public class Header {
+import net.marcarni.easycheck.DetallActivity;
+import net.marcarni.easycheck.settings.MenuAppCompatActivity;
+
+public class Header extends MenuAppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     String dni,data,check;
-    DBInterface db;
+
 
     public String getData() {
         return data;
@@ -50,11 +60,15 @@ public class Header {
     }
 
     public String getCheck() {
+        Log.d("proba","DNI: " + this.getResponsableName().substring(5,14));
+        Log.d("proba","Check: " + check);
+        DetallActivity detall = new DetallActivity();
+   //     detall.ferCheckIn(this.getResponsableName().substring(5,14));
         return check;
     }
 
     public void setCheck(String check) {
-
+       // db = new DBInterface(this);
         this.check = check;
     }
 

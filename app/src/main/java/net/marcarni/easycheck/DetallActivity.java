@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.Header;
@@ -80,7 +81,7 @@ public class DetallActivity extends MenuAppCompatActivity {
         }
     }
 
-    private void RetornaReservaDNI(String dni) {
+    public void RetornaReservaDNI(String dni) {
         db.obre();
         Cursor cursor=db.RetornaReservaDNI(dni);
         if(cursor.moveToFirst()){
@@ -134,7 +135,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     public void RetornaReserva(String dni, String data){
-        db.obre();
+
         Cursor cursor=db.RetornaTotesLesReserves();
         CursorBD(cursor);
         db.tanca();
@@ -145,6 +146,15 @@ public class DetallActivity extends MenuAppCompatActivity {
         Cursor cursor=db.RetornaReservaQR(qrCode);
         CursorBD(cursor);
         db.tanca();
+    }
+    public void ferCheckIn(String dni){
+        DBInterface dataBase = new DBInterface(this);
+        CrearReserva();
+        dataBase.obre();
+       // db.ActalitzaCheckInReserva(dni);
+
+        Log.d("proba", "ferCheckIn: "+dni);
+
     }
 
     public void CursorBD(Cursor cursor){

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 
 public class DBInterface {
@@ -163,13 +164,22 @@ public class DBInterface {
 
         return cursor;
     }
-    public Cursor ActalitzaCheckInReserva (String dni){
-        Cursor cursor;
-        cursor=bd.rawQuery("update Reserva set checkIn = '1' where dniTitular = ? ",new String[]{dni});
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-        return cursor;
+    public void ActalitzaCheckInReserva (String dni){
+
+        String checkIn="1";
+        bd.rawQuery("update Reserva set checkIn = ? ",new String[]{checkIn});
+
+        //bd.rawQuery("update Reserva set checkIn = '"+checkIn+"' where dniTitular = ? ",new String[]{dni});
+       /* ContentValues valores = new ContentValues();
+        valores.put("checkIn","1");
+        String where ="dniTitular like ? ";
+        String[] selection={dni};
+        bd.update("Reserva", valores,where, selection); */
+
+    }
+    public void proba (){
+        Log.d("proba","Conectat!");
+        Log.d("proba",Boolean.toString(bd.isOpen()));
     }
 
 }
