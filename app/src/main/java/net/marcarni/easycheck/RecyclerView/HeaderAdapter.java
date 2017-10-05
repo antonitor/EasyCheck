@@ -29,6 +29,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         View v;
         ViewHolder(View v) {
             super(v);
+
             headerCode = (TextView) v.findViewById(R.id.headerCode);
             responsableName = (TextView) v.findViewById(R.id.headerDetall);
             dni = (TextView) v.findViewById(R.id.dni);
@@ -53,9 +54,10 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
-                                    v.setBackgroundColor(Color.GREEN);
+                                    v.setBackgroundColor(Color.rgb(165,246,149));
                                     //v.setTag(0,"CHECK");
                                     //String tag = (String) v.getTag ();
+                                   
                                 }
                             }
                     );
