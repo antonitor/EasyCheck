@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.marcarni.easycheck.DetallActivity;
 import net.marcarni.easycheck.R;
 
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         @Override
         public void onClick(View view) {
             v = view;
+
             if  (check.getText().toString().equalsIgnoreCase("0")) {   // Si NO TE el check-in FET
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setMessage("Vols Confirmar el Check-IN?")
@@ -66,6 +69,9 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
                                         v.setBackgroundColor(Color.rgb(165, 246, 149));
                                         Toast.makeText(v.getContext(), "Check-in Realitzat", Toast.LENGTH_LONG).show();
                                         check.setText("1");
+                                        Log.d("proba", "onClick: "+responsableName.getText().toString().substring(5,14));
+                                        DetallActivity d = new DetallActivity();
+                                        d.ferCheckIn(responsableName.getText().toString().substring(5,14));
                                     }
                                 }
                         );

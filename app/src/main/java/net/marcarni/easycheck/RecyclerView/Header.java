@@ -1,18 +1,7 @@
 package net.marcarni.easycheck.RecyclerView;
 
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
-
-import net.marcarni.easycheck.DetallActivity;
-import net.marcarni.easycheck.settings.MenuAppCompatActivity;
-
-public class Header extends MenuAppCompatActivity {
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+public class Header{
 
     String dni,data,check;
 
@@ -60,15 +49,10 @@ public class Header extends MenuAppCompatActivity {
     }
 
     public String getCheck() {
-        Log.d("proba","DNI: " + this.getResponsableName().substring(5,14));
-        Log.d("proba","Check: " + check);
-        DetallActivity detall = new DetallActivity();
-   //     detall.ferCheckIn(this.getResponsableName().substring(5,14));
         return check;
     }
 
     public void setCheck(String check) {
-       // db = new DBInterface(this);
         this.check = check;
     }
 

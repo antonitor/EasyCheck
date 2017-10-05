@@ -148,11 +148,9 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.tanca();
     }
     public void ferCheckIn(String dni){
-        DBInterface dataBase = new DBInterface(this);
-        CrearReserva();
-        dataBase.obre();
-       // db.ActalitzaCheckInReserva(dni);
-
+      //  db.obre();
+        //db.ActalitzaCheckInReserva(dni);
+       // db.tanca();
         Log.d("proba", "ferCheckIn: "+dni);
 
     }
