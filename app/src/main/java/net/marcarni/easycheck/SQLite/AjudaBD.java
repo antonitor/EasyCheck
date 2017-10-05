@@ -1,8 +1,5 @@
 package net.marcarni.easycheck.SQLite;
 
-/**
- * Created by Maria on 29/09/2017.
- */
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

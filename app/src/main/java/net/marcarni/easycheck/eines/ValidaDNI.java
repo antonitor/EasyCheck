@@ -1,9 +1,5 @@
 package net.marcarni.easycheck.eines;
 
-/**
- * Created by Carlos on 04/10/2017.
- */
-
 public class ValidaDNI {
     public boolean validarDni(String dni) {
         boolean totOK = verificarDNI(dni);

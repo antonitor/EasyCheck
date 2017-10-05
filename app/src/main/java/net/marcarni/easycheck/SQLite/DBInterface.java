@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-/**
- * Created by Maria on 29/09/2017.
- */
 
 public class DBInterface {
     public static final String TAG = "DBInterface";
@@ -164,6 +161,14 @@ public class DBInterface {
             cursor.moveToFirst();
         }
 
+        return cursor;
+    }
+    public Cursor ActalitzaCheckInReserva (String dni){
+        Cursor cursor;
+        cursor=bd.rawQuery("update Reserva set checkIn = '1' where dniTitular = ? ",new String[]{dni});
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
         return cursor;
     }
 

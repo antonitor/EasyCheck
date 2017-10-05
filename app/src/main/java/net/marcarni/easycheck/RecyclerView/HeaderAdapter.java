@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.marcarni.easycheck.R;
 
@@ -26,6 +27,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         TextView headerCode;
         TextView responsableName;
         TextView dni, data;
+        TextView check;
         View v;
         ViewHolder(View v) {
             super(v);
@@ -34,35 +36,39 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
             responsableName = (TextView) v.findViewById(R.id.headerDetall);
             dni = (TextView) v.findViewById(R.id.dni);
             data = (TextView) v.findViewById(R.id.data);
+            check = (TextView) v.findViewById(R.id.check);
+            check.setVisibility(View.INVISIBLE);
             v.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
+
             v = view;
-            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-            builder.setMessage("Vols Confirmar el Check-IN?")
-                    .setTitle("Atenció!!")
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int i) {
-                            dialog.cancel();
-                        }
-                    })
-                    .setPositiveButton("Acceptar",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    v.setBackgroundColor(Color.rgb(165,246,149));
-                                    //v.setTag(0,"CHECK");
-                                    //String tag = (String) v.getTag ();
-                                   
-                                }
+            if  (check.getText().toString().equalsIgnoreCase("0")) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setMessage("Vols Confirmar el Check-IN?")
+                        .setTitle("Atenció!!")
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                dialog.cancel();
                             }
-                    );
-            AlertDialog alert = builder.create();
-            alert.show();
+                        })
+                        .setPositiveButton("Acceptar",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                        v.setBackgroundColor(Color.rgb(165, 246, 149));
+                                        Toast.makeText(v.getContext(), "Check-in Realitzat", Toast.LENGTH_LONG).show();
+                                        check.setText("1");
+                                    }
+                                }
+                        );
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
     }
 
@@ -79,10 +85,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_header, parent, false);
         // set the view's size, margins, paddings and layout parameters
-
-
         return  new ViewHolder(v);
-
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -94,11 +97,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         holder.responsableName.setText(mDataset.get(position).getResponsableName());
         holder.dni.setText(mDataset.get(position).getDni());
         holder.data.setText(mDataset.get(position).getData());
-
-
-
-
-
+        holder.check.setText(mDataset.get(position).getCheck());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
