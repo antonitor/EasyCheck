@@ -152,7 +152,7 @@ public class DetallActivity extends MenuAppCompatActivity {
             do {
                 myDataset.add(new Header(cursor.getString(6)+" "+cursor.getString(7)+" "+cursor.getString(8),
                         "DNI: "+cursor.getString(15)+"  "+"Data Servei: " +cursor.getString(4),
-                        "QR: "+cursor.getString(13)+"   Localització"+cursor.getString(2)
+                        "QR: "+cursor.getString(13)+"   Localització: "+cursor.getString(2)
                         , cursor.getString(10),cursor.getString(14)));
 
             }while(cursor.moveToNext());
