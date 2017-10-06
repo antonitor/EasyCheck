@@ -24,8 +24,11 @@
     <string name="pref_auto_ckeckin_label">Check-in Automàtic</string>
     <string name="pref_auto_ckeckin_key">autocheckin</string>
 
+    <string name="pref_cerca_default_labels">Preferencia de cerques</string>
+
     <!-- LIST PREFERENCES -->
 
+    <!-- Gestor de reserves -->
     <string name="pref_manager_default_label">Gestor de reserves per defecte</string>
     <string name="pref_manager_default_key" translatable="false">defaultmanager</string>
     <string name="pref_manager_default_qr_label">QRCode Scanner</string>
@@ -34,14 +37,23 @@
     <string name="pref_manager_default_qr_value" translatable="false">qrscanner</string>
     <string name="pref_manager_default_dni_value" translatable="false">dni_serach</string>
     <string name="pref_manager_default_loc_value" translatable="false">loc_serach</string>
+    <!-- Consultes -->
+    <string name="pref_manager_default_label_consultes">Gestor de Consultes per defecte</string>
+    <string name="pref_cerca_default_key" translatable="false">defaultmanagerconsultes</string>
+    <string name="pref_cerca_default_data">Per data</string>
+    <string name="pref_cerca_default_serveis_pendents">Serveis pendents</string>
+    <string name="pref_cerca_default_activitat">Per activitats</string>
+    <string name="pref_cerca_default_treballador">Per Treballador</string>
+    <string name="pref_cerca_default_hora">Hora</string>
+    <string name="pref_cerca_default_data_value" translatable="false">data_search</string>
+    <string name="pref_cerca_default_serveis_pendents_value" translatable="false">pendent_search</string>
+    <string name="pref_cerca_default_hora_value" translatable="false">hora_search</string>
+    <string name="pref_cerca_default_activitat_value" translatable="false">activitat_search</string>
+    <string name="pref_cerca_default_treballador_value" translatable="false">treballador_search</string>
+    <!-- Misc -->
 
-    <!-- -->
-
-    <string name="button_next">Següent</string>
     <string name="camera_permission_denied">Permissos insuficients</string>
-
     <string name="scanner_result" translatable="false">xScanningResult</string>
     <string name="auto_focus_extra" translatable="false">xAutoFocus</string>
-
 
 </resources>

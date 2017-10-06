@@ -6,13 +6,12 @@
 
     <PreferenceCategory android:title="@string/pref_camera_category">
 
-    <CheckBoxPreference
-        android:defaultValue="@bool/pref_autofocus_default"
-        android:key="@string/pref_autofocus_key"
-        android:title="@string/pref_autofocus_label"
-        android:summaryOn="@string/pref_show_true"
-        android:summaryOff="@string/pref_show_false"/>
-
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_autofocus_default"
+            android:key="@string/pref_autofocus_key"
+            android:title="@string/pref_autofocus_label"
+            android:summaryOn="@string/pref_show_true"
+            android:summaryOff="@string/pref_show_false"/>
         <CheckBoxPreference
             android:defaultValue="@bool/pref_auto_checkin"
             android:key="@string/pref_auto_ckeckin_key"
@@ -32,5 +31,17 @@
             android:summary="%s"/>
 
     </PreferenceCategory>
+    <PreferenceCategory android:title="Configuració de consultes">
 
+        <ListPreference
+            android:key="defaultmanagerconsultes"
+            android:title="Configuracio de consultes"
+            android:entryValues="@array/pref_manager_defaults_values_cerca"
+            android:entries="@array/pref_cerca_defaults_labels"
+            android:defaultValue="data_search"
+            android:summary="%s">
+
+        </ListPreference>
+
+    </PreferenceCategory>
 </PreferenceScreen>
