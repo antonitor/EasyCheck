@@ -42,6 +42,12 @@
             android:layout_height="wrap_content"
             android:text="data" />
         <TextView
+            android:id="@+id/checkText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check-in: "
+            android:textStyle="bold"/>
+        <TextView
             android:id="@+id/check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

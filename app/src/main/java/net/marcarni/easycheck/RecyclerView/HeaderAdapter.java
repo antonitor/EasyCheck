@@ -29,7 +29,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         TextView headerCode;
         TextView responsableName;
         TextView dni, data;
-        TextView check;
+        TextView check,checkText;
         View v;
         ViewHolder(View v) {
             super(v);
@@ -39,7 +39,8 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
             dni = (TextView) v.findViewById(R.id.dni);
             data = (TextView) v.findViewById(R.id.data);
             check = (TextView) v.findViewById(R.id.check);
-            check.setVisibility(View.INVISIBLE);
+            checkText = (TextView) v.findViewById(R.id.checkText);
+            //check.setVisibility(View.GONE);
             v.setOnClickListener(this);
 
         }
@@ -78,6 +79,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
                 alert.show();
             } else {
                 Toast.makeText(v.getContext(), "Aquesta reserva ja te check-in!", Toast.LENGTH_LONG).show();
+                v.setBackgroundColor(Color.rgb(255, 51, 30));
             }
         }
     }
@@ -108,6 +110,10 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         holder.dni.setText(mDataset.get(position).getDni());
         holder.data.setText(mDataset.get(position).getData());
         holder.check.setText(mDataset.get(position).getCheck());
+        String checkin = mDataset.get(position).getCheck();
+        if (checkin.equalsIgnoreCase("0")) checkin="Check-In: No Realitzat"; else checkin="Check-In: Realitzat";
+        // holder.check.setText(mDataset.get(position).getCheck());
+        holder.checkText.setText(checkin);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
