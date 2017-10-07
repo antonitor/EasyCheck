@@ -175,9 +175,9 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.InserirTreballador("Carlos Alberto","Castro","Cañabate","carlos","xxx","1");
 
 
-        db.InserirServei("Barcelona - Reus", 2);
-        db.InserirServei("Barcelona - Seu d'urgell", 3);
-        db.InserirServei("Eivissa - Formentera", 1);
+        db.InserirServei("Barcelona - Reus", "2");
+        db.InserirServei("Barcelona - Seu d'urgell", "3");
+        db.InserirServei("Eivissa - Formentera", "1");
 
         //LOC                   DATA                                                                                      QR            DNI
         db.InserirReserva("123456","16/1/2017","29/10/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","0","41471860P");

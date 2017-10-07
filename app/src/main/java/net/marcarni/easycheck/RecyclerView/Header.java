@@ -4,11 +4,10 @@ package net.marcarni.easycheck.RecyclerView;
 public class Header{
 
     String dni,data,check;
+    String headerCode;
+    String responsableName;
 
 
-    public String getData() {
-        return data;
-    }
 
     public Header(String headerCode, String responsableName, String dni, String data, String check) {
         this.headerCode = headerCode;
@@ -18,8 +17,10 @@ public class Header{
         this.check=check;
     }
 
-    String headerCode;
 
+    public String getData() {
+        return data;
+    }
     public void setData(String data) {
         this.data = data;
     }
@@ -56,5 +57,5 @@ public class Header{
         this.check = check;
     }
 
-    String responsableName;
+
 }

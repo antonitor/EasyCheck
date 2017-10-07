@@ -18,12 +18,51 @@ import java.util.ArrayList;
 
 
 public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> {
-    private ArrayList<Header> mDataset;
+private ArrayList<Header> mDataset;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+// Provide a reference to the views for each data item
+// Complex data items may need more than one view per item, and
+// you provide access to all the views for a data item in a view holder
 
+
+
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public HeaderAdapter(ArrayList<Header> myDataset) {
+        mDataset = myDataset;
+    }
+
+    // Create new views (invoked by the layout manager)
+    @Override
+    public HeaderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                       int viewType) {
+        // create a new view
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_header, parent, false);
+        // set the view's size, margins, paddings and layout parameters
+        return  new ViewHolder(v);
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+        holder.headerCode.setText(mDataset.get(position).getHeaderCode());
+        holder.responsableName.setText(mDataset.get(position).getResponsableName());
+        holder.dni.setText(mDataset.get(position).getDni());
+        holder.data.setText(mDataset.get(position).getData());
+        holder.check.setText(mDataset.get(position).getCheck());
+        String checkin = mDataset.get(position).getCheck();
+        if (checkin.equalsIgnoreCase("0")) checkin="Check-In: No Realitzat"; else checkin="Check-In: Realitzat";
+        // holder.check.setText(mDataset.get(position).getCheck());
+        holder.checkText.setText(checkin);
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        return mDataset.size();
+    }
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // each data item is just a string in this case
         TextView headerCode;
@@ -83,43 +122,4 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
             }
         }
     }
-
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public HeaderAdapter(ArrayList<Header> myDataset) {
-        mDataset = myDataset;
-    }
-
-    // Create new views (invoked by the layout manager)
-    @Override
-    public HeaderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_header, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        return  new ViewHolder(v);
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.headerCode.setText(mDataset.get(position).getHeaderCode());
-        holder.responsableName.setText(mDataset.get(position).getResponsableName());
-        holder.dni.setText(mDataset.get(position).getDni());
-        holder.data.setText(mDataset.get(position).getData());
-        holder.check.setText(mDataset.get(position).getCheck());
-        String checkin = mDataset.get(position).getCheck();
-        if (checkin.equalsIgnoreCase("0")) checkin="Check-In: No Realitzat"; else checkin="Check-In: Realitzat";
-        // holder.check.setText(mDataset.get(position).getCheck());
-        holder.checkText.setText(checkin);
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return mDataset.size();
-    }
-
 }

@@ -3,24 +3,31 @@ package net.marcarni.easycheck;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.ActionMenuItemView;
-import android.support.v7.widget.ActionMenuView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import net.marcarni.easycheck.RecyclerView.HeaderAdapter_Consulta;
+import net.marcarni.easycheck.RecyclerView.Header_Consulta;
+import net.marcarni.easycheck.SQLite.DBInterface;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
+
+import java.util.ArrayList;
 
 public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
     private static final int DATE_PICKER_REQUEST = 22;
+    DBInterface db;
+    private HeaderAdapter_Consulta headerAdapter_consulta;
+    ArrayList<Header_Consulta> myDataset;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +38,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         editToolbar.inflateMenu(R.menu.toolbar_menu);
         Spinner spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
+        // Afegeixo Recycler per instanciar
+        recyclerView=(RecyclerView)findViewById(R.id.recyclerView_consulta);
 
         //TODO 1: Cursor amb dades test, s'ha d'esborrar el métode getFakeCursor y extraure-les de la bbdd
-        Cursor cursorTest =  getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
+      Cursor cursorTest =  getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
 
         android.widget.SimpleCursorAdapter  adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -55,7 +64,33 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             spinnerTreballadors.setAdapter(adapter);
             spinnerTreballadors.setOnItemSelectedListener(new myOnItemSelectedListener());
         }
+
+        // Afegim Recycler
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        myDataset=new ArrayList<>();
+        headerAdapter_consulta=new HeaderAdapter_Consulta(myDataset);
+        recyclerView.setAdapter(headerAdapter_consulta);
+        db=new DBInterface(this);
+
+        RetornaServeis();
     }
+    public void CursorBD(Cursor cursor) {
+        if (cursor.moveToFirst()) {
+            do {
+                myDataset.add(new Header_Consulta("Treballador: "+cursor.getString(1),"Servei: "+ cursor.getString(2)));
+            } while (cursor.moveToNext());
+
+        }
+    }
+    public void RetornaServeis() {
+        db.obre();
+        Cursor cursor = db.RetornaTotsElsServeis();
+        CursorBD(cursor);
+        db.tanca();
+    }
+
+
 
     /**
      * Recull el resultat de CalendarActivity
@@ -79,8 +114,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     /*
      * //TODO 4: Aquest mètode es pot esborrar un cop extreiem els treballadors de la bbdd sqlite
      *
-     * @return
-     */
+     * @return*/
+
     public MatrixCursor getFakeCursor(){
         String[] columns = new String[] { "_id", "treballador" };
 
