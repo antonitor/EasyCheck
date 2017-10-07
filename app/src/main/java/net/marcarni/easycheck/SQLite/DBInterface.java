@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
+import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 
 
 public class DBInterface {
@@ -41,6 +42,8 @@ public class DBInterface {
 
     public void Esborra() {
         bd.execSQL("drop table if exists " + Reserves.NOM_TAULA + " ;");
+        bd.execSQL("drop table if exists " + Serveis.NOM_TAULA + " ;");
+        bd.execSQL("drop table if exists " + Treballador.NOM_TAULA + " ;");
         ajuda.onCreate(bd);
     }
 
@@ -132,10 +135,10 @@ public class DBInterface {
     public long InserirServei(String descripcio, int idTreballador) {
 
         ContentValues initialValues = new ContentValues();
-        initialValues.put(ContracteBD.Serveis.DESCRIPCIO,descripcio);
-        initialValues.put(ContracteBD.Serveis.ID_TREBALLADOR,idTreballador);
+        initialValues.put(Serveis.DESCRIPCIO,descripcio);
+        initialValues.put(Serveis.ID_TREBALLADOR,idTreballador);
 
-        return bd.insert( ContracteBD.Serveis.NOM_TAULA, null, initialValues);
+        return bd.insert( Serveis.NOM_TAULA, null, initialValues);
     }
 
     public long InserirReserva(String localizador, String fechaReserva,

@@ -35,7 +35,7 @@ public class DetallActivity extends MenuAppCompatActivity {
         recyclerView.setAdapter(headerAdapter);
         db = new DBInterface(this);
 
-        //CrearReserva();
+        CrearExemplesBD();
         consultes();
         verifica();
     }

@@ -50,13 +50,13 @@ class AjudaBD extends SQLiteOpenHelper {
             + ContracteBD.Reserves.QR_CODE + " TEXT NOT NULL, "
             + ContracteBD.Reserves.CHECK_IN+ " TEXT NOT NULL, "
             + ContracteBD.Reserves.DNI_TITULAR+ " TEXT NOT NULL, "
-            + "FOREIGN KEY("+ ContracteBD.Reserves.ID_SERVICIO+") REFERENCES" + ContracteBD.Serveis.NOM_TAULA +"(" + ContracteBD.Serveis._ID +");";;
+            + "FOREIGN KEY("+ ContracteBD.Reserves.ID_SERVICIO+") REFERENCES " + ContracteBD.Serveis.NOM_TAULA +"(" + ContracteBD.Serveis._ID +"));";;
 
-    public static final String BD_CREATE_SERVEIS = "CREATE TABLE" + ContracteBD.Serveis.NOM_TAULA + "("
+    public static final String BD_CREATE_SERVEIS = "CREATE TABLE " + ContracteBD.Serveis.NOM_TAULA + "("
             + ContracteBD.Serveis._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ContracteBD.Serveis.DESCRIPCIO + " TEXT NOT NULL, "
             + ContracteBD.Serveis.ID_TREBALLADOR + " INTEGER NOT NULL, "
-            + "FOREIGN KEY("+ ContracteBD.Serveis.ID_TREBALLADOR+") REFERENCES" + ContracteBD.Treballador.NOM_TAULA +"(" + ContracteBD.Treballador._ID +");";
+            + "FOREIGN KEY("+ ContracteBD.Serveis.ID_TREBALLADOR+") REFERENCES " + ContracteBD.Treballador.NOM_TAULA +"(" + ContracteBD.Treballador._ID +"));";
 
 
     public static final String BD_CREATE_TREBALLADOR = "CREATE TABLE " + ContracteBD.Treballador.NOM_TAULA + "("
