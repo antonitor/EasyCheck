@@ -12,8 +12,6 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 
 public class DBInterface {
     public static final String TAG = "DBInterface";
-    public static final String BD_NOM = "BDReserva";
-    public static final int VERSIO = 1;
 
     public String[] arrayReserva() {
         String[] Reserva = {Reserves._ID,Reserves.LOCALIZADOR,Reserves.FECHA_RESERVA,Reserves.FECHA_SERVICIO,Reserves.ID_SERVICIO,Reserves.NOMBRE_TITULAR,Reserves.APELLIDO1_TITULAR,
