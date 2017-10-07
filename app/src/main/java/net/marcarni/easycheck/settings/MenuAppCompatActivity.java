@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import net.marcarni.easycheck.CheckCameraPermissionsActivity;
+import net.marcarni.easycheck.ConsultaServeisActivity;
 import net.marcarni.easycheck.DniActivity;
 import net.marcarni.easycheck.MainActivity;
 import net.marcarni.easycheck.QRScanner;
@@ -65,7 +66,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
-        switch (item.getItemId()) {
+        switch (id) {
             case R.id.action_qr:
                 Intent startQrActivity = new Intent(this, CheckCameraPermissionsActivity.class);
                 finish();
@@ -82,6 +83,11 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                 startLocActivity.putExtra("DATO", "LOCALITZADOR");
                 finish();
                 startActivity(startLocActivity);
+                return true;
+            case R.id.action_services:
+                Intent startServicesActivity = new Intent(this, ConsultaServeisActivity.class);
+                finish();
+                startActivity(startServicesActivity);
                 return true;
             default:
                 return false;

@@ -44,4 +44,9 @@
     <string name="scanner_result" translatable="false">xScanningResult</string>
     <string name="auto_focus_extra" translatable="false">xAutoFocus</string>
 
+    <!-- Menú Filtres -->
+    <string name="menu_date_picker">Seleccionar Data</string>
+    <string name="spinner_treballadors">Selecciona Treballador</string>
+    <string name="filter">Filtres: </string>
+
 </resources>
