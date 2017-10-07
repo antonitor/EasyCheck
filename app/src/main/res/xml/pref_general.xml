@@ -31,17 +31,5 @@
             android:summary="%s"/>
 
     </PreferenceCategory>
-    <PreferenceCategory android:title="Configuració de consultes">
 
-        <ListPreference
-            android:key="defaultmanagerconsultes"
-            android:title="Configuracio de consultes"
-            android:entryValues="@array/pref_manager_defaults_values_cerca"
-            android:entries="@array/pref_cerca_defaults_labels"
-            android:defaultValue="data_search"
-            android:summary="%s">
-
-        </ListPreference>
-
-    </PreferenceCategory>
 </PreferenceScreen>

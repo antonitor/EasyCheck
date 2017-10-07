@@ -10,18 +10,4 @@
         <item>@string/pref_manager_default_dni_value</item>
         <item>@string/pref_manager_default_loc_value</item>
     </array>
-    <array name="pref_cerca_defaults_labels">
-        <item>@string/pref_cerca_default_data</item>
-        <item>@string/pref_cerca_default_serveis_pendents</item>
-        <item>@string/pref_cerca_default_activitat</item>
-        <item>@string/pref_cerca_default_treballador</item>
-        <item>@string/pref_cerca_default_hora</item>
-    </array>
-    <array name="pref_manager_defaults_values_cerca">
-        <item>@string/pref_cerca_default_data_value</item>
-        <item>@string/pref_cerca_default_activitat_value</item>
-        <item>@string/pref_cerca_default_serveis_pendents_value</item>
-        <item>@string/pref_cerca_default_treballador_value</item>
-        <item>@string/pref_cerca_default_hora_value</item>
-    </array>
 </resources>
