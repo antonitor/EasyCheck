@@ -5,56 +5,37 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
+import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 
 
 public class DBInterface {
     public static final String TAG = "DBInterface";
     public static final String BD_NOM = "BDReserva";
-    public static final String BD_TAULA = "Reserva";
     public static final int VERSIO = 1;
 
-    public static final String ID = "id";
-    public static final String ID_RESERVA="idReserva";
-    public static final String LOCALIZADOR="localizador";
-    public static final String FECHA_RESERVA="fechaReserva";
-    public static final String FECHA_SERVICIO ="fechaServicio";
-    public static final String ID_SERVICIO="idServicio";
-    public static final String NOMBRE_TITULAR="nombreTitular";
-    public static final String APELLIDO1_TITULAR="apellido1Titular";
-    public static final String APELLIDO2_TITULAR ="apellido2Titular";
-    public static final String TELEFONO_TITULAR="telefonoTitular";
-    public static final String EMAIL_TITULAR="emailTitular";
-    public static final String ID_PAIS_TITULAR="idPaisTitular";
-    public static final String LANG_TITULAR="langTitular";
-    public static final String QR_CODE="qrCode";
-    public static final String CHECK_IN="checkIn";
-    public static final String DNI_TITULAR="dniTitular";
-    public static final String ID_TRABAJADOR_ASIGNADO="idTrabajadorAsignado";
-
     public String[] arrayReserva() {
-        String[] Reserva = {ID,ID_RESERVA,LOCALIZADOR,FECHA_RESERVA,FECHA_SERVICIO,ID_SERVICIO,NOMBRE_TITULAR,APELLIDO1_TITULAR,
-        APELLIDO2_TITULAR,TELEFONO_TITULAR,EMAIL_TITULAR,ID_PAIS_TITULAR,LANG_TITULAR,QR_CODE,CHECK_IN,DNI_TITULAR,ID_TRABAJADOR_ASIGNADO};
+        String[] Reserva = {Reserves._ID,Reserves.LOCALIZADOR,Reserves.FECHA_RESERVA,Reserves.FECHA_SERVICIO,Reserves.ID_SERVICIO,Reserves.NOMBRE_TITULAR,Reserves.APELLIDO1_TITULAR,
+                Reserves.APELLIDO2_TITULAR,Reserves.TELEFONO_TITULAR,Reserves.EMAIL_TITULAR,Reserves.ID_PAIS_TITULAR,Reserves.LANG_TITULAR,Reserves.QR_CODE,Reserves.CHECK_IN,Reserves.DNI_TITULAR};
         return Reserva;
     }
 
-    public static final String BD_CREATE = "CREATE TABLE " + BD_TAULA + "("
-            + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + ID_RESERVA + " TEXT not null, "
-            + LOCALIZADOR + " TEXT NOT NULL, "
-            + FECHA_RESERVA + " TEXT NOT NULL, "
-            + FECHA_SERVICIO + " TEXT NOT NULL, "
-            + ID_SERVICIO + " TEXT NOT NULL, "
-            + NOMBRE_TITULAR + " TEXT NOT NULL, "
-            + APELLIDO1_TITULAR+ " TEXT NOT NULL, "
-            + APELLIDO2_TITULAR + " TEXT NOT NULL, "
-            + TELEFONO_TITULAR + " TEXT, "
-            + EMAIL_TITULAR + " TEXT, "
-            + ID_PAIS_TITULAR+ " TEXT, "
-            + LANG_TITULAR + " TEXT, "
-            + QR_CODE + " TEXT NOT NULL, "
-            + CHECK_IN+ " TEXT NOT NULL, "
-            + DNI_TITULAR+ " TEXT NOT NULL, "
-            + ID_TRABAJADOR_ASIGNADO+" TEXT NOT NULL );";
+    public static final String BD_CREATE = "CREATE TABLE " + Reserves.BD_TAULA + "("
+            + Reserves._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + Reserves.LOCALIZADOR + " TEXT NOT NULL, "
+            + Reserves.FECHA_RESERVA + " TEXT NOT NULL, "
+            + Reserves.FECHA_SERVICIO + " TEXT NOT NULL, "
+            + Reserves.ID_SERVICIO + " INTEGER NOT NULL, "
+            + Reserves.NOMBRE_TITULAR + " TEXT NOT NULL, "
+            + Reserves.APELLIDO1_TITULAR+ " TEXT NOT NULL, "
+            + Reserves.APELLIDO2_TITULAR + " TEXT NOT NULL, "
+            + Reserves.TELEFONO_TITULAR + " TEXT, "
+            + Reserves.EMAIL_TITULAR + " TEXT, "
+            + Reserves.ID_PAIS_TITULAR+ " TEXT, "
+            + Reserves.LANG_TITULAR + " TEXT, "
+            + Reserves.QR_CODE + " TEXT NOT NULL, "
+            + Reserves.CHECK_IN+ " TEXT NOT NULL, "
+            + Reserves.DNI_TITULAR+ " TEXT NOT NULL);";
 
     private final Context context;
     private AjudaBD ajuda;
@@ -76,40 +57,38 @@ public class DBInterface {
     }
 
     public void Esborra() {
-        bd.execSQL("drop table if exists " + BD_TAULA + " ;");
+        bd.execSQL("drop table if exists " + Reserves.BD_TAULA + " ;");
         bd.execSQL(BD_CREATE);
     }
-    public long InserirReserva(String idReserva, String localizador, String fechaReserva,
+    public long InserirReserva(String localizador, String fechaReserva,
                                String fechaServicio, String idServicio, String nombreTitular,
                                String apellido1Titular, String apellido2Titular, String telefonoTitular,
                                String emailTitular, String idPaisTitular, String langTitular,
-                               String qrCode, String checkIn, String dniTitular, String idTrabajadorAsignado) {
+                               String qrCode, String checkIn, String dniTitular) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(ID_RESERVA,idReserva);
-        initialValues.put(LOCALIZADOR,localizador);
-        initialValues.put(FECHA_RESERVA,fechaReserva);
-        initialValues.put(FECHA_SERVICIO,fechaServicio);
-        initialValues.put(ID_SERVICIO,idServicio);
-        initialValues.put(NOMBRE_TITULAR,nombreTitular);
-        initialValues.put(APELLIDO1_TITULAR,apellido1Titular);
-        initialValues.put(APELLIDO2_TITULAR,apellido2Titular);
-        initialValues.put(TELEFONO_TITULAR,telefonoTitular);
-        initialValues.put(EMAIL_TITULAR,emailTitular);
-        initialValues.put(ID_PAIS_TITULAR,idPaisTitular);
-        initialValues.put(LANG_TITULAR,langTitular);
-        initialValues.put(QR_CODE,qrCode);
-        initialValues.put(CHECK_IN,checkIn);
-        initialValues.put(DNI_TITULAR,dniTitular);
-        initialValues.put(ID_TRABAJADOR_ASIGNADO,idTrabajadorAsignado);
+        initialValues.put(Reserves.LOCALIZADOR,localizador);
+        initialValues.put(Reserves.FECHA_RESERVA,fechaReserva);
+        initialValues.put(Reserves.FECHA_SERVICIO,fechaServicio);
+        initialValues.put(Reserves.ID_SERVICIO,idServicio);
+        initialValues.put(Reserves.NOMBRE_TITULAR,nombreTitular);
+        initialValues.put(Reserves.APELLIDO1_TITULAR,apellido1Titular);
+        initialValues.put(Reserves.APELLIDO2_TITULAR,apellido2Titular);
+        initialValues.put(Reserves.TELEFONO_TITULAR,telefonoTitular);
+        initialValues.put(Reserves.EMAIL_TITULAR,emailTitular);
+        initialValues.put(Reserves.ID_PAIS_TITULAR,idPaisTitular);
+        initialValues.put(Reserves.LANG_TITULAR,langTitular);
+        initialValues.put(Reserves.QR_CODE,qrCode);
+        initialValues.put(Reserves.CHECK_IN,checkIn);
+        initialValues.put(Reserves.DNI_TITULAR,dniTitular);
 
-        return bd.insert(BD_TAULA, null, initialValues);
+        return bd.insert(Reserves.BD_TAULA, null, initialValues);
 
 
     }
     public Cursor RetornaTotesLesReserves (){
         String[] ReservesTotals = arrayReserva();
-        String orderBy=NOMBRE_TITULAR+" ASC";
-        return bd.query(BD_TAULA,ReservesTotals, null, null, null,null,orderBy);
+        String orderBy=Reserves.NOMBRE_TITULAR+" ASC";
+        return bd.query(Reserves.BD_TAULA,ReservesTotals, null, null, null,null,orderBy);
     }
     public Cursor RetornaReservaDNI_DATA(String dni,String data) {
         String[] reserva = arrayReserva();
@@ -124,7 +103,7 @@ public class DBInterface {
     }
     public Cursor RetornaReservaQR(String qr) {
         String[] reserva = arrayReserva();
-        Cursor cursor = bd.query(true, BD_TAULA, reserva,QR_CODE + " like ? ", new String[]{qr}, null, null, null, null);
+        Cursor cursor = bd.query(true, Reserves.BD_TAULA, reserva,Reserves.QR_CODE + " like ? ", new String[]{qr}, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();

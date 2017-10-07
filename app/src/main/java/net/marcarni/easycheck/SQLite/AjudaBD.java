@@ -9,7 +9,6 @@ import android.util.Log;
 import static android.content.ContentValues.TAG;
 import static net.marcarni.easycheck.SQLite.DBInterface.BD_CREATE;
 import static net.marcarni.easycheck.SQLite.DBInterface.BD_NOM;
-import static net.marcarni.easycheck.SQLite.DBInterface.BD_TAULA;
 import static net.marcarni.easycheck.SQLite.DBInterface.VERSIO;
 
 /*****************************************************************************************
@@ -38,7 +37,7 @@ class AjudaBD extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int VersioAntiga, int VersioNova) {
         Log.w(TAG, "Actualitzant Base de dades versió " + VersioAntiga + " a " + VersioNova + ". Destruirà totes les dades");
 
-        db.execSQL("Drop table if exists " + BD_TAULA);
+        db.execSQL("Drop table if exists " + ContracteBD.Reserves.BD_TAULA);
         onCreate(db);
     }
 

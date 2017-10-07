@@ -35,7 +35,7 @@ public class DetallActivity extends MenuAppCompatActivity {
         recyclerView.setAdapter(headerAdapter);
         db = new DBInterface(this);
 
-       // CrearReserva();
+        //CrearReserva();
         consultes();
         verifica();
     }
@@ -83,29 +83,21 @@ public class DetallActivity extends MenuAppCompatActivity {
     public void RetornaReservaDNI(String dni) {
         db.obre();
         Cursor cursor=db.RetornaReservaDNI(dni);
-        if(cursor.moveToFirst()){
-            do {
-                myDataset.add(new Header(cursor.getString(6)+" "+cursor.getString(7)+" "+cursor.getString(8),
-                        "DNI: "+cursor.getString(15)+"  "+"Data Servei:" +cursor.getString(4),
-                        "QR: "+cursor.getString(13)+"   Localització: "+cursor.getString(2)
-                        , cursor.getString(10),cursor.getString(14)));
-
-            }while(cursor.moveToNext());
-        }
+        CursorBD(cursor);
         db.tanca();
     }
 
     public void CrearReserva(){
         db.obre();
         db.Esborra();
-                                  //LOC                   DATA                                                                                      QR            DNI
-        db.InserirReserva("001","123456","16/1/2017","29/10/2017","12345","Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","0","41471860P","01");
-        db.InserirReserva("002","123446","16/3/2017","19/11/2017","12345","Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","45R545WE45","0","38039532Q","01");
-        db.InserirReserva("003","55546","3/3/2017","3/1/2018","12995","Pere","Fernandez","Pujol","22342998","perean@gmail.com","14","French","854HFHH945","0","99392359K","02");
-        db.InserirReserva("004","54446","10/3/2017","23/2/2018","12995","Pamela","Sanchez","Grau","14445998","raimn@gmail.com","14","Spanish","66FHHF45","0","72339884P","02");
-        db.InserirReserva("005","5746","9/3/2017","31/1/2018","12995","Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","0","20841817E","02");
-        db.InserirReserva("006","55666","10/3/2017","19/1/2018","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","97620922K","02");
-        db.InserirReserva("006","55666","10/3/2017","19/11/2017","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","17370830B","02");
+                            //LOC                   DATA                                                                                      QR            DNI
+        db.InserirReserva("123456","16/1/2017","29/10/2017","12345","Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","0","41471860P");
+        db.InserirReserva("123446","16/3/2017","19/11/2017","12345","Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","45R545WE45","0","38039532Q");
+        db.InserirReserva("55546","3/3/2017","3/1/2018","12995","Pere","Fernandez","Pujol","22342998","perean@gmail.com","14","French","854HFHH945","0","99392359K");
+        db.InserirReserva("54446","10/3/2017","23/2/2018","12995","Pamela","Sanchez","Grau","14445998","raimn@gmail.com","14","Spanish","66FHHF45","0","72339884P");
+        db.InserirReserva("5746","9/3/2017","31/1/2018","12995","Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","0","20841817E");
+        db.InserirReserva("55666","10/3/2017","19/1/2018","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","97620922K");
+        db.InserirReserva("55666","10/3/2017","19/11/2017","12995","Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","17370830B");
 
         db.tanca();
     }
@@ -150,10 +142,10 @@ public class DetallActivity extends MenuAppCompatActivity {
     public void CursorBD(Cursor cursor){
         if(cursor.moveToFirst()){
             do {
-                myDataset.add(new Header(cursor.getString(6)+" "+cursor.getString(7)+" "+cursor.getString(8),
-                        "DNI: "+cursor.getString(15)+"  "+"Data Servei: " +cursor.getString(4),
-                        "QR: "+cursor.getString(13)+"   Localització: "+cursor.getString(2)
-                        , cursor.getString(10),cursor.getString(14)));
+                myDataset.add(new Header(cursor.getString(5)+" "+cursor.getString(6)+" "+cursor.getString(7),
+                        "DNI: "+cursor.getString(14)+"  "+"Data Servei: " +cursor.getString(3),
+                        "QR: "+cursor.getString(12)+"   Localització: "+cursor.getString(1)
+                        , cursor.getString(9),cursor.getString(13)));
 
             }while(cursor.moveToNext());
 
