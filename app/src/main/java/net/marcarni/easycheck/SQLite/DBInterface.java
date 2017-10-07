@@ -116,8 +116,30 @@ public class DBInterface {
 
     }
 
+    public long InserirTreballador(String nom, String cognom1, String cognom2, String login, String password, String admin) {
+
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Treballador.NOM,nom);
+        initialValues.put(Treballador.APELLIDO1,cognom1);
+        initialValues.put(Treballador.APELLIDO2,cognom2);
+        initialValues.put(Treballador.LOGIN,login);
+        initialValues.put(Treballador.PASSWORD,password);
+        initialValues.put(Treballador.ADMIN,admin);
+
+        return bd.insert(Treballador.NOM_TAULA, null, initialValues);
+    }
+
+    public long InserirServei(String descripcio, int idTreballador) {
+
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(ContracteBD.Serveis.DESCRIPCIO,descripcio);
+        initialValues.put(ContracteBD.Serveis.ID_TREBALLADOR,idTreballador);
+
+        return bd.insert( ContracteBD.Serveis.NOM_TAULA, null, initialValues);
+    }
+
     public long InserirReserva(String localizador, String fechaReserva,
-                               String fechaServicio, String idServicio, String nombreTitular,
+                               String fechaServicio, int idServicio, String nombreTitular,
                                String apellido1Titular, String apellido2Titular, String telefonoTitular,
                                String emailTitular, String idPaisTitular, String langTitular,
                                String qrCode, String checkIn, String dniTitular) {
@@ -139,6 +161,8 @@ public class DBInterface {
 
         return bd.insert(Reserves.NOM_TAULA, null, initialValues);
     }
+
+
 
     public void proba (){
         Log.d("proba","Conectat!");
