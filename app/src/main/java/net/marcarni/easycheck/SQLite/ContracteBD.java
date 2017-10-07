@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 public class ContracteBD {
 
     public static final class Reserves implements BaseColumns {
-        public static final String BD_TAULA = "Reserva";
+        public static final String NOM_TAULA = "Reserva";
         public static final String LOCALIZADOR = "localizador";
         public static final String FECHA_RESERVA = "fechaReserva";
         public static final String FECHA_SERVICIO = "fechaServicio";
@@ -27,12 +27,19 @@ public class ContracteBD {
     }
 
     public static final class Treballador implements BaseColumns {
+        public static final String NOM_TAULA = "Treballador";
         public static final String NOM = "nom";
         public static final String APELLIDO1 = "apellido1";
         public static final String APELLIDO2 = "apellido2";
         public static final String ADMIN = "esAdmin";
         public static final String LOGIN = "login";
         public static final String PASSWORD = "password";
+    }
+
+    public static final class Serveis implements BaseColumns {
+        public static final String NOM_TAULA = "Serveis";
+        public static final String DESCRIPCIO = "descripcio";
+        public static final String ID_TREBALLADOR = "idTreballador";
     }
 
 
