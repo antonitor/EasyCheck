@@ -5,7 +5,10 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,12 +44,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ((MenuItem)findViewById(R.id.seleccionar_data)).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        ((ActionMenuItemView)findViewById(R.id.seleccionar_data)).setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
+            public void onClick(View view) {
                 Intent intent = new Intent (ConsultaServeisActivity.this,CalendarActivity.class);
                 startActivityForResult(intent, DATE_PICKER_REQUEST);
-                return true;
             }
         });
         if (spinnerTreballadors != null) {
@@ -69,6 +71,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             {
                 //TODO 2: Recollir la data seleccionada a l'activitat Calendar i actualitzar el recycler aquí
                 String data = intent.getStringExtra("DATA");
+                Log.d("Data seleccionada: ", data);
             }
         }
     }
