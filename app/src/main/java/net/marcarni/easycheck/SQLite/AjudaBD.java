@@ -31,7 +31,11 @@ class AjudaBD extends SQLiteOpenHelper {
         super(con, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //crea una nova base de dades.
+    /**
+     * Crea les taules a la basse de dades, l'ordre és important, per tal de no crear
+     * conflictes amb les claus foranes: primer Treballador, després Serveis i per últim Reserves
+     * @param db
+     */
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(BD_CREATE_TREBALLADOR);
         db.execSQL(BD_CREATE_SERVEIS);
@@ -72,7 +76,11 @@ class AjudaBD extends SQLiteOpenHelper {
             + Treballador.LOGIN + " TEXT NOT NULL, "
             + Treballador.PASSWORD + " TEXT NOT NULL);";
 
-    //El que fa és eliminar-la (fer un drop de la taula) i tornar-la a crear.
+    /**
+     * Elimina les taules i les torna a crear.
+     * L'ordre és important, primer Reserves, després Serveis i per últim Treballador,
+     * per tal de no crear un conflicte amb les claus foranes.
+     */
     public void onUpgrade(SQLiteDatabase db, int VersioAntiga, int VersioNova) {
         Log.w(TAG, "Actualitzant Base de dades versió " + VersioAntiga + " a " + VersioNova + ". Destruirà totes les dades");
         db.execSQL("Drop table if exists " + Reserves.NOM_TAULA);

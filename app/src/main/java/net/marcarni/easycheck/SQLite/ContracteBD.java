@@ -8,6 +8,7 @@ import android.provider.BaseColumns;
 
 public class ContracteBD {
 
+    //BaseColumns és una interficie que afegeix la String _id i _count
     public static final class Reserves implements BaseColumns {
         public static final String NOM_TAULA = "Reserva";
         public static final String LOCALIZADOR = "localizador";
