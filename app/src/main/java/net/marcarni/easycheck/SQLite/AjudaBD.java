@@ -29,6 +29,8 @@ class AjudaBD extends SQLiteOpenHelper {
 
     //crea una nova base de dades.
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(BD_CREATE_TREBALLADOR);
+        db.execSQL(BD_CREATE_SERVEIS);
         db.execSQL(BD_CREATE_RESERVES);
     }
 
@@ -69,8 +71,9 @@ class AjudaBD extends SQLiteOpenHelper {
     //El que fa és eliminar-la (fer un drop de la taula) i tornar-la a crear.
     public void onUpgrade(SQLiteDatabase db, int VersioAntiga, int VersioNova) {
         Log.w(TAG, "Actualitzant Base de dades versió " + VersioAntiga + " a " + VersioNova + ". Destruirà totes les dades");
-
         db.execSQL("Drop table if exists " + ContracteBD.Reserves.NOM_TAULA);
+        db.execSQL("Drop table if exists " + ContracteBD.Serveis.NOM_TAULA);
+        db.execSQL("Drop table if exists " + ContracteBD.Treballador.NOM_TAULA);
         onCreate(db);
     }
 
