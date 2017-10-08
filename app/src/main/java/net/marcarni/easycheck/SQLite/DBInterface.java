@@ -156,7 +156,7 @@ public class DBInterface {
 
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////    EXEMPLES DE TREBALLADORS   //////////////////////////////////////////////////////////////////////
+    ////////////////////   TREBALLADORS   //////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public long InserirTreballador(String nom, String cognom1, String cognom2, String login, String password, String admin) {
 
@@ -170,8 +170,25 @@ public class DBInterface {
 
         return bd.insert(Treballador.NOM_TAULA, null, initialValues);
     }
+
+    // array amb tots els atributs de la classe treballador
+    public String[] arrayTreballadors() {
+        String[] Treballadors = {Treballador._ID,Treballador.NOM,Treballador.APELLIDO1,Treballador.APELLIDO2,Treballador.LOGIN,
+                Treballador.PASSWORD,Treballador.ADMIN};
+        return Treballadors;
+    }
+
+    //Query que retorna tots els treballadors
+    public Cursor RetornaTotsElsTreballadors (){
+
+        String[]TreballadorsTotals = arrayTreballadors();
+
+       return bd.query(Treballador.NOM_TAULA,arrayTreballadors(), null, null, null,null,null);
+
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////    EXEMPLES DE SERVEIS   //////////////////////////////////////////////////////////////////////
+    ////////////////////    SERVEIS   //////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String[] arrayServeis() {
@@ -189,14 +206,27 @@ public class DBInterface {
     }
 
     public Cursor RetornaTotsElsServeis (){
+        String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+", s."+Serveis.DESCRIPCIO+
+                " FROM "+Treballador.NOM_TAULA+" t, "+Serveis.NOM_TAULA+" s  WHERE t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+" ;";
 
         String[] ServeisTotals = arrayServeis();
+        return bd.rawQuery(consultaSQL,null);
+        // return bd.query(Serveis.NOM_TAULA,ServeisTotals, null, null, null,null,null);
 
-        return bd.query(Serveis.NOM_TAULA,ServeisTotals, null, null, null,null,null);
+    }
+    public Cursor RetornaServei_Treballador (String treb){
+        String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+", s."+Serveis.DESCRIPCIO+
+                " FROM "+Treballador.NOM_TAULA+" t, "+Serveis.NOM_TAULA+
+                " s  WHERE t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+" AND t."+Treballador._ID+"= '?';";
+
+        String[] ServeisTotals = arrayServeis();
+        return bd.rawQuery(consultaSQL,new String[]{String.valueOf(treb)});
+        // return bd.query(Serveis.NOM_TAULA,ServeisTotals, null, null, null,null,null);
 
     }
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void proba (){
         Log.d("proba","Conectat!");
         Log.d("proba",Boolean.toString(bd.isOpen()));

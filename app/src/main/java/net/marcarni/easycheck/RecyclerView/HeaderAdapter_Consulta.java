@@ -33,8 +33,6 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.nomTreballador.setText(mDataset.get(position).getNomTreballador());
-        //holder.cognom1Treballador.setText(mDataset.get(position).getCognom1Treballador());
-        //holder.cognom2Treballador.setText(mDataset.get(position).getCognom2Treballador());
         holder.descripcioServei.setText(mDataset.get(position).getDescripcioServei());
 
     }
@@ -51,16 +49,12 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView  nomTreballador;
-        //TextView cognom1Treballador;
-        //TextView cognom2Treballador;
         TextView descripcioServei;
         View v;
 
         public ViewHolder(View v) {
             super(v);
             nomTreballador=(TextView)v.findViewById(R.id.nomTreballador);
-            //cognom1Treballador=(TextView)v.findViewById(R.id.cognom1Treballador);
-            //cognom2Treballador=(TextView)v.findViewById(R.id.cognom2Treballador);
             descripcioServei=(TextView)v.findViewById(R.id.descripcio_servei);
         }
 

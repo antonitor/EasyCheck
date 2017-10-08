@@ -171,7 +171,7 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.Esborra();
 
         db.InserirTreballador("Toni","Torres","Mari","jacdemanec","xxx","1");
-        db.InserirTreballador("Maria","Remedios","Ortega","mari","xxx","1");
+        db.InserirTreballador("Maria","Ortega","Cobo","mari","xxx","1");
         db.InserirTreballador("Carlos Alberto","Castro","Cañabate","carlos","xxx","1");
 
 

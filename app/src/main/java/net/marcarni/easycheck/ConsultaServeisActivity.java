@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.HeaderAdapter_Consulta;
 import net.marcarni.easycheck.RecyclerView.Header_Consulta;
@@ -72,24 +71,32 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         headerAdapter_consulta=new HeaderAdapter_Consulta(myDataset);
         recyclerView.setAdapter(headerAdapter_consulta);
         db=new DBInterface(this);
-
-        RetornaServeis();
+      RetornaServeis();
     }
     public void CursorBD(Cursor cursor) {
+        if(cursor!=null && cursor.getCount() > 0)
+        {
         if (cursor.moveToFirst()) {
             do {
-                myDataset.add(new Header_Consulta("Treballador: "+cursor.getString(1),"Servei: "+ cursor.getString(2)));
+                myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
+                                                "Servei:    "+ cursor.getString(3)));
+
             } while (cursor.moveToNext());
 
         }
-    }
+    }}
     public void RetornaServeis() {
         db.obre();
         Cursor cursor = db.RetornaTotsElsServeis();
         CursorBD(cursor);
         db.tanca();
     }
-
+    public void RetornaServeidelTreballador(String id){
+        db.obre();
+        Cursor cursor=db.RetornaServei_Treballador(id);
+        CursorBD(cursor);
+        db.tanca();
+    }
 
 
     /**
@@ -127,6 +134,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         matrixCursor.addRow(new Object[] { 3, "Carlos"});
         return matrixCursor;
     }
+
+
+
 }
 
 /**
@@ -137,7 +147,8 @@ class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
         //TODO 3: Recarregar aquí el RecyclerView segons el treballador seleccionat (el paràmetre id correspón a la columna _id de treballadors)
-        Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
+
+      //  Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
     }
 
     @Override
