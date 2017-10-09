@@ -39,25 +39,25 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         editToolbar.inflateMenu(R.menu.toolbar_menu);
         Spinner spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
         // Afegeixo Recycler per instanciar
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView_consulta);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
         //TODO 1: Cursor amb dades test, s'ha d'esborrar el métode getFakeCursor y extraure-les de la bbdd
 
-       // Cursor cursorTest = db.RetornaTotsElsTreballadors();
-        Cursor cursorTest =  getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
-        android.widget.SimpleCursorAdapter  adapter = new android.widget.SimpleCursorAdapter(this,
+        // Cursor cursorTest = db.RetornaTotsElsTreballadors();
+        Cursor cursorTest = getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
+        android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 cursorTest,
-                new String[] {"treballador"}, //Columna del cursor que volem agafar
-                new int[] {android.R.id.text1},0);
+                new String[]{"treballador"}, //Columna del cursor que volem agafar
+                new int[]{android.R.id.text1}, 0);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ((ActionMenuItemView)findViewById(R.id.seleccionar_data)).setOnClickListener(new View.OnClickListener() {
+        ((ActionMenuItemView) findViewById(R.id.seleccionar_data)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (ConsultaServeisActivity.this,CalendarActivity.class);
+                Intent intent = new Intent(ConsultaServeisActivity.this, CalendarActivity.class);
                 startActivityForResult(intent, DATE_PICKER_REQUEST);
             }
         });
@@ -67,14 +67,15 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         }
 
         // Afegim Recycler
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        myDataset=new ArrayList<>();
-        headerAdapter_consulta=new HeaderAdapter_Consulta(myDataset);
+        myDataset = new ArrayList<>();
+        headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
         recyclerView.setAdapter(headerAdapter_consulta);
-        db=new DBInterface(this);
-      RetornaServeis();
+        db = new DBInterface(this);
+        RetornaServeidelTreballador(2);
     }
+
     public void CursorBD(Cursor cursor) {
         if(cursor!=null && cursor.getCount() > 0)
         {
@@ -93,10 +94,19 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         CursorBD(cursor);
         db.tanca();
     }
-    public void RetornaServeidelTreballador(String id){
+    public void RetornaServeidelTreballador(int id){
         db.obre();
         Cursor cursor=db.RetornaServei_Treballador(id);
-        CursorBD(cursor);
+            if (cursor.moveToFirst()) {
+                    do {
+                        myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
+                                "Servei:    "+ cursor.getString(3)
+                                ,cursor.getString(4)));
+
+                    } while (cursor.moveToNext());
+
+
+            }
         db.tanca();
     }
 
@@ -158,6 +168,5 @@ class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }
