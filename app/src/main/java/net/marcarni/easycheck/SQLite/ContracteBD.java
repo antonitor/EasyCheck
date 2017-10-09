@@ -20,8 +20,6 @@ public class ContracteBD {
         public static final String APELLIDO2_TITULAR = "apellido2Titular";
         public static final String TELEFONO_TITULAR = "telefonoTitular";
         public static final String EMAIL_TITULAR = "emailTitular";
-        public static final String ID_PAIS_TITULAR = "idPaisTitular";
-        public static final String LANG_TITULAR = "langTitular";
         public static final String QR_CODE = "qrCode";
         public static final String CHECK_IN = "checkIn";
         public static final String DNI_TITULAR = "dniTitular";

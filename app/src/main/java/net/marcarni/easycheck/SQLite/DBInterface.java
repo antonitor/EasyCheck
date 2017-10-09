@@ -26,8 +26,6 @@ public class DBInterface {
                 Reserves.APELLIDO2_TITULAR,
                 Reserves.TELEFONO_TITULAR,
                 Reserves.EMAIL_TITULAR,
-                Reserves.ID_PAIS_TITULAR,
-                Reserves.LANG_TITULAR,
                 Reserves.QR_CODE,
                 Reserves.CHECK_IN,
                 Reserves.DNI_TITULAR};
@@ -70,7 +68,7 @@ public class DBInterface {
         String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
-        cursor = bd.rawQuery("select * from Reserva where dniTitular = ? and fechaServicio =?", new String[]{dni, data});
+        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.DNI_TITULAR + " = ? and " + Reserves.FECHA_SERVICIO + " =?", new String[]{dni, data});
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -91,7 +89,7 @@ public class DBInterface {
     public Cursor RetornaReservaLocalitzador(String loc) {
         String[] reserva = arrayReserva();
         Cursor cursor;
-        cursor = bd.rawQuery("select * from Reserva where localizador = ? ", new String[]{loc});
+        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.LOCALIZADOR + " = ? ", new String[]{loc});
         //Cursor cursor = bd.query(true, BD_TAULA, reserva,LOCALIZADOR+ " like ? ", new String[]{loc}, null, null, null, null);
 
         if (cursor != null) {
@@ -104,7 +102,7 @@ public class DBInterface {
         String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
-        cursor = bd.rawQuery("select * from Reserva where dniTitular = ? ", new String[]{dni});
+        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.DNI_TITULAR + " = ? ", new String[]{dni});
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -115,8 +113,7 @@ public class DBInterface {
     public long InserirReserva(String localizador, String fechaReserva,
                                String fechaServicio, int idServicio, String nombreTitular,
                                String apellido1Titular, String apellido2Titular, String telefonoTitular,
-                               String emailTitular, String idPaisTitular, String langTitular,
-                               String qrCode, String checkIn, String dniTitular) {
+                               String emailTitular, String qrCode, String checkIn, String dniTitular) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(Reserves.LOCALIZADOR, localizador);
         initialValues.put(Reserves.FECHA_RESERVA, fechaReserva);
@@ -127,8 +124,6 @@ public class DBInterface {
         initialValues.put(Reserves.APELLIDO2_TITULAR, apellido2Titular);
         initialValues.put(Reserves.TELEFONO_TITULAR, telefonoTitular);
         initialValues.put(Reserves.EMAIL_TITULAR, emailTitular);
-        initialValues.put(Reserves.ID_PAIS_TITULAR, idPaisTitular);
-        initialValues.put(Reserves.LANG_TITULAR, langTitular);
         initialValues.put(Reserves.QR_CODE, qrCode);
         initialValues.put(Reserves.CHECK_IN, checkIn);
         initialValues.put(Reserves.DNI_TITULAR, dniTitular);
@@ -140,7 +135,7 @@ public class DBInterface {
         String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
-        cursor = bd.rawQuery("select * from Reserva where fechaServicio = ? ", new String[]{data});
+        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.FECHA_SERVICIO + " = ? ", new String[]{data});
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -154,10 +149,10 @@ public class DBInterface {
         //bd.rawQuery("update Reserva set checkIn = '"+checkIn+"' where dniTitular = ? ",new String[]{dni});
         Log.d("proba", Boolean.toString(bd.isOpen()));
         ContentValues valores = new ContentValues();
-        valores.put("checkIn", "1");
-        String where = "dniTitular like ? ";
+        valores.put(Reserves.CHECK_IN, "1");
+        String where = Reserves.DNI_TITULAR + " like ? ";
         String[] selection = {dni};
-        bd.update("Reserva", valores, where, selection);
+        bd.update(Reserves.NOM_TAULA, valores, where, selection);
         Log.d("proba", "Actualitzat");
 
     }
@@ -249,7 +244,7 @@ public class DBInterface {
 
     public Cursor RetornaReservaId_Reserva(String id_reserva) {
         Cursor cursor;
-        cursor = bd.rawQuery("select * from Reserva where idServicio = ? ", new String[]{id_reserva});
+        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.ID_SERVICIO + " = ? ", new String[]{id_reserva});
         if (cursor != null) {
             cursor.moveToFirst();
         }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.Header;
 import net.marcarni.easycheck.RecyclerView.HeaderAdapter;
+import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.DBInterface;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 
@@ -135,34 +136,14 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.tanca();
     }
 
-    /**
-     * En caso de cambiar la configuración del cursor, modificar este comentario:
-     *
-     * 0: _id
-     * 1: localidador
-     * 2: fechaReserva
-     * 3: fechaServicio
-     * 4: idServicio
-     * 5: nombreTitular
-     * 6: apellido1Titular
-     * 7: apellido2Titular
-     * 8: telefonoTitular
-     * 9: emailTitular
-     * 10: idPaistitular
-     * 11: langTitular
-     * 12: qrCode
-     * 13: checkIn
-     * 14: dniTitular
-     *
-     * @param cursor
-     */
+
     public void CursorBD(Cursor cursor){
         if(cursor.moveToFirst()){
             do {
-                myDataset.add(new Header(cursor.getString(5)+" "+cursor.getString(6)+" "+cursor.getString(7),
-                        "DNI: "+cursor.getString(14)+"  "+"Data Servei: " +cursor.getString(3),
-                        "QR: "+cursor.getString(12)+"   Localització: "+cursor.getString(1)
-                        , cursor.getString(9),cursor.getString(13)));
+                myDataset.add(new Header(cursor.getString(cursor.getColumnIndex(Reserves.NOMBRE_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(Reserves.APELLIDO1_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(Reserves.APELLIDO2_TITULAR)),
+                        "DNI: "+cursor.getString(cursor.getColumnIndex(Reserves.DNI_TITULAR))+"  "+"Data Servei: " +cursor.getString(cursor.getColumnIndex(Reserves.FECHA_SERVICIO)),
+                        "QR: "+cursor.getString(cursor.getColumnIndex(Reserves.QR_CODE))+"   Localització: "+cursor.getString(cursor.getColumnIndex(Reserves.LOCALIZADOR))
+                        , cursor.getString(cursor.getColumnIndex(Reserves.EMAIL_TITULAR)),cursor.getString(cursor.getColumnIndex(Reserves.CHECK_IN))));
 
             }while(cursor.moveToNext());
 
@@ -192,14 +173,14 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.InserirServei("Sabadell - Girona", "3");
 
                          //LOC   DATA reserva data servei idservei                                                                         QR            DNI
-        db.InserirReserva("123456","16/1/2017","29/10/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","0","41471860P");
-        db.InserirReserva("123446","16/3/2017","19/11/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","45R545WE45","0","38039532Q");
-        db.InserirReserva("55546","3/3/2017","3/1/2018",2,"Pere","Fernandez","Pujol","22342998","perean@gmail.com","14","French","854HFHH945","0","99392359K");
-        db.InserirReserva("54446","10/3/2017","23/2/2018",2,"Pamela","Sanchez","Grau","14445998","raimn@gmail.com","14","Spanish","66FHHF45","0","72339884P");
-        db.InserirReserva("5746","9/3/2017","31/1/2018",3,"Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","0","20841817E");
-        db.InserirReserva("55666","10/3/2017","19/1/2018",3,"Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","97620922K");
-        db.InserirReserva("55669","10/3/2017","19/11/2017",3,"Maria","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","17370830B");
-        db.InserirReserva("556665","10/3/2017","19/11/2017",7,"Nuria","Smith","Delon","16789998","iuoean@gmail.com","13","Spanish","ABCDE","0","47169530A");
+        db.InserirReserva("123456","16/1/2017","29/10/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","45R545WE45","0","41471860P");
+        db.InserirReserva("123446","16/3/2017","19/11/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","45R545WE45","0","38039532Q");
+        db.InserirReserva("55546","3/3/2017","3/1/2018",2,"Pere","Fernandez","Pujol","22342998","perean@gmail.com","854HFHH945","0","99392359K");
+        db.InserirReserva("54446","10/3/2017","23/2/2018",2,"Pamela","Sanchez","Grau","14445998","raimn@gmail.com","66FHHF45","0","72339884P");
+        db.InserirReserva("5746","9/3/2017","31/1/2018",3,"Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","867FHH9945","0","20841817E");
+        db.InserirReserva("55666","10/3/2017","19/1/2018",3,"Enma","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","97620922K");
+        db.InserirReserva("55669","10/3/2017","19/11/2017",3,"Maria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","17370830B");
+        db.InserirReserva("556665","10/3/2017","19/11/2017",7,"Nuria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","47169530A");
         db.tanca();
     }
 }

@@ -53,8 +53,6 @@ class AjudaBD extends SQLiteOpenHelper {
             + Reserves.APELLIDO2_TITULAR + " TEXT NOT NULL, "
             + Reserves.TELEFONO_TITULAR + " TEXT, "
             + Reserves.EMAIL_TITULAR + " TEXT, "
-            + Reserves.ID_PAIS_TITULAR+ " TEXT, "
-            + Reserves.LANG_TITULAR + " TEXT, "
             + Reserves.QR_CODE + " TEXT NOT NULL, "
             + Reserves.CHECK_IN+ " TEXT NOT NULL, "
             + Reserves.DNI_TITULAR+ " TEXT NOT NULL, "
