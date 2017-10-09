@@ -60,35 +60,38 @@ public class DBInterface {
         ajuda.onCreate(bd);
     }
 
-    public Cursor RetornaTotesLesReserves (){
+    public Cursor RetornaTotesLesReserves() {
         String[] ReservesTotals = arrayReserva();
-        String orderBy=Reserves.NOMBRE_TITULAR+" ASC";
-        return bd.query(Reserves.NOM_TAULA,ReservesTotals, null, null, null,null,orderBy);
+        String orderBy = Reserves.NOMBRE_TITULAR + " ASC";
+        return bd.query(Reserves.NOM_TAULA, ReservesTotals, null, null, null, null, orderBy);
     }
-    public Cursor RetornaReservaDNI_DATA(String dni,String data) {
+
+    public Cursor RetornaReservaDNI_DATA(String dni, String data) {
         String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
-        cursor=bd.rawQuery("select * from Reserva where dniTitular = ? and fechaServicio =?",new String[]{dni,data});
+        cursor = bd.rawQuery("select * from Reserva where dniTitular = ? and fechaServicio =?", new String[]{dni, data});
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
         return cursor;
     }
+
     public Cursor RetornaReservaQR(String qr) {
         String[] reserva = arrayReserva();
-        Cursor cursor = bd.query(true, Reserves.NOM_TAULA, reserva,Reserves.QR_CODE + " like ? ", new String[]{qr}, null, null, null, null);
+        Cursor cursor = bd.query(true, Reserves.NOM_TAULA, reserva, Reserves.QR_CODE + " like ? ", new String[]{qr}, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
         }
         return cursor;
     }
+
     public Cursor RetornaReservaLocalitzador(String loc) {
         String[] reserva = arrayReserva();
         Cursor cursor;
-        cursor=bd.rawQuery("select * from Reserva where localizador = ? ",new String[]{loc});
+        cursor = bd.rawQuery("select * from Reserva where localizador = ? ", new String[]{loc});
         //Cursor cursor = bd.query(true, BD_TAULA, reserva,LOCALIZADOR+ " like ? ", new String[]{loc}, null, null, null, null);
 
         if (cursor != null) {
@@ -96,37 +99,39 @@ public class DBInterface {
         }
         return cursor;
     }
+
     public Cursor RetornaReservaDNI(String dni) {
         String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
-        cursor=bd.rawQuery("select * from Reserva where dniTitular = ? ",new String[]{dni});
+        cursor = bd.rawQuery("select * from Reserva where dniTitular = ? ", new String[]{dni});
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
         return cursor;
     }
+
     public long InserirReserva(String localizador, String fechaReserva,
                                String fechaServicio, int idServicio, String nombreTitular,
                                String apellido1Titular, String apellido2Titular, String telefonoTitular,
                                String emailTitular, String idPaisTitular, String langTitular,
                                String qrCode, String checkIn, String dniTitular) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(Reserves.LOCALIZADOR,localizador);
-        initialValues.put(Reserves.FECHA_RESERVA,fechaReserva);
-        initialValues.put(Reserves.FECHA_SERVICIO,fechaServicio);
-        initialValues.put(Reserves.ID_SERVICIO,idServicio);
-        initialValues.put(Reserves.NOMBRE_TITULAR,nombreTitular);
-        initialValues.put(Reserves.APELLIDO1_TITULAR,apellido1Titular);
-        initialValues.put(Reserves.APELLIDO2_TITULAR,apellido2Titular);
-        initialValues.put(Reserves.TELEFONO_TITULAR,telefonoTitular);
-        initialValues.put(Reserves.EMAIL_TITULAR,emailTitular);
-        initialValues.put(Reserves.ID_PAIS_TITULAR,idPaisTitular);
-        initialValues.put(Reserves.LANG_TITULAR,langTitular);
-        initialValues.put(Reserves.QR_CODE,qrCode);
-        initialValues.put(Reserves.CHECK_IN,checkIn);
-        initialValues.put(Reserves.DNI_TITULAR,dniTitular);
+        initialValues.put(Reserves.LOCALIZADOR, localizador);
+        initialValues.put(Reserves.FECHA_RESERVA, fechaReserva);
+        initialValues.put(Reserves.FECHA_SERVICIO, fechaServicio);
+        initialValues.put(Reserves.ID_SERVICIO, idServicio);
+        initialValues.put(Reserves.NOMBRE_TITULAR, nombreTitular);
+        initialValues.put(Reserves.APELLIDO1_TITULAR, apellido1Titular);
+        initialValues.put(Reserves.APELLIDO2_TITULAR, apellido2Titular);
+        initialValues.put(Reserves.TELEFONO_TITULAR, telefonoTitular);
+        initialValues.put(Reserves.EMAIL_TITULAR, emailTitular);
+        initialValues.put(Reserves.ID_PAIS_TITULAR, idPaisTitular);
+        initialValues.put(Reserves.LANG_TITULAR, langTitular);
+        initialValues.put(Reserves.QR_CODE, qrCode);
+        initialValues.put(Reserves.CHECK_IN, checkIn);
+        initialValues.put(Reserves.DNI_TITULAR, dniTitular);
 
         return bd.insert(Reserves.NOM_TAULA, null, initialValues);
     }
@@ -135,55 +140,57 @@ public class DBInterface {
         String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
-        cursor=bd.rawQuery("select * from Reserva where fechaServicio = ? ",new String[]{data});
+        cursor = bd.rawQuery("select * from Reserva where fechaServicio = ? ", new String[]{data});
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
         return cursor;
     }
-    public void ActalitzaCheckInReserva (String dni){
+
+    public void ActalitzaCheckInReserva(String dni) {
 
         //String checkIn="1";
         //bd.rawQuery("update Reserva set checkIn = '"+checkIn+"' where dniTitular = ? ",new String[]{dni});
-        Log.d("proba",Boolean.toString(bd.isOpen()));
+        Log.d("proba", Boolean.toString(bd.isOpen()));
         ContentValues valores = new ContentValues();
-        valores.put("checkIn","1");
-        String where ="dniTitular like ? ";
-        String[] selection={dni};
-        bd.update("Reserva", valores,where, selection);
-        Log.d("proba","Actualitzat");
+        valores.put("checkIn", "1");
+        String where = "dniTitular like ? ";
+        String[] selection = {dni};
+        bd.update("Reserva", valores, where, selection);
+        Log.d("proba", "Actualitzat");
 
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////   TREBALLADORS   //////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public long InserirTreballador(String nom, String cognom1, String cognom2, String login, String password, String admin) {
 
         ContentValues initialValues = new ContentValues();
-        initialValues.put(Treballador.NOM,nom);
-        initialValues.put(Treballador.APELLIDO1,cognom1);
-        initialValues.put(Treballador.APELLIDO2,cognom2);
-        initialValues.put(Treballador.LOGIN,login);
-        initialValues.put(Treballador.PASSWORD,password);
-        initialValues.put(Treballador.ADMIN,admin);
+        initialValues.put(Treballador.NOM, nom);
+        initialValues.put(Treballador.APELLIDO1, cognom1);
+        initialValues.put(Treballador.APELLIDO2, cognom2);
+        initialValues.put(Treballador.LOGIN, login);
+        initialValues.put(Treballador.PASSWORD, password);
+        initialValues.put(Treballador.ADMIN, admin);
 
         return bd.insert(Treballador.NOM_TAULA, null, initialValues);
     }
 
     // array amb tots els atributs de la classe treballador
     public String[] arrayTreballadors() {
-        String[] Treballadors = {Treballador._ID,Treballador.NOM,Treballador.APELLIDO1,Treballador.APELLIDO2,Treballador.LOGIN,
-                Treballador.PASSWORD,Treballador.ADMIN};
+        String[] Treballadors = {Treballador._ID, Treballador.NOM, Treballador.APELLIDO1, Treballador.APELLIDO2, Treballador.LOGIN,
+                Treballador.PASSWORD, Treballador.ADMIN};
         return Treballadors;
     }
 
     //Query que retorna tots els treballadors
-    public Cursor RetornaTotsElsTreballadors (){
+    public Cursor RetornaTotsElsTreballadors() {
 
-        String[]TreballadorsTotals = arrayTreballadors();
+        String[] TreballadorsTotals = arrayTreballadors();
 
-       return bd.query(Treballador.NOM_TAULA,arrayTreballadors(), null, null, null,null,null);
+        return bd.query(Treballador.NOM_TAULA, arrayTreballadors(), null, null, null, null, null);
 
     }
 
@@ -192,51 +199,58 @@ public class DBInterface {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String[] arrayServeis() {
-        String[] Servei = {Serveis._ID,Serveis.ID_TREBALLADOR,Serveis.DESCRIPCIO};
+        String[] Servei = {Serveis._ID, Serveis.ID_TREBALLADOR, Serveis.DESCRIPCIO};
         return Servei;
     }
 
     public long InserirServei(String descripcio, String idTreballador) {
 
         ContentValues initialValues = new ContentValues();
-        initialValues.put(Serveis.DESCRIPCIO,descripcio);
-        initialValues.put(Serveis.ID_TREBALLADOR,idTreballador);
+        initialValues.put(Serveis.DESCRIPCIO, descripcio);
+        initialValues.put(Serveis.ID_TREBALLADOR, idTreballador);
 
-        return bd.insert( Serveis.NOM_TAULA, null, initialValues);
+        return bd.insert(Serveis.NOM_TAULA, null, initialValues);
     }
 
-    public Cursor RetornaTotsElsServeis (){
-       /* String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+", s."+Serveis.DESCRIPCIO+", r."+Reserves.ID_SERVICIO+
-                " FROM "+Treballador.NOM_TAULA+" t, "+Serveis.NOM_TAULA+" s, "+Reserves.NOM_TAULA+" r  " +
-                " WHERE t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+" AND s."+Serveis._ID +" = r."+Reserves.ID_SERVICIO+";";
-*/      String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+
-                ", s."+Serveis.DESCRIPCIO+", r."+Reserves.ID_SERVICIO+
-                " FROM "+Serveis.NOM_TAULA+" s " +
-                " JOIN "+Treballador.NOM_TAULA+" t ON t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+
-                " JOIN "+Reserves.NOM_TAULA+" r  ON s."+Serveis._ID +" = r."+Reserves.ID_SERVICIO+
+    public Cursor RetornaTotsElsServeis() {
+String consultaSQL = "Select t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
+                ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVICIO +
+                " FROM " + Serveis.NOM_TAULA + " s " +
+                " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
+                " JOIN " + Reserves.NOM_TAULA + " r  ON s." + Serveis._ID + " = r." + Reserves.ID_SERVICIO +
                 " GROUP BY 1,2,3";
 
         String[] ServeisTotals = arrayServeis();
-        return bd.rawQuery(consultaSQL,null);
-        // return bd.query(Serveis.NOM_TAULA,ServeisTotals, null, null, null,null,null);
-
-    }
-    public Cursor RetornaServei_Treballador (int id){
-
-        String[] args=new String[]{String.valueOf(id)};
-        String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+
-                ", s."+Serveis.DESCRIPCIO+", t."+Treballador.NOM+
-                " FROM "+Treballador.NOM_TAULA+" t, "+Serveis.NOM_TAULA+
-                " s  WHERE t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+"" + " AND t."+Treballador._ID+" = ?;";
-
-
-        return bd.rawQuery(consultaSQL,args);
+        return bd.rawQuery(consultaSQL, null);
 
 
     }
-    public Cursor RetornaReservaId_Reserva (String id_reserva){
+
+    public Cursor RetornaServei_Treballador(int id) {
+
+        String[] args = new String[]{String.valueOf(id)};
+      /*  String consultaSQL = "Select t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
+                ", s." + Serveis.DESCRIPCIO + ", t." + Treballador.NOM +
+                " FROM " + Treballador.NOM_TAULA + " t, " + Serveis.NOM_TAULA +
+                " s  WHERE t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR + "" + " AND t." + Treballador._ID + " = ?;";
+*/
+      String consultaSQL= "Select t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
+              ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVICIO +
+              " FROM " + Serveis.NOM_TAULA + " s " +
+              " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
+              " and t."+Treballador._ID+"= ?" +
+              " join " +  Reserves.NOM_TAULA  +" r  on s."+ Serveis._ID+" = r."+Reserves.ID_SERVICIO +
+              " group by  1,2,3;";
+
+        return bd.rawQuery(consultaSQL, args);
+
+
+    }
+
+
+    public Cursor RetornaReservaId_Reserva(String id_reserva) {
         Cursor cursor;
-        cursor=bd.rawQuery("select * from Reserva where idServicio = ? ",new String[]{id_reserva});
+        cursor = bd.rawQuery("select * from Reserva where idServicio = ? ", new String[]{id_reserva});
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -244,11 +258,11 @@ public class DBInterface {
         return cursor;
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void proba (){
-        Log.d("proba","Conectat!");
-        Log.d("proba",Boolean.toString(bd.isOpen()));
+    public void proba() {
+        Log.d("proba", "Conectat!");
+        Log.d("proba", Boolean.toString(bd.isOpen()));
     }
 
 
