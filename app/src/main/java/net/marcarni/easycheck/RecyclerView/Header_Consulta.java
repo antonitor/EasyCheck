@@ -1,16 +1,14 @@
 package net.marcarni.easycheck.RecyclerView;
 
-/**
- * Created by Maria on 07/10/2017.
- */
-
 public class Header_Consulta {
     public String nomTreballador;
     public  String descripcioServei;
+    public String idServei;
 
-    public Header_Consulta(String nomTreballador, String descripcioServei) {
+    public Header_Consulta(String nomTreballador, String descripcioServei, String idServei) {
         this.nomTreballador = nomTreballador;
-       this.descripcioServei = descripcioServei;
+        this.descripcioServei = descripcioServei;
+        this.idServei = idServei;
     }
 
     public void setNomTreballador(String nomTreballador) {
@@ -29,4 +27,12 @@ public class Header_Consulta {
         return nomTreballador;
     }
 
+    public String getIdServei() {
+        return idServei;
     }
+
+    public void setIdServei(String idServei) {
+        this.idServei = idServei;
+    }
+}
+

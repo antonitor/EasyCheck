@@ -86,7 +86,6 @@ private ArrayList<Header> mDataset;
         @Override
         public void onClick(View view) {
             v = view;
-
             if  (check.getText().toString().equalsIgnoreCase("0")) {   // Si NO TE el check-in FET
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setMessage("Vols Confirmar el Check-IN?")

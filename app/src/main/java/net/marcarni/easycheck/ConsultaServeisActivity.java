@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.HeaderAdapter_Consulta;
 import net.marcarni.easycheck.RecyclerView.Header_Consulta;
@@ -41,8 +42,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView_consulta);
 
         //TODO 1: Cursor amb dades test, s'ha d'esborrar el métode getFakeCursor y extraure-les de la bbdd
-      Cursor cursorTest =  getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
 
+       // Cursor cursorTest = db.RetornaTotsElsTreballadors();
+        Cursor cursorTest =  getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
         android.widget.SimpleCursorAdapter  adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 cursorTest,
@@ -79,7 +81,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         if (cursor.moveToFirst()) {
             do {
                 myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
-                                                "Servei:    "+ cursor.getString(3)));
+                                                "Servei:    "+ cursor.getString(3),cursor.getString(4)));
 
             } while (cursor.moveToNext());
 
@@ -114,6 +116,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 //TODO 2: Recollir la data seleccionada a l'activitat Calendar i actualitzar el recycler aquí
                 String data = intent.getStringExtra("DATA");
                 Log.d("Data seleccionada: ", data);
+                Toast.makeText(this, "Data seleccionada: "+data, Toast.LENGTH_SHORT ).show();
+                // fechaServicio
             }
         }
     }
@@ -148,7 +152,7 @@ class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
         //TODO 3: Recarregar aquí el RecyclerView segons el treballador seleccionat (el paràmetre id correspón a la columna _id de treballadors)
 
-      //  Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
+         // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
     }
 
     @Override

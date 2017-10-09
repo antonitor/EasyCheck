@@ -78,12 +78,20 @@ public class DetallActivity extends MenuAppCompatActivity {
         } else if (getIntent().hasExtra("DNI")){
             String dni = getIntent().getExtras().getString("DNI");
             RetornaReservaDNI(dni);
-        } else {
+        } else if (getIntent().hasExtra("ID_RESERVA")){
+            String id_reserva = getIntent().getExtras().getString("ID_RESERVA");
+            RetornaReservaId_Reserva(id_reserva);
+        }else {
             //NO S'HAURÍA D'ARRIBAR A AQUEST PUNT!!!
             Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
         }
     }
-
+    public void RetornaReservaId_Reserva(String id_reserva){
+        db.obre();
+        Cursor cursor=db.RetornaReservaId_Reserva(id_reserva);
+        CursorBD(cursor);
+        db.tanca();
+    }
     public void RetornaReservaDNI(String dni) {
         db.obre();
         Cursor cursor=db.RetornaReservaDNI(dni);
@@ -178,16 +186,16 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.InserirServei("Barcelona - Reus", "2");
         db.InserirServei("Barcelona - Seu d'urgell", "3");
         db.InserirServei("Eivissa - Formentera", "1");
-
-        //LOC                   DATA                                                                                      QR            DNI
+     //   db.InserirServei("Sabadell - Girona", "3");
+                         //LOC   DATA reserva data servei idservei                                                                         QR            DNI
         db.InserirReserva("123456","16/1/2017","29/10/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","0","41471860P");
         db.InserirReserva("123446","16/3/2017","19/11/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","45R545WE45","0","38039532Q");
         db.InserirReserva("55546","3/3/2017","3/1/2018",2,"Pere","Fernandez","Pujol","22342998","perean@gmail.com","14","French","854HFHH945","0","99392359K");
         db.InserirReserva("54446","10/3/2017","23/2/2018",2,"Pamela","Sanchez","Grau","14445998","raimn@gmail.com","14","Spanish","66FHHF45","0","72339884P");
         db.InserirReserva("5746","9/3/2017","31/1/2018",3,"Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","0","20841817E");
         db.InserirReserva("55666","10/3/2017","19/1/2018",3,"Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","97620922K");
-        db.InserirReserva("55666","10/3/2017","19/11/2017",3,"Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","17370830B");
-
+        db.InserirReserva("55669","10/3/2017","19/11/2017",3,"Maria","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","17370830B");
+       // db.InserirReserva("556665","10/3/2017","19/11/2017",4,"Enma","Smith","Delon","16789998","iuoean@gmail.com","13","Spanish","ABCDE","0","47169530A");
         db.tanca();
     }
 }

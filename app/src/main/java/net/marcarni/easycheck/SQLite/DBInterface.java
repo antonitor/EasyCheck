@@ -206,8 +206,14 @@ public class DBInterface {
     }
 
     public Cursor RetornaTotsElsServeis (){
-        String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+", s."+Serveis.DESCRIPCIO+
-                " FROM "+Treballador.NOM_TAULA+" t, "+Serveis.NOM_TAULA+" s  WHERE t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+" ;";
+       /* String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+", s."+Serveis.DESCRIPCIO+", r."+Reserves.ID_SERVICIO+
+                " FROM "+Treballador.NOM_TAULA+" t, "+Serveis.NOM_TAULA+" s, "+Reserves.NOM_TAULA+" r  " +
+                " WHERE t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+" AND s."+Serveis._ID +" = r."+Reserves.ID_SERVICIO+";";
+*/      String consultaSQL="Select t."+Treballador.NOM+", t."+Treballador.APELLIDO1+", t."+Treballador.APELLIDO2+", s."+Serveis.DESCRIPCIO+", r."+Reserves.ID_SERVICIO+
+                " FROM "+Serveis.NOM_TAULA+" s " +
+                " JOIN "+Treballador.NOM_TAULA+" t ON t."+Treballador._ID+" = s."+Serveis.ID_TREBALLADOR+
+                " JOIN "+Reserves.NOM_TAULA+" r  ON s."+Serveis._ID +" = r."+Reserves.ID_SERVICIO+
+                " GROUP BY 1,2,3";
 
         String[] ServeisTotals = arrayServeis();
         return bd.rawQuery(consultaSQL,null);
@@ -223,6 +229,15 @@ public class DBInterface {
         return bd.rawQuery(consultaSQL,new String[]{String.valueOf(treb)});
         // return bd.query(Serveis.NOM_TAULA,ServeisTotals, null, null, null,null,null);
 
+    }
+    public Cursor RetornaReservaId_Reserva (String id_reserva){
+        Cursor cursor;
+        cursor=bd.rawQuery("select * from Reserva where idServicio = ? ",new String[]{id_reserva});
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor;
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
