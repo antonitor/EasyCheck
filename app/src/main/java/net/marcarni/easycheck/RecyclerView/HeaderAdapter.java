@@ -104,7 +104,7 @@ private ArrayList<Header> mDataset;
                                         Toast.makeText(v.getContext(), "Check-in Realitzat", Toast.LENGTH_LONG).show();
                                         check.setText("1");
                                         Log.d("proba", "onClick: "+responsableName.getText().toString().substring(5,14));
-
+                                        checkText.setText("Check-In:  Realitzat");
                                         String dni=responsableName.getText().toString().substring(5,14);
                                         DBInterface db=new DBInterface(v.getContext());
                                         db.obre();
