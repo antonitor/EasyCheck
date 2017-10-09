@@ -21,11 +21,6 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
     public HeaderAdapter_Consulta(ArrayList<Header_Consulta> myDataset) {
         mDataset = myDataset;
     }
-    
-    public void actualitzaRecycler(ArrayList<Header_Consulta> llistaConsultes) {
-        mDataset = llistaConsultes;
-        this.notifyDataSetChanged();
-    }
 
     @Override
     public HeaderAdapter_Consulta.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

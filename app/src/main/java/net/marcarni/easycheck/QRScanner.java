@@ -110,6 +110,11 @@ public class QRScanner extends MenuAppCompatActivity {
                 finish();
                 startActivity(startLocActivity);
                 return true;
+            case R.id.action_services:
+                Intent startServicesActivity = new Intent(this, ConsultaServeisActivity.class);
+                finish();
+                startActivity(startServicesActivity);
+                return true;
             default:
                 return false;
         }
