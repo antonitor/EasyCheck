@@ -2,6 +2,8 @@ package net.marcarni.easycheck;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.database.MergeCursor;
 import android.os.Bundle;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,10 +48,10 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
         //TODO 1: Cursor amb dades test, s'ha d'esborrar el métode getFakeCursor y extraure-les de la bbdd
 
-        Cursor cursorTest = db.RetornaTotsElsTreballadors();
+        Cursor cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
         android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
-                cursorTest,
+                cursor,
                 new String[]{"nom"}, //Columna del cursor que volem agafar
                 new int[]{android.R.id.text1}, 0);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -81,6 +83,14 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
         // RetornaServeis();
         db.tanca();
+    }
+
+
+    private Cursor getCursorSpinner(Cursor cursor){
+        MatrixCursor extras = new MatrixCursor(new String[] { "_id", "nom" });
+        extras.addRow(new String[] { "0", "Tots" });
+        Cursor[] cursors = { extras, cursor };
+        return new MergeCursor(cursors);
     }
 
 
