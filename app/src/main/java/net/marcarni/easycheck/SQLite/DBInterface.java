@@ -187,10 +187,9 @@ public class DBInterface {
 
     //Query que retorna tots els treballadors
     public Cursor RetornaTotsElsTreballadors() {
-
-        String[] TreballadorsTotals = arrayTreballadors();
-
-        return bd.query(Treballador.NOM_TAULA, arrayTreballadors(), null, null, null, null, null);
+        String consultaSQL="Select t."+Treballador._ID+", t."+Treballador.NOM+
+                " FROM "+Treballador.NOM_TAULA+" t";
+        return bd.rawQuery(consultaSQL,null);
 
     }
 

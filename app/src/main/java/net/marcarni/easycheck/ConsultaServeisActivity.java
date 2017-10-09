@@ -28,12 +28,16 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     private HeaderAdapter_Consulta headerAdapter_consulta;
     ArrayList<Header_Consulta> myDataset;
     RecyclerView recyclerView;
+    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_serveis);
-
+        myDataset = new ArrayList<>();
+        headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
+        db=new DBInterface(this);
+        db.obre();
         //Configuració del toolbar amb els filtres
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         editToolbar.inflateMenu(R.menu.toolbar_menu);
@@ -43,12 +47,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
         //TODO 1: Cursor amb dades test, s'ha d'esborrar el métode getFakeCursor y extraure-les de la bbdd
 
-        // Cursor cursorTest = db.RetornaTotsElsTreballadors();
-        Cursor cursorTest = getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
+        Cursor cursorTest = db.RetornaTotsElsTreballadors();
         android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 cursorTest,
-                new String[]{"treballador"}, //Columna del cursor que volem agafar
+                new String[]{"nom"}, //Columna del cursor que volem agafar
                 new int[]{android.R.id.text1}, 0);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTreballadors.setAdapter(adapter);
@@ -67,27 +70,35 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         }
 
         // Afegim Recycler
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        myDataset = new ArrayList<>();
-        headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
+
         recyclerView.setAdapter(headerAdapter_consulta);
-        db = new DBInterface(this);
-        RetornaServeidelTreballador(2);
+        if (getIntent().hasExtra("ID_TREBALLADOR")) {
+            long id = getIntent().getExtras().getLong("ID_TREBALLADOR");
+            RetornaServeidelTreballador((int)id);
+        }
+        RetornaServeidelTreballador(3);
+
+        // RetornaServeis();
+        db.tanca();
     }
+
+
 
     public void CursorBD(Cursor cursor) {
         if(cursor!=null && cursor.getCount() > 0)
         {
-        if (cursor.moveToFirst()) {
-            do {
-                myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
-                                                "Servei:    "+ cursor.getString(3),cursor.getString(4)));
+            if (cursor.moveToFirst()) {
+                do {
 
-            } while (cursor.moveToNext());
+                    myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
+                            "Servei:    "+ cursor.getString(3),cursor.getString(4)));
 
-        }
-    }}
+                } while (cursor.moveToNext());
+
+            }
+        }}
     public void RetornaServeis() {
         db.obre();
         Cursor cursor = db.RetornaTotsElsServeis();
@@ -97,17 +108,16 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     public void RetornaServeidelTreballador(int id){
         db.obre();
         Cursor cursor=db.RetornaServei_Treballador(id);
-            if (cursor.moveToFirst()) {
-                    do {
-                        myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
-                                "Servei:    "+ cursor.getString(3)
-                                ,cursor.getString(4)));
+        if (cursor.moveToFirst()) {
+            do {
+                myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
+                        "Servei:    "+ cursor.getString(3)
+                        ,cursor.getString(4)));
 
-                    } while (cursor.moveToNext());
-
-
-            }
+            } while (cursor.moveToNext());
+        }
         db.tanca();
+
     }
 
 
@@ -188,9 +198,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             db.tanca();
         }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-        }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 }
 
