@@ -212,12 +212,13 @@ public class DBInterface {
     }
 
     public Cursor RetornaTotsElsServeis() {
-String consultaSQL = "Select t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
+
+        String consultaSQL = "Select distinct t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
                 ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVICIO +
                 " FROM " + Serveis.NOM_TAULA + " s " +
-                " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
-                " JOIN " + Reserves.NOM_TAULA + " r  ON s." + Serveis._ID + " = r." + Reserves.ID_SERVICIO +
-                " GROUP BY 1,2,3";
+                " LEFT JOIN  " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
+                " LEFT join " + Reserves.NOM_TAULA + " r  ON s." + Serveis._ID + " = r." + Reserves.ID_SERVICIO +"";
+          //      " GROUP BY 1,2,3";
 
         String[] ServeisTotals = arrayServeis();
         return bd.rawQuery(consultaSQL, null);
@@ -232,13 +233,13 @@ String consultaSQL = "Select t." + Treballador.NOM + ", t." + Treballador.APELLI
 
         String[] args = new String[]{String.valueOf(id)};
 
-      String consultaSQL= "Select t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
+      String consultaSQL= "Select distinct t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
               ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVICIO +
               " FROM " + Serveis.NOM_TAULA + " s " +
-              " inner JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
+              " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
               " and t."+Treballador._ID+"= ?" +
-              " inner join " +  Reserves.NOM_TAULA  +" r  on s."+ Serveis._ID+" = r."+Reserves.ID_SERVICIO +
-              " group by  1,2,3;";
+              " LEFT join " +  Reserves.NOM_TAULA  +" r  on s."+ Serveis._ID+" = r."+Reserves.ID_SERVICIO +"";
+
 
         return bd.rawQuery(consultaSQL, args);
 

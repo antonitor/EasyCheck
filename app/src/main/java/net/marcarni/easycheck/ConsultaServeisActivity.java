@@ -46,7 +46,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         // Afegeixo Recycler per instanciar
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
-        //TODO 1: Cursor amb dades test, s'ha d'esborrar el métode getFakeCursor y extraure-les de la bbdd
 
         Cursor cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
         android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(this,
@@ -75,11 +74,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(headerAdapter_consulta);
-        if (getIntent().hasExtra("ID_TREBALLADOR")) {
-            long id = getIntent().getExtras().getLong("ID_TREBALLADOR");
-            RetornaServeidelTreballador((int)id);
-        }
-        RetornaServeidelTreballador(3);
+
 
         // RetornaServeis();
         db.tanca();
@@ -93,8 +88,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         return new MergeCursor(cursors);
     }
 
-
-
     public void CursorBD(Cursor cursor) {
         if(cursor!=null && cursor.getCount() > 0)
         {
@@ -107,29 +100,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 } while (cursor.moveToNext());
 
             }
-        }}
-    public void RetornaServeis() {
-        db.obre();
-        Cursor cursor = db.RetornaTotsElsServeis();
-        CursorBD(cursor);
-        db.tanca();
-    }
-    public void RetornaServeidelTreballador(int id){
-        db.obre();
-        Cursor cursor=db.RetornaServei_Treballador(id);
-        if (cursor.moveToFirst()) {
-            do {
-                myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
-                        "Servei:    "+ cursor.getString(3)
-                        ,cursor.getString(4)));
-
-            } while (cursor.moveToNext());
         }
-        db.tanca();
-
     }
-
-
     /**
      * Recull el resultat de CalendarActivity
      * @param requestCode
