@@ -142,8 +142,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         String[] columns = new String[] { "_id", "treballador" };
 
         MatrixCursor matrixCursor= new MatrixCursor(columns);
-        startManagingCursor(matrixCursor);
-
         matrixCursor.addRow(new Object[] { 1, "Toni"});
         matrixCursor.addRow(new Object[] { 2, "Mari"});
         matrixCursor.addRow(new Object[] { 3, "Carlos"});
@@ -151,22 +149,49 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     }
 
 
+    /**
+     * Listener per els items seleccionats al Spinner amb nombs de treballador
+     */
+    class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            //TODO 3: Recarregar aquí el RecyclerView segons el treballador seleccionat (el paràmetre id correspón a la columna _id de treballadors)
+
+            // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
+            db.obre();
+            Cursor cursor;
+            myDataset = new ArrayList<Header_Consulta>();
+            if (id == 0) {
+                cursor = db.RetornaTotsElsServeis();
+                if (cursor.moveToFirst()) {
+                    do {
+                        myDataset.add(new Header_Consulta(cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2),
+                                "Servei:    " + cursor.getString(3)
+                                , cursor.getString(4)));
+
+                    } while (cursor.moveToNext());
+                }
+                headerAdapter_consulta.actualitzaRecycler(myDataset);
+            } else {
+                cursor = db.RetornaServei_Treballador((int)id);
+                if (cursor.moveToFirst()) {
+                    do {
+                        myDataset.add(new Header_Consulta(cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2),
+                                "Servei:    " + cursor.getString(3)
+                                , cursor.getString(4)));
+
+                    } while (cursor.moveToNext());
+                }
+                headerAdapter_consulta.actualitzaRecycler(myDataset);
+            }
+            db.tanca();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+        }
+    }
 }
 
-/**
- * Listener per els items seleccionats al Spinner amb nombs de treballador
- */
-class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        //TODO 3: Recarregar aquí el RecyclerView segons el treballador seleccionat (el paràmetre id correspón a la columna _id de treballadors)
-
-         // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-    }
-}
