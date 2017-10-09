@@ -182,11 +182,16 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.InserirTreballador("Maria","Ortega","Cobo","mari","xxx","1");
         db.InserirTreballador("Carlos Alberto","Castro","Cañabate","carlos","xxx","1");
 
+        db.InserirServei("Tarragona - Reus", "3");
 
         db.InserirServei("Barcelona - Reus", "2");
         db.InserirServei("Barcelona - Seu d'urgell", "3");
         db.InserirServei("Eivissa - Formentera", "1");
-     //   db.InserirServei("Sabadell - Girona", "3");
+        db.InserirServei("Eivissa - Formentera", "2");
+        db.InserirServei("Barcelona - Seu d'urgell", "1");
+
+
+        //   db.InserirServei("Sabadell - Girona", "3");
                          //LOC   DATA reserva data servei idservei                                                                         QR            DNI
         db.InserirReserva("123456","16/1/2017","29/10/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","12","Spanish","45R545WE45","0","41471860P");
         db.InserirReserva("123446","16/3/2017","19/11/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","12","Spanish","45R545WE45","0","38039532Q");
@@ -195,7 +200,7 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.InserirReserva("5746","9/3/2017","31/1/2018",3,"Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","13","French","867FHH9945","0","20841817E");
         db.InserirReserva("55666","10/3/2017","19/1/2018",3,"Enma","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","97620922K");
         db.InserirReserva("55669","10/3/2017","19/11/2017",3,"Maria","Smith","Delon","16789998","iuoean@gmail.com","13","English","ABCDE","0","17370830B");
-       // db.InserirReserva("556665","10/3/2017","19/11/2017",4,"Enma","Smith","Delon","16789998","iuoean@gmail.com","13","Spanish","ABCDE","0","47169530A");
+       db.InserirReserva("556665","10/3/2017","19/11/2017",4,"Enma","Smith","Delon","16789998","iuoean@gmail.com","13","Spanish","ABCDE","0","47169530A");
         db.tanca();
     }
 }

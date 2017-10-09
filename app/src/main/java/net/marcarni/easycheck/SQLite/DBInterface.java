@@ -226,20 +226,19 @@ String consultaSQL = "Select t." + Treballador.NOM + ", t." + Treballador.APELLI
 
     }
 
+    /* Mètode que rebrà per mostrar els serveis relacionats amb el id del treballado i es relaciona amb
+        les reserves asociades a aquestes serveis
+*/
     public Cursor RetornaServei_Treballador(int id) {
 
         String[] args = new String[]{String.valueOf(id)};
-      /*  String consultaSQL = "Select t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
-                ", s." + Serveis.DESCRIPCIO + ", t." + Treballador.NOM +
-                " FROM " + Treballador.NOM_TAULA + " t, " + Serveis.NOM_TAULA +
-                " s  WHERE t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR + "" + " AND t." + Treballador._ID + " = ?;";
-*/
+
       String consultaSQL= "Select t." + Treballador.NOM + ", t." + Treballador.APELLIDO1 + ", t." + Treballador.APELLIDO2 +
               ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVICIO +
               " FROM " + Serveis.NOM_TAULA + " s " +
-              " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
+              " inner JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
               " and t."+Treballador._ID+"= ?" +
-              " join " +  Reserves.NOM_TAULA  +" r  on s."+ Serveis._ID+" = r."+Reserves.ID_SERVICIO +
+              " inner join " +  Reserves.NOM_TAULA  +" r  on s."+ Serveis._ID+" = r."+Reserves.ID_SERVICIO +
               " group by  1,2,3;";
 
         return bd.rawQuery(consultaSQL, args);
