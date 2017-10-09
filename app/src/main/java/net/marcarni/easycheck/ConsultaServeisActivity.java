@@ -2,7 +2,6 @@ package net.marcarni.easycheck;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,12 +27,16 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     private HeaderAdapter_Consulta headerAdapter_consulta;
     ArrayList<Header_Consulta> myDataset;
     RecyclerView recyclerView;
+    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_serveis);
-
+        myDataset = new ArrayList<>();
+        headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
+        db=new DBInterface(this);
+        db.obre();
         //Configuració del toolbar amb els filtres
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         editToolbar.inflateMenu(R.menu.toolbar_menu);
@@ -43,12 +46,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
         //TODO 1: Cursor amb dades test, s'ha d'esborrar el métode getFakeCursor y extraure-les de la bbdd
 
-        // Cursor cursorTest = db.RetornaTotsElsTreballadors();
-        Cursor cursorTest = getFakeCursor(); //--->>> db.obtenirLlistaDeTreballadors();
+        Cursor cursorTest = db.RetornaTotsElsTreballadors();
         android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 cursorTest,
-                new String[]{"treballador"}, //Columna del cursor que volem agafar
+                new String[]{"nom"}, //Columna del cursor que volem agafar
                 new int[]{android.R.id.text1}, 0);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTreballadors.setAdapter(adapter);
@@ -67,27 +69,35 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         }
 
         // Afegim Recycler
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        myDataset = new ArrayList<>();
-        headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
+
         recyclerView.setAdapter(headerAdapter_consulta);
-        db = new DBInterface(this);
-        RetornaServeidelTreballador(2);
+        if (getIntent().hasExtra("ID_TREBALLADOR")) {
+            long id = getIntent().getExtras().getLong("ID_TREBALLADOR");
+            RetornaServeidelTreballador((int)id);
+        }
+        RetornaServeidelTreballador(3);
+
+        // RetornaServeis();
+        db.tanca();
     }
+
+
 
     public void CursorBD(Cursor cursor) {
         if(cursor!=null && cursor.getCount() > 0)
         {
-        if (cursor.moveToFirst()) {
-            do {
-                myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
-                                                "Servei:    "+ cursor.getString(3),cursor.getString(4)));
+            if (cursor.moveToFirst()) {
+                do {
 
-            } while (cursor.moveToNext());
+                    myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
+                            "Servei:    "+ cursor.getString(3),cursor.getString(4)));
 
-        }
-    }}
+                } while (cursor.moveToNext());
+
+            }
+        }}
     public void RetornaServeis() {
         db.obre();
         Cursor cursor = db.RetornaTotsElsServeis();
@@ -97,17 +107,16 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     public void RetornaServeidelTreballador(int id){
         db.obre();
         Cursor cursor=db.RetornaServei_Treballador(id);
-            if (cursor.moveToFirst()) {
-                    do {
-                        myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
-                                "Servei:    "+ cursor.getString(3)
-                                ,cursor.getString(4)));
+        if (cursor.moveToFirst()) {
+            do {
+                myDataset.add(new Header_Consulta(cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2),
+                        "Servei:    "+ cursor.getString(3)
+                        ,cursor.getString(4)));
 
-                    } while (cursor.moveToNext());
-
-
-            }
+            } while (cursor.moveToNext());
+        }
         db.tanca();
+
     }
 
 
@@ -133,37 +142,25 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         }
     }
 
-    /*
-     * //TODO 4: Aquest mètode es pot esborrar un cop extreiem els treballadors de la bbdd sqlite
-     *
-     * @return*/
-
-    public MatrixCursor getFakeCursor(){
-        String[] columns = new String[] { "_id", "treballador" };
-
-        MatrixCursor matrixCursor= new MatrixCursor(columns);
-        startManagingCursor(matrixCursor);
-
-        matrixCursor.addRow(new Object[] { 1, "Toni"});
-        matrixCursor.addRow(new Object[] { 2, "Mari"});
-        matrixCursor.addRow(new Object[] { 3, "Carlos"});
-        return matrixCursor;
-    }
-
-
-
 }
 
 /**
  * Listener per els items seleccionats al Spinner amb nombs de treballador
  */
 class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
-
+    private HeaderAdapter_Consulta headerAdapter_consulta;
+    ArrayList<Header_Consulta> myDataset;
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
         //TODO 3: Recarregar aquí el RecyclerView segons el treballador seleccionat (el paràmetre id correspón a la columna _id de treballadors)
+        Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
+       /* Context context = adapterView.getContext();
+        Intent intent = new Intent (context,ConsultaServeisActivity.class);
+        DBInterface db = new DBInterface(view.getContext());
+        intent.putExtra("ID_TREBALLADOR",id);
+        context.startActivity(intent);
 
-         // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
+        headerAdapter_consulta.actualitzaRecycler(myDataset);  */
     }
 
     @Override
