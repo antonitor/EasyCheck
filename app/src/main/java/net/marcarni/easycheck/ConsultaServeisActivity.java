@@ -118,6 +118,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 Log.d("Data seleccionada: ", data);
                 Toast.makeText(this, "Data seleccionada: "+data, Toast.LENGTH_SHORT ).show();
                 // fechaServicio
+
             }
         }
     }

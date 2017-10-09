@@ -78,8 +78,8 @@ public class DetallActivity extends MenuAppCompatActivity {
         } else if (getIntent().hasExtra("DNI")){
             String dni = getIntent().getExtras().getString("DNI");
             RetornaReservaDNI(dni);
-        } else if (getIntent().hasExtra("ID_RESERVA")){
-            String id_reserva = getIntent().getExtras().getString("ID_RESERVA");
+        } else if (getIntent().hasExtra("ID_SERVEI")){
+            String id_reserva = getIntent().getExtras().getString("ID_SERVEI");
             RetornaReservaId_Reserva(id_reserva);
         }else {
             //NO S'HAURÍA D'ARRIBAR A AQUEST PUNT!!!

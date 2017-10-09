@@ -44,10 +44,6 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
        return mDataset.size();
     }
 
-
-
-
-
     static class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
         TextView nomTreballador;
         TextView descripcioServei;
@@ -65,14 +61,12 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
             v.setOnClickListener(this);
         }
 
-
         @Override
         public void onClick(View view) {
           //  Toast.makeText(view.getContext(), idServei.getText().toString(), Toast.LENGTH_LONG).show();
             Intent intent = new Intent(context,DetallActivity.class);
-            intent.putExtra("ID_RESERVA",idServei.getText().toString());
+            intent.putExtra("ID_SERVEI",idServei.getText().toString());
             context.startActivity(intent);
         }
     }
-
 }
