@@ -10,7 +10,6 @@ import android.database.MergeCursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,6 +28,8 @@ import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static net.marcarni.easycheck.R.id.seleccionar_hora;
+
 public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
     private static final int DATE_PICKER_REQUEST = 22;
@@ -40,7 +41,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     long treballador=0;
     String fecha = null;
-String time=null;
+    String time=null;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +69,14 @@ String time=null;
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ((ActionMenuItemView) findViewById(R.id.seleccionar_data)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.seleccionar_data)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConsultaServeisActivity.this, CalendarActivity.class);
                 startActivityForResult(intent, DATE_PICKER_REQUEST);
             }
         });
-        ((ActionMenuItemView) findViewById(R.id.seleccionar_hora)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(seleccionar_hora)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mcurrentTime = Calendar.getInstance();
@@ -85,26 +86,34 @@ String time=null;
                 mTimePicker = new TimePickerDialog(ConsultaServeisActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time=(selectedHour + ":" + selectedMinute);
-
+                        String hora = Integer.toString(selectedHour);
+                        String minuts = Integer.toString(selectedMinute);
+                        if (hora.length()==1) hora="0"+hora;
+                        if (minuts.length()==1) minuts="0"+minuts;
+                        time=(hora + ":" + minuts);
+                        Toast.makeText(getBaseContext(),time,Toast.LENGTH_LONG).show();
+                        db.obre();
+                        Cursor cursor;
+                        if (treballador==0) {
+                            myDataset = new ArrayList<Header_Consulta>();
+                            cursor = db.RetornaServei_data_hora(fecha,time);
+                            myDataset=mouCursor(cursor);
+                            headerAdapter_consulta.actualitzaRecycler(myDataset);
+                        } else {
+                            myDataset = new ArrayList<Header_Consulta>();
+                            cursor = db.RetornaServei_Treballador_data_hora((int)treballador,fecha,time);
+                            myDataset=mouCursor(cursor);
+                            headerAdapter_consulta.actualitzaRecycler(myDataset);
+                        }
+                        db.tanca();
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
-
             }
-
         });
-        Toast.makeText(this,time,Toast.LENGTH_LONG).show();
 
-
-
-
-
-
-
-
-        ((ActionMenuItemView) findViewById(R.id.seleccionar_data)).setOnLongClickListener(new View.OnLongClickListener(){
+        (findViewById(R.id.seleccionar_data)).setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(final View view) {
                 if (fecha != null){
@@ -116,25 +125,23 @@ String time=null;
                             .setNegativeButton("Acceptar\t",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
+
                                             dialog.cancel();
                                         }
                                     });
                     builder.setPositiveButton("\tReiniciar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             fecha=null;
+                            (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
                             dialog.cancel();
-
-
                         }
                     });
 
                     AlertDialog alert = builder.create();
                     alert.show();
-
                 } else Toast.makeText(view.getContext(), "selecciona data!", Toast.LENGTH_SHORT).show();
                 return false;
             }
-
         });
 
 
@@ -149,9 +156,8 @@ String time=null;
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(headerAdapter_consulta);
-
-
         db.tanca();
+        if (fecha==null) (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
     }
 
 
@@ -176,6 +182,7 @@ String time=null;
                 if (resultCode == RESULT_OK) {
                     String data = intent.getStringExtra("DATA");
                     fecha = data;
+                    (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
                     db.obre();
                     Cursor cursor = null;
                     carregarDataTreballador(cursor);
