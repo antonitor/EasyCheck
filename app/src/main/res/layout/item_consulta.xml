@@ -22,6 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="idServei" />
+        <TextView
+            android:id="@+id/dataServei"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="dataServei" />
 
         <TextView
             android:id="@+id/nomTreballador"

@@ -244,8 +244,8 @@ public class DBInterface {
     public Cursor RetornaTotsElsServeis() {
 
         String consultaSQL = "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
-                ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI +
-                " FROM " + Serveis.NOM_TAULA + " s " +
+                ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI+
+        " FROM " + Serveis.NOM_TAULA + " s " +
                 " LEFT JOIN  " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
                 " LEFT join " + Reserves.NOM_TAULA + " r  ON s." + Serveis._ID + " = r." + Reserves.ID_SERVEI +"";
           //      " GROUP BY 1,2,3";
@@ -264,7 +264,7 @@ public class DBInterface {
         String[] args = new String[]{String.valueOf(id)};
 
       String consultaSQL= "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
-              ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI +
+              ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI+
               " FROM " + Serveis.NOM_TAULA + " s " +
               " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
               " and t."+Treballador._ID+"= ?" +
