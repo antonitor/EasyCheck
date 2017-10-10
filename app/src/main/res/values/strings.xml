@@ -48,5 +48,6 @@
     <string name="menu_date_picker">Seleccionar Data</string>
     <string name="spinner_treballadors">Selecciona Treballador</string>
     <string name="filter">Filtres: </string>
+    <string name="menu_time_picker">Seleccionar hora</string>
 
 </resources>
