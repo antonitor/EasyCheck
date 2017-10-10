@@ -138,25 +138,12 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             if (id == 0) {
                 myDataset = new ArrayList<Header_Consulta>();
                 cursor = db.RetornaTotsElsServeis();
-                if (cursor.moveToFirst()) {
-                    do {
-                        myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
-                                cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
-
-
-                    } while (cursor.moveToNext());
-                }
+                myDataset=mouCursor(cursor);
                 headerAdapter_consulta.actualitzaRecycler(myDataset);
             } else {
                 myDataset = new ArrayList<Header_Consulta>();
                 cursor = db.RetornaServei_Treballador((int) id);
-                if (cursor.moveToFirst()) {
-                    do {
-                        myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
-                                cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
-
-                    } while (cursor.moveToNext());
-                }
+               myDataset=mouCursor(cursor);
                 headerAdapter_consulta.actualitzaRecycler(myDataset);
             }
             db.tanca();
@@ -168,5 +155,17 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         }
 
     }
+    public ArrayList mouCursor(Cursor cursor){
+        if (cursor.moveToFirst()) {
+            do {
+                myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
+                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
+
+
+            } while (cursor.moveToNext());
+        }
+        return myDataset;
+    }
+
 }
 

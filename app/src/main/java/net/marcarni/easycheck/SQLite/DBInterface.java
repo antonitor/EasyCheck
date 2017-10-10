@@ -275,8 +275,21 @@ public class DBInterface {
 
 
     }
+    public Cursor RetornaServei_Treballador_data(int id,String data) {
+
+        String[] args = new String[]{String.valueOf(id), data};
+
+        String consultaSQL = "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
+                ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI + ", s." + Serveis.HORA_INICI + ", s." + Serveis.HORA_FI +
+                " FROM " + Serveis.NOM_TAULA + " s " +
+                " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
+                " and t." + Treballador._ID + "= ? and s." + Serveis.DATA_SERVEI + " = ? " +
+                " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI + "";
 
 
+        return bd.rawQuery(consultaSQL, args);
+
+    }
     public Cursor RetornaReservaId_Servei(String idServei) {
         //Cursor cursor;
         //cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.ID_SERVEI + " = ? ", new String[]{id_reserva});
