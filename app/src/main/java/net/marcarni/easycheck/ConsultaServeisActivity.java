@@ -1,5 +1,7 @@
 package net.marcarni.easycheck;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -71,7 +73,26 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             @Override
             public boolean onLongClick(View view) {
                 if (fecha != null){
-                    Toast.makeText(view.getContext(), "Data seleccionada: " + fecha, Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage(fecha)
+                            .setTitle("Data Seleccionada:")
+                            .setCancelable(false)
+
+                            .setNegativeButton("Acceptar",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    builder.setPositiveButton("Reiniciar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            fecha=null;
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 } else Toast.makeText(view.getContext(), "selecciona data!", Toast.LENGTH_SHORT).show();
                 return false;
             }
