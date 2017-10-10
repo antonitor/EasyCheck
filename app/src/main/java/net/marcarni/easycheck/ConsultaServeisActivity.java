@@ -67,6 +67,15 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 startActivityForResult(intent, DATE_PICKER_REQUEST);
             }
         });
+        ((ActionMenuItemView) findViewById(R.id.seleccionar_data)).setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View view) {
+                if (fecha != null){
+                    Toast.makeText(view.getContext(), "Data seleccionada: " + fecha, Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(view.getContext(), "selecciona data!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
         if (spinnerTreballadors != null) {
             spinnerTreballadors.setAdapter(adapter);
             spinnerTreballadors.setOnItemSelectedListener(new myOnItemSelectedListener());
@@ -91,21 +100,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         return new MergeCursor(cursors);
     }
 
-    public void CursorBD(Cursor cursor) {
-        if(cursor!=null && cursor.getCount() > 0)
-        {
-            if (cursor.moveToFirst()) {
-                do {
-
-                    myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
-                            cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)), cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
-
-
-                } while (cursor.moveToNext());
-
-            }
-        }
-    }
     /**
      * Recull el resultat de CalendarActivity
      * @param requestCode
@@ -120,8 +114,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 String data = intent.getStringExtra("DATA");
                 Log.d("Data seleccionada: ", data);
                 fecha = data;
-                Toast.makeText(this, "Data seleccionada: " + data, Toast.LENGTH_SHORT).show();
-                // fechaServicio
                 db.obre();
                 Cursor cursor = null;
                 carregarDataTreballador(cursor);
@@ -185,8 +177,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             do {
                 myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
                         cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
-
-
             } while (cursor.moveToNext());
         }
         return myDataset;
