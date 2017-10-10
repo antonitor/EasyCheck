@@ -78,16 +78,18 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                             .setTitle("Data Seleccionada:")
                             .setCancelable(false)
 
-                            .setNegativeButton("Acceptar",
+                            .setNegativeButton("Acceptar\t",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             dialog.cancel();
                                         }
                                     });
-                    builder.setPositiveButton("Reiniciar", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("\tReiniciar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             fecha=null;
                             dialog.cancel();
+
+
                         }
                     });
 
@@ -96,7 +98,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 } else Toast.makeText(view.getContext(), "selecciona data!", Toast.LENGTH_SHORT).show();
                 return false;
             }
+
         });
+
+
+
         if (spinnerTreballadors != null) {
             spinnerTreballadors.setAdapter(adapter);
             spinnerTreballadors.setOnItemSelectedListener(new myOnItemSelectedListener());
@@ -105,11 +111,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         // Afegim Recycler
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         recyclerView.setAdapter(headerAdapter_consulta);
 
-
-        // RetornaServeis();
         db.tanca();
     }
 
@@ -181,6 +184,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 }
             } else {
                 carregarDataTreballador(cursor);
+
+
             }
 
             db.tanca();
