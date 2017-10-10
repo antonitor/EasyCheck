@@ -32,6 +32,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     long treballador=0;
+    String fecha = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,31 +114,33 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(requestCode == DATE_PICKER_REQUEST)
-        {
-            if(resultCode == RESULT_OK)
-            {
+        if (requestCode == DATE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
                 //TODO 2: Recollir la data seleccionada a l'activitat Calendar i actualitzar el recycler aquí
                 String data = intent.getStringExtra("DATA");
                 Log.d("Data seleccionada: ", data);
-                Toast.makeText(this, "Data seleccionada: "+data, Toast.LENGTH_SHORT ).show();
+                fecha = data;
+                Toast.makeText(this, "Data seleccionada: " + data, Toast.LENGTH_SHORT).show();
                 // fechaServicio
                 db.obre();
-                Cursor cursor;
-                if (treballador==0) {
-                    myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaServei_data(data);
-                    myDataset=mouCursor(cursor);
-                    headerAdapter_consulta.actualitzaRecycler(myDataset);
-                } else {
-                    myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaServei_Treballador_data((int)treballador,data);
-                    myDataset=mouCursor(cursor);
-                    headerAdapter_consulta.actualitzaRecycler(myDataset);
-                }
+                Cursor cursor = null;
+                carregarDataTreballador(cursor);
                 db.tanca();
-
             }
+        }
+
+    }
+    public void carregarDataTreballador (Cursor cursor){
+        if (treballador==0) {
+            myDataset = new ArrayList<Header_Consulta>();
+            cursor = db.RetornaServei_data(fecha);
+            myDataset=mouCursor(cursor);
+            headerAdapter_consulta.actualitzaRecycler(myDataset);
+        } else {
+            myDataset = new ArrayList<Header_Consulta>();
+            cursor = db.RetornaServei_Treballador_data((int)treballador,fecha);
+            myDataset=mouCursor(cursor);
+            headerAdapter_consulta.actualitzaRecycler(myDataset);
         }
     }
 
@@ -149,19 +152,24 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
             // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
             db.obre();
-            Cursor cursor;
+            Cursor cursor=null;
             treballador = id;
-            if (id == 0) {
-                myDataset = new ArrayList<Header_Consulta>();
-                cursor = db.RetornaTotsElsServeis();
-                myDataset=mouCursor(cursor);
-                headerAdapter_consulta.actualitzaRecycler(myDataset);
+            if (fecha==null){
+                if (treballador == 0) {
+                    myDataset = new ArrayList<Header_Consulta>();
+                    cursor = db.RetornaTotsElsServeis();
+                    myDataset=mouCursor(cursor);
+                    headerAdapter_consulta.actualitzaRecycler(myDataset);
+                } else {
+                    myDataset = new ArrayList<Header_Consulta>();
+                    cursor = db.RetornaServei_Treballador((int) id);
+                    myDataset=mouCursor(cursor);
+                    headerAdapter_consulta.actualitzaRecycler(myDataset);
+                }
             } else {
-                myDataset = new ArrayList<Header_Consulta>();
-                cursor = db.RetornaServei_Treballador((int) id);
-                myDataset=mouCursor(cursor);
-                headerAdapter_consulta.actualitzaRecycler(myDataset);
+                carregarDataTreballador(cursor);
             }
+
             db.tanca();
 
         }
