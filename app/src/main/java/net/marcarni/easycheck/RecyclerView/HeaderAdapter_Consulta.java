@@ -37,6 +37,8 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
         holder.descripcioServei.setText(mDataset.get(position).getDescripcioServei());
         holder.idServei.setText(mDataset.get(position).getIdServei());
         holder.dataServei.setText(mDataset.get(position).getDataServei());
+        holder.horaInici.setText(mDataset.get(position).getHoraInici());
+        holder.horaFi.setText(mDataset.get(position).getHoraFi());
     }
 
 
@@ -50,6 +52,8 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
         TextView descripcioServei;
         TextView idServei;
         TextView dataServei;
+        TextView horaInici;
+        TextView horaFi;
         View v;
         Context context;
 
@@ -59,6 +63,9 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
             descripcioServei=(TextView)v.findViewById(R.id.descripcio_servei);
             dataServei=(TextView) v.findViewById(R.id.dataServei);
             idServei = (TextView) v.findViewById(R.id.idServei);
+            horaInici = (TextView) v.findViewById(R.id.horaInici);
+            horaFi = (TextView) v.findViewById(R.id.horaFi);
+
             idServei.setVisibility(View.GONE);
             context = itemView.getContext();
             v.setOnClickListener(this);
