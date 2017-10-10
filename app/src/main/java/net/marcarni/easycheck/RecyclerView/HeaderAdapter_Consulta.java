@@ -36,6 +36,7 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
         holder.nomTreballador.setText(mDataset.get(position).getNomTreballador());
         holder.descripcioServei.setText(mDataset.get(position).getDescripcioServei());
         holder.idServei.setText(mDataset.get(position).getIdServei());
+        holder.dataServei.setText(mDataset.get(position).getDataServei());
     }
 
 
@@ -48,6 +49,7 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
         TextView nomTreballador;
         TextView descripcioServei;
         TextView idServei;
+        TextView dataServei;
         View v;
         Context context;
 
@@ -55,6 +57,7 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
             super(v);
             nomTreballador=(TextView)v.findViewById(R.id.nomTreballador);
             descripcioServei=(TextView)v.findViewById(R.id.descripcio_servei);
+            dataServei=(TextView) v.findViewById(R.id.dataServei);
             idServei = (TextView) v.findViewById(R.id.idServei);
             idServei.setVisibility(View.GONE);
             context = itemView.getContext();
