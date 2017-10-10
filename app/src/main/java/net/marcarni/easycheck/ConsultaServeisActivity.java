@@ -31,6 +31,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     ArrayList<Header_Consulta> myDataset;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
+    long treballador=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +122,20 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 Log.d("Data seleccionada: ", data);
                 Toast.makeText(this, "Data seleccionada: "+data, Toast.LENGTH_SHORT ).show();
                 // fechaServicio
+                db.obre();
+                Cursor cursor;
+                if (treballador==0) {
+                    myDataset = new ArrayList<Header_Consulta>();
+                    cursor = db.RetornaServei_data(data);
+                    myDataset=mouCursor(cursor);
+                    headerAdapter_consulta.actualitzaRecycler(myDataset);
+                } else {
+                    myDataset = new ArrayList<Header_Consulta>();
+                    cursor = db.RetornaServei_Treballador_data((int)treballador,data);
+                    myDataset=mouCursor(cursor);
+                    headerAdapter_consulta.actualitzaRecycler(myDataset);
+                }
+                db.tanca();
 
             }
         }
@@ -135,6 +150,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
             db.obre();
             Cursor cursor;
+            treballador = id;
             if (id == 0) {
                 myDataset = new ArrayList<Header_Consulta>();
                 cursor = db.RetornaTotsElsServeis();
@@ -143,10 +159,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             } else {
                 myDataset = new ArrayList<Header_Consulta>();
                 cursor = db.RetornaServei_Treballador((int) id);
-               myDataset=mouCursor(cursor);
+                myDataset=mouCursor(cursor);
                 headerAdapter_consulta.actualitzaRecycler(myDataset);
             }
             db.tanca();
+
         }
 
         @Override
