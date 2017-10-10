@@ -41,7 +41,6 @@ public class DetallActivity extends MenuAppCompatActivity {
          * Per un correcte funcionament cal llençar "CrearExemplesBD()" el primer cop que
          * s'instal·la l'app, a continuació comentar aquest mètode i tornar a instal·lar l'app
          */
-        CrearExemplesBD();
         consultes();
         verifica();
     }
@@ -149,40 +148,5 @@ public class DetallActivity extends MenuAppCompatActivity {
             }while(cursor.moveToNext());
 
         }
-    }
-
-    /*
- * Crea els exemples per tal de provar l'app, l'ordre és important:
- * primer treballador, després servei i per últim reserva, per tal de
- * no crear conflictes amb les claus primaries.
- */
-    public void CrearExemplesBD(){
-        db.obre();
-        db.Esborra();
-
-        // nom - cognom1 - cognom2 - login - esAdmin
-        db.InserirTreballador("Toni","Torres","Mari","jacdemanec","1");
-        db.InserirTreballador("Maria","Ortega","Cobo","mari","1");
-        db.InserirTreballador("Carlos Alberto","Castro","Cañabate","carlos","1");
-
-        // descripcio  - idTreballador - dataServei - horaInici - horaFi
-        db.InserirServei("Tarragona - Reus", "3","29/10/2017","10:00","11:00");
-        db.InserirServei("Barcelona - Reus", "2","29/10/2017","10:00","11:00");
-        db.InserirServei("Barcelona - Seu d'urgell", "3","29/10/2017","10:00","11:00");
-        db.InserirServei("Eivissa - Formentera", "1","19/11/2017","10:00","11:00");
-        db.InserirServei("Eivissa - Formentera", "2","19/11/2017","10:00","11:00");
-        db.InserirServei("Barcelona - Seu d'urgell", "1","31/1/2018","10:00","11:00");
-        db.InserirServei("Sabadell - Girona", "3","31/1/2018","10:00","11:00");
-
-        // localitzador, dataReserva, idServei, nomTitular, cognom1Titular, cognom2Titular, telefonTitular, emailTitular, qrCode, checkIn, dniTitular
-        db.InserirReserva("123456","16/1/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","45R545WE45","0","41471860P");
-        db.InserirReserva("123446","16/3/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","45R545WE45","0","38039532Q");
-        db.InserirReserva("55546","3/3/2017",2,"Pere","Fernandez","Pujol","22342998","perean@gmail.com","854HFHH945","0","99392359K");
-        db.InserirReserva("54446","10/3/2017",2,"Pamela","Sanchez","Grau","14445998","raimn@gmail.com","66FHHF45","0","72339884P");
-        db.InserirReserva("5746","9/3/2017",3,"Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","867FHH9945","0","20841817E");
-        db.InserirReserva("55666","10/3/2017",3,"Enma","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","97620922K");
-        db.InserirReserva("55669","10/3/2017",3,"Maria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","17370830B");
-        db.InserirReserva("556665","10/3/2017",7,"Nuria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","47169530A");
-        db.tanca();
     }
 }
