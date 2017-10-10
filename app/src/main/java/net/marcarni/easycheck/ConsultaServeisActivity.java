@@ -1,12 +1,15 @@
 package net.marcarni.easycheck;
 
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.HeaderAdapter_Consulta;
@@ -23,6 +27,7 @@ import net.marcarni.easycheck.SQLite.DBInterface;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
@@ -35,7 +40,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     long treballador=0;
     String fecha = null;
-
+String time=null;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +78,31 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         ((ActionMenuItemView) findViewById(R.id.seleccionar_hora)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConsultaServeisActivity.this, HourActivity.class);
-                startActivityForResult(intent, HOUR_PICKER_REQUEST);
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(ConsultaServeisActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        time=(selectedHour + ":" + selectedMinute);
+
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
             }
+
         });
+        Toast.makeText(this,time,Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+
 
         ((ActionMenuItemView) findViewById(R.id.seleccionar_data)).setOnLongClickListener(new View.OnLongClickListener(){
             @Override
@@ -155,14 +182,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                     db.tanca();
                 }
                 break;
-            case HOUR_PICKER_REQUEST:
-                if(requestCode==RESULT_OK){
-                    String hora = intent.getStringExtra("HORA");
-
-                }
-                break;
-
-
+           
         }
 
 
