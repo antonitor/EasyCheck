@@ -56,7 +56,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".ConsultaServeisActivity"></activity>
+        <activity android:name=".ConsultaServeisActivity" />
+        <activity android:name=".HourActivity"></activity>
     </application>
 
 </manifest>

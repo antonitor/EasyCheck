@@ -11,7 +11,6 @@ import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -28,6 +27,7 @@ import java.util.ArrayList;
 public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
     private static final int DATE_PICKER_REQUEST = 22;
+    private static final int HOUR_PICKER_REQUEST = 25;
     DBInterface db;
     private HeaderAdapter_Consulta headerAdapter_consulta;
     ArrayList<Header_Consulta> myDataset;
@@ -69,9 +69,17 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 startActivityForResult(intent, DATE_PICKER_REQUEST);
             }
         });
+        ((ActionMenuItemView) findViewById(R.id.seleccionar_hora)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ConsultaServeisActivity.this, HourActivity.class);
+                startActivityForResult(intent, HOUR_PICKER_REQUEST);
+            }
+        });
+
         ((ActionMenuItemView) findViewById(R.id.seleccionar_data)).setOnLongClickListener(new View.OnLongClickListener(){
             @Override
-            public boolean onLongClick(View view) {
+            public boolean onLongClick(final View view) {
                 if (fecha != null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setMessage(fecha)
@@ -95,11 +103,13 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
 
                     AlertDialog alert = builder.create();
                     alert.show();
+
                 } else Toast.makeText(view.getContext(), "selecciona data!", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
         });
+
 
 
 
@@ -112,6 +122,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(headerAdapter_consulta);
+
 
         db.tanca();
     }
@@ -132,7 +143,45 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == DATE_PICKER_REQUEST) {
+        super.onActivityResult(requestCode,resultCode,intent);
+        switch (requestCode){
+            case DATE_PICKER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    String data = intent.getStringExtra("DATA");
+                    fecha = data;
+                    db.obre();
+                    Cursor cursor = null;
+                    carregarDataTreballador(cursor);
+                    db.tanca();
+                }
+                break;
+            case HOUR_PICKER_REQUEST:
+                if(requestCode==RESULT_OK){
+                    String hora = intent.getStringExtra("HORA");
+
+                }
+                break;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       /* if (requestCode == DATE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 //TODO 2: Recollir la data seleccionada a l'activitat Calendar i actualitzar el recycler aquí
                 String data = intent.getStringExtra("DATA");
@@ -143,9 +192,10 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 carregarDataTreballador(cursor);
                 db.tanca();
             }
-        }
+        }*/
 
     }
+
     public void carregarDataTreballador (Cursor cursor){
         if (treballador==0) {
             myDataset = new ArrayList<Header_Consulta>();
