@@ -12,7 +12,6 @@ import net.marcarni.easycheck.RecyclerView.Header;
 import net.marcarni.easycheck.RecyclerView.HeaderAdapter;
 import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
-import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 import net.marcarni.easycheck.SQLite.DBInterface;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 
@@ -42,7 +41,7 @@ public class DetallActivity extends MenuAppCompatActivity {
          * Per un correcte funcionament cal llençar "CrearExemplesBD()" el primer cop que
          * s'instal·la l'app, a continuació comentar aquest mètode i tornar a instal·lar l'app
          */
-        //CrearExemplesBD();
+        CrearExemplesBD();
         consultes();
         verifica();
     }
@@ -91,7 +90,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
     public void RetornaReservaId_Reserva(String id_reserva){
         db.obre();
-        Cursor cursor=db.RetornaReservaId_Reserva(id_reserva);
+        Cursor cursor=db.RetornaReservaId_Servei(id_reserva);
         CursorBD(cursor);
         db.tanca();
     }
@@ -161,10 +160,12 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.obre();
         db.Esborra();
 
+        // nom - cognom1 - cognom2 - login - esAdmin
         db.InserirTreballador("Toni","Torres","Mari","jacdemanec","1");
         db.InserirTreballador("Maria","Ortega","Cobo","mari","1");
         db.InserirTreballador("Carlos Alberto","Castro","Cañabate","carlos","1");
 
+        // descripcio  - idTreballador - dataServei - horaInici - horaFi
         db.InserirServei("Tarragona - Reus", "3","29/10/2017","10:00","11:00");
         db.InserirServei("Barcelona - Reus", "2","29/10/2017","10:00","11:00");
         db.InserirServei("Barcelona - Seu d'urgell", "3","29/10/2017","10:00","11:00");
@@ -173,7 +174,7 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.InserirServei("Barcelona - Seu d'urgell", "1","31/1/2018","10:00","11:00");
         db.InserirServei("Sabadell - Girona", "3","31/1/2018","10:00","11:00");
 
-                         //LOC   DATA reserva data servei idservei                                                                         QR            DNI
+        // localitzador, dataReserva, idServei, nomTitular, cognom1Titular, cognom2Titular, telefonTitular, emailTitular, qrCode, checkIn, dniTitular
         db.InserirReserva("123456","16/1/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","45R545WE45","0","41471860P");
         db.InserirReserva("123446","16/3/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","45R545WE45","0","38039532Q");
         db.InserirReserva("55546","3/3/2017",2,"Pere","Fernandez","Pujol","22342998","perean@gmail.com","854HFHH945","0","99392359K");

@@ -11,7 +11,7 @@ public class ContracteBD {
     //BaseColumns és una interficie que afegeix la String _id i _count
     public static final class Reserves implements BaseColumns {
         public static final String NOM_TAULA = "Reserva";
-        public static final String LOCALITZADOR = "localiTzador";
+        public static final String LOCALITZADOR = "localitzador";
         public static final String DATA_RESERVA = "dataReserva";
         public static final String ID_SERVEI = "idServei";
         public static final String NOM_TITULAR = "nomTitular";

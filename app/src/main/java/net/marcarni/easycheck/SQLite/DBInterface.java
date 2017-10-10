@@ -59,19 +59,29 @@ public class DBInterface {
     }
 
     public Cursor RetornaTotesLesReserves() {
-        String[] ReservesTotals = arrayReserva();
+        //String[] ReservesTotals = arrayReserva();
         String orderBy = Reserves.NOM_TITULAR + " ASC";
-        return bd.query(Reserves.NOM_TAULA, ReservesTotals, null, null, null, null, orderBy);
+        //return bd.query(Reserves.NOM_TAULA, ReservesTotals, null, null, null, null, orderBy);
+
+        SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = "  + Serveis.NOM_TAULA + "." + Serveis._ID);
+        Cursor cursor = QBuilder.query(bd, null, null, null, null, null, orderBy);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor;
     }
 
     public Cursor RetornaReservaDNI_DATA(String dni, String data) {
-        String[] reserva = arrayReserva();
+        //String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
         //cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.DNI_TITULAR + " = ? and " + Reserves.FECHA_SERVICIO + " =?", new String[]{dni, data});
 
         SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
-        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = " + Serveis._ID);
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = "  + Serveis.NOM_TAULA + "." + Serveis._ID);
         String orderBy = Serveis.HORA_INICI + " ASC";
         cursor = QBuilder.query(bd, null, Reserves.DNI_TITULAR + " = ? AND " + Serveis.DATA_SERVEI + " = ? ", new String[]{dni, data},null,null,orderBy);
 
@@ -83,8 +93,13 @@ public class DBInterface {
     }
 
     public Cursor RetornaReservaQR(String qr) {
-        String[] reserva = arrayReserva();
-        Cursor cursor = bd.query(true, Reserves.NOM_TAULA, reserva, Reserves.QR_CODE + " like ? ", new String[]{qr}, null, null, null, null);
+        //String[] reserva = arrayReserva();
+        //Cursor cursor = bd.query(true, Reserves.NOM_TAULA, reserva, Reserves.QR_CODE + " like ? ", new String[]{qr}, null, null, null, null);
+
+        SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = "  + Serveis.NOM_TAULA + "." + Serveis._ID);
+        String orderBy = Serveis.HORA_INICI + " ASC";
+        Cursor cursor = QBuilder.query(bd, null, Reserves.QR_CODE + " = ? ", new String[]{qr},null,null,orderBy);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -93,10 +108,15 @@ public class DBInterface {
     }
 
     public Cursor RetornaReservaLocalitzador(String loc) {
-        String[] reserva = arrayReserva();
-        Cursor cursor;
-        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.LOCALITZADOR + " = ? ", new String[]{loc});
+        //String[] reserva = arrayReserva();
+        //Cursor cursor;
+        //cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.LOCALITZADOR + " = ? ", new String[]{loc});
         //Cursor cursor = bd.query(true, BD_TAULA, reserva,LOCALIZADOR+ " like ? ", new String[]{loc}, null, null, null, null);
+
+        SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = "  + Serveis.NOM_TAULA + "." + Serveis._ID);
+        String orderBy = Serveis.HORA_INICI + " ASC";
+        Cursor cursor = QBuilder.query(bd, null, Reserves.LOCALITZADOR + " = ? ", new String[]{loc},null,null,orderBy);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -105,10 +125,15 @@ public class DBInterface {
     }
 
     public Cursor RetornaReservaDNI(String dni) {
-        String[] reserva = arrayReserva();
+        //String[] reserva = arrayReserva();
+        //Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
+        //cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.DNI_TITULAR + " = ? ", new String[]{dni});
 
-        Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
-        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.DNI_TITULAR + " = ? ", new String[]{dni});
+        SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = "  + Serveis.NOM_TAULA + "." + Serveis._ID);
+        String orderBy = Serveis.HORA_INICI + " ASC";
+        Cursor cursor = QBuilder.query(bd, null, Reserves.DNI_TITULAR + " = ? ", new String[]{dni},null,null,orderBy);
+
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -123,7 +148,7 @@ public class DBInterface {
         initialValues.put(Reserves.LOCALITZADOR, localizador);
         initialValues.put(Reserves.DATA_RESERVA, fechaReserva);
         initialValues.put(Reserves.ID_SERVEI, idServicio);
-        initialValues.put(Reserves.NOM_TAULA, nombreTitular);
+        initialValues.put(Reserves.NOM_TITULAR, nombreTitular);
         initialValues.put(Reserves.COGNOM1_TITULAR, apellido1Titular);
         initialValues.put(Reserves.COGNOM2_TITULAR, apellido2Titular);
         initialValues.put(Reserves.TELEFON_TITULAR, telefonoTitular);
@@ -136,13 +161,13 @@ public class DBInterface {
     }
 
     public Cursor RetornaReservaData(String data) {
-        String[] reserva = arrayReserva();
+        //String[] reserva = arrayReserva();
 
         Cursor cursor; //= bd.query(true, BD_TAULA, reserva,DNI_TITULAR + " like ? ", new String[]{dni}, null, null, null, null);
         //cursor = bd.rawQuery("select " + Reserves.LOCALITZADOR + " from " + Reserves.NOM_TAULA + " where " + Reserves.FECHA_SERVICIO + " = ? ", new String[]{data});
 
         SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
-        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = " + Serveis._ID);
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = " + Serveis.NOM_TAULA + "." + Serveis._ID);
         String orderBy = Serveis.HORA_INICI + " ASC";
         cursor = QBuilder.query(bd, null, Serveis.DATA_SERVEI + " = ? ", new String[]{data},null,null,orderBy);
         if (cursor != null) {
@@ -252,9 +277,15 @@ public class DBInterface {
     }
 
 
-    public Cursor RetornaReservaId_Reserva(String id_reserva) {
-        Cursor cursor;
-        cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.ID_SERVEI + " = ? ", new String[]{id_reserva});
+    public Cursor RetornaReservaId_Servei(String idServei) {
+        //Cursor cursor;
+        //cursor = bd.rawQuery("select * from " + Reserves.NOM_TAULA + " where " + Reserves.ID_SERVEI + " = ? ", new String[]{id_reserva});
+
+        SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = "  + Serveis.NOM_TAULA + "." + Serveis._ID);
+        String orderBy = Serveis.HORA_INICI + " ASC";
+        Cursor cursor = QBuilder.query(bd, null, Reserves.ID_SERVEI + " = ? ", new String[]{idServei},null,null,orderBy);
+
         if (cursor != null) {
             cursor.moveToFirst();
         }
