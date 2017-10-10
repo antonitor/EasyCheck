@@ -95,8 +95,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             if (cursor.moveToFirst()) {
                 do {
 
-                    myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.APELLIDO1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.APELLIDO2)),
-                            "Servei:    "+ cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVICIO))));
+                    myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
+                            "Servei:    "+ cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI))));
 
                 } while (cursor.moveToNext());
 
@@ -139,8 +139,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 cursor = db.RetornaTotsElsServeis();
                 if (cursor.moveToFirst()) {
                     do {
-                        myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.APELLIDO1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.APELLIDO2)),
-                                "Servei:    "+ cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVICIO))));
+                        myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
+                                "Servei:    "+ cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI))));
 
                     } while (cursor.moveToNext());
                 }
@@ -150,8 +150,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 cursor = db.RetornaServei_Treballador((int) id);
                 if (cursor.moveToFirst()) {
                     do {
-                        myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.APELLIDO1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.APELLIDO2)),
-                                "Servei:    "+ cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVICIO))));
+                        myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
+                                "Servei:    "+ cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI))));
 
                     } while (cursor.moveToNext());
                 }

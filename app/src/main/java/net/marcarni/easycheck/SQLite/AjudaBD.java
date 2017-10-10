@@ -44,35 +44,36 @@ class AjudaBD extends SQLiteOpenHelper {
 
     public static final String BD_CREATE_RESERVES = "CREATE TABLE " + ContracteBD.Reserves.NOM_TAULA + "("
             + Reserves._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + Reserves.LOCALIZADOR + " TEXT NOT NULL, "
-            + Reserves.FECHA_RESERVA + " TEXT NOT NULL, "
-            + Reserves.FECHA_SERVICIO + " TEXT NOT NULL, "
-            + Reserves.ID_SERVICIO + " INTEGER NOT NULL, "
-            + Reserves.NOMBRE_TITULAR + " TEXT NOT NULL, "
-            + Reserves.APELLIDO1_TITULAR+ " TEXT NOT NULL, "
-            + Reserves.APELLIDO2_TITULAR + " TEXT NOT NULL, "
-            + Reserves.TELEFONO_TITULAR + " TEXT, "
+            + Reserves.LOCALITZADOR + " TEXT NOT NULL, "
+            + Reserves.DATA_RESERVA + " TEXT NOT NULL, "
+            + Reserves.ID_SERVEI + " INTEGER NOT NULL, "
+            + Reserves.NOM_TITULAR + " TEXT NOT NULL, "
+            + Reserves.COGNOM1_TITULAR+ " TEXT NOT NULL, "
+            + Reserves.COGNOM2_TITULAR + " TEXT NOT NULL, "
+            + Reserves.TELEFON_TITULAR + " TEXT, "
             + Reserves.EMAIL_TITULAR + " TEXT, "
             + Reserves.QR_CODE + " TEXT NOT NULL, "
             + Reserves.CHECK_IN+ " TEXT NOT NULL, "
             + Reserves.DNI_TITULAR+ " TEXT NOT NULL, "
-            + "FOREIGN KEY("+ Reserves.ID_SERVICIO+") REFERENCES " + Serveis.NOM_TAULA +"(" + Serveis._ID +"));";;
+            + "FOREIGN KEY("+ Reserves.ID_SERVEI+") REFERENCES " + Serveis.NOM_TAULA +"(" + Serveis._ID +"));";;
 
     public static final String BD_CREATE_SERVEIS = "CREATE TABLE " + Serveis.NOM_TAULA + "("
             + Serveis._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + Serveis.DESCRIPCIO + " TEXT NOT NULL, "
             + Serveis.ID_TREBALLADOR + " INTEGER NOT NULL, "
+            + Serveis.DATA_SERVEI + " TEXT NOT NULL, "
+            + Serveis.HORA_INICI + " TEXT NOT NULL, "
+            + Serveis.HORA_FI + " TEXT NOT NULL, "
             + "FOREIGN KEY("+ Serveis.ID_TREBALLADOR+") REFERENCES " + Treballador.NOM_TAULA +"(" + Treballador._ID +"));";
 
 
     public static final String BD_CREATE_TREBALLADOR = "CREATE TABLE " + Treballador.NOM_TAULA + "("
             + Treballador._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + Treballador.NOM + " TEXT NOT NULL, "
-            + Treballador.APELLIDO1 + " TEXT NOT NULL, "
-            + Treballador.APELLIDO2 +" TEXT NOT NULL, "
+            + Treballador.COGNOM1 + " TEXT NOT NULL, "
+            + Treballador.COGNOM2 +" TEXT NOT NULL, "
             + Treballador.ADMIN + " TEXT NOT NULL, "
-            + Treballador.LOGIN + " TEXT NOT NULL, "
-            + Treballador.PASSWORD + " TEXT NOT NULL);";
+            + Treballador.LOGIN + " TEXT NOT NULL);";
 
     /**
      * Elimina les taules i les torna a crear.
