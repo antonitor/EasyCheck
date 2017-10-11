@@ -3,10 +3,10 @@ package net.marcarni.easycheck.RecyclerView;
 
 public class Header{
 
-    String nom,dni,data,qr,localitzacio,email,check;
+    String nom,dni,data,qr,localitzacio,email,check,servei;
 
 
-    public Header(String nom, String dni, String data, String qr, String localitzacio, String email, String check) {
+    public Header(String nom, String dni, String data, String qr, String localitzacio, String email, String check, String servei) {
         this.nom = nom;
         this.dni = dni;
         this.data = data;
@@ -14,6 +14,15 @@ public class Header{
         this.localitzacio = localitzacio;
         this.email = email;
         this.check = check;
+        this.servei = servei;
+    }
+
+    public String getServei() {
+        return servei;
+    }
+
+    public void setServei(String servei) {
+        this.servei = servei;
     }
 
     public String getNom() {

@@ -54,6 +54,7 @@ private ArrayList<Header> mDataset;
         holder.localitzacio.setText(mDataset.get(position).getLocalitzacio());
         holder.email.setText(mDataset.get(position).getEmail());
         holder.check.setText(mDataset.get(position).getCheck());
+        holder.servei.setText(mDataset.get(position).getServei());
         String checkin = mDataset.get(position).getCheck();
         if (checkin.equalsIgnoreCase("0")) checkin="Check-In: No Realitzat"; else checkin="Check-In: Realitzat";
         // holder.check.setText(mDataset.get(position).getCheck());
@@ -67,7 +68,7 @@ private ArrayList<Header> mDataset;
     }
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // nom,dni,data,qr,localitzacio,email,check;
-        TextView nom,dni,data,qr,localitzacio,email,check,checkText;
+        TextView nom,dni,data,qr,localitzacio,email,check,checkText,servei;
         View v;
         ViewHolder(View v) {
             super(v);
@@ -79,6 +80,7 @@ private ArrayList<Header> mDataset;
             email = (TextView) v.findViewById(R.id.email);
             check = (TextView) v.findViewById(R.id.check);
             checkText = (TextView) v.findViewById(R.id.checkText);
+            servei = (TextView) v.findViewById(R.id.servei);
             check.setVisibility(View.GONE);
             v.setOnClickListener(this);
         }
