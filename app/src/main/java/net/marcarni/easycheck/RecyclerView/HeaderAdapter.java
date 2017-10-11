@@ -47,10 +47,12 @@ private ArrayList<Header> mDataset;
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.headerCode.setText(mDataset.get(position).getHeaderCode());
-        holder.responsableName.setText(mDataset.get(position).getResponsableName());
+        holder.nom.setText(mDataset.get(position).getNom());
         holder.dni.setText(mDataset.get(position).getDni());
         holder.data.setText(mDataset.get(position).getData());
+        holder.qr.setText(mDataset.get(position).getQr());
+        holder.localitzacio.setText(mDataset.get(position).getLocalitzacio());
+        holder.email.setText(mDataset.get(position).getEmail());
         holder.check.setText(mDataset.get(position).getCheck());
         String checkin = mDataset.get(position).getCheck();
         if (checkin.equalsIgnoreCase("0")) checkin="Check-In: No Realitzat"; else checkin="Check-In: Realitzat";
@@ -64,24 +66,21 @@ private ArrayList<Header> mDataset;
         return mDataset.size();
     }
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        // each data item is just a string in this case
-        TextView headerCode;
-        TextView responsableName;
-        TextView dni, data;
-        TextView check,checkText;
+        // nom,dni,data,qr,localitzacio,email,check;
+        TextView nom,dni,data,qr,localitzacio,email,check,checkText;
         View v;
         ViewHolder(View v) {
             super(v);
-
-            headerCode = (TextView) v.findViewById(R.id.headerCode);
-            responsableName = (TextView) v.findViewById(R.id.headerDetall);
+            nom = (TextView) v.findViewById(R.id.nomTreballador);
             dni = (TextView) v.findViewById(R.id.dni);
             data = (TextView) v.findViewById(R.id.data);
+            qr = (TextView) v.findViewById(R.id.qr);
+            localitzacio = (TextView) v.findViewById(R.id.localitzacio);
+            email = (TextView) v.findViewById(R.id.email);
             check = (TextView) v.findViewById(R.id.check);
             checkText = (TextView) v.findViewById(R.id.checkText);
-            //check.setVisibility(View.GONE);
+            check.setVisibility(View.GONE);
             v.setOnClickListener(this);
-
         }
         @Override
         public void onClick(View view) {
@@ -103,12 +102,12 @@ private ArrayList<Header> mDataset;
                                         v.setBackgroundColor(Color.rgb(165, 246, 149));
                                         Toast.makeText(v.getContext(), "Check-in Realitzat", Toast.LENGTH_LONG).show();
                                         check.setText("1");
-                                        Log.d("proba", "onClick: "+responsableName.getText().toString().substring(5,14));
+                                        Log.d("proba", "onClick: "+dni.getText().toString().substring(5,14));
                                         checkText.setText("Check-In:  Realitzat");
-                                        String dni=responsableName.getText().toString().substring(5,14);
+                                        String numDni= dni.getText().toString().substring(5,14);
                                         DBInterface db=new DBInterface(v.getContext());
                                         db.obre();
-                                        db.ActalitzaCheckInReserva(dni);
+                                        db.ActalitzaCheckInReserva(numDni);
                                         db.tanca();
                                     }
                                 }

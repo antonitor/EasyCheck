@@ -1,58 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-    app:cardCornerRadius="4dp"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="105dp"
-    android:layout_margin="3dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="4dp">
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="check"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
 
         <TextView
-            android:id="@+id/headerCode"
+            android:id="@+id/nomTreballador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nom"
+            android:textColor="@android:color/holo_red_dark"
             android:textSize="20dp"
-
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/headerDetall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cognom" />
         <TextView
             android:id="@+id/dni"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="dni" />
+
         <TextView
             android:id="@+id/data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="data" />
         <TextView
-            android:id="@+id/checkText"
+            android:id="@+id/localitzacio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Check-in: "
-            android:textStyle="bold"/>
+            android:text="localitzacio" />
         <TextView
-            android:id="@+id/check"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="check" />
+            android:text="email" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/qr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="qr" />
+
+
+            <TextView
+                android:id="@+id/checkText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Check-in: "
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
-
 </android.support.v7.widget.CardView>

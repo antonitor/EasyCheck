@@ -141,8 +141,8 @@ public class DetallActivity extends MenuAppCompatActivity {
         if(cursor.moveToFirst()){
             do {
                 myDataset.add(new Header(cursor.getString(cursor.getColumnIndex(Reserves.NOM_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(Reserves.COGNOM1_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(Reserves.COGNOM2_TITULAR)),
-                        "DNI: "+cursor.getString(cursor.getColumnIndex(Reserves.DNI_TITULAR))+"  "+"Data Servei: " +cursor.getString(cursor.getColumnIndex(Serveis.DATA_SERVEI)),
-                        "QR: "+cursor.getString(cursor.getColumnIndex(Reserves.QR_CODE))+"   Localització: "+cursor.getString(cursor.getColumnIndex(Reserves.LOCALITZADOR))
+                        "DNI: "+cursor.getString(cursor.getColumnIndex(Reserves.DNI_TITULAR)),"Data Servei: " +cursor.getString(cursor.getColumnIndex(Serveis.DATA_SERVEI)),
+                        "QR: "+cursor.getString(cursor.getColumnIndex(Reserves.QR_CODE)),"Localització: "+cursor.getString(cursor.getColumnIndex(Reserves.LOCALITZADOR))
                         , cursor.getString(cursor.getColumnIndex(Reserves.EMAIL_TITULAR)),cursor.getString(cursor.getColumnIndex(Reserves.CHECK_IN))));
 
             }while(cursor.moveToNext());

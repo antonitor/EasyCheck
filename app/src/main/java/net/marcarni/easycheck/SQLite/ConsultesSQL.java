@@ -7,10 +7,6 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 
-/**
- * Created by Maria on 11/10/2017.
- */
-
 public class ConsultesSQL {
     String RetornaTotsElsTreballadors ="Select t."+ ContracteBD.Treballador._ID+", t."+ ContracteBD.Treballador.NOM+
             " FROM "+ ContracteBD.Treballador.NOM_TAULA+" t";
