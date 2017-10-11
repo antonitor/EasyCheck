@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/seleccionar_hora"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@android:drawable/ic_lock_idle_alarm"
         android:title="@string/menu_time_picker"
         app:showAsAction="always" />
 

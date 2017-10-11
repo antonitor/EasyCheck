@@ -144,9 +144,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
             }
         });
 
-
-
-
         if (spinnerTreballadors != null) {
             spinnerTreballadors.setAdapter(adapter);
             spinnerTreballadors.setOnItemSelectedListener(new myOnItemSelectedListener());
@@ -159,7 +156,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         db.tanca();
         if (fecha==null) (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
     }
-
 
     private Cursor getCursorSpinner(Cursor cursor){
         MatrixCursor extras = new MatrixCursor(new String[] { "_id", "nom" });
@@ -189,38 +185,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                     db.tanca();
                 }
                 break;
-           
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /* if (requestCode == DATE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                //TODO 2: Recollir la data seleccionada a l'activitat Calendar i actualitzar el recycler aquí
-                String data = intent.getStringExtra("DATA");
-                Log.d("Data seleccionada: ", data);
-                fecha = data;
-                db.obre();
-                Cursor cursor = null;
-                carregarDataTreballador(cursor);
-                db.tanca();
-            }
-        }*/
-
     }
 
     public void carregarDataTreballador (Cursor cursor){
@@ -261,18 +226,12 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
                 }
             } else {
                 carregarDataTreballador(cursor);
-
-
             }
-
             db.tanca();
-
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
+        public void onNothingSelected(AdapterView<?> adapterView) {}
 
     }
     public ArrayList mouCursor(Cursor cursor){
@@ -284,6 +243,5 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity {
         }
         return myDataset;
     }
-
 }
 
