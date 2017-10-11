@@ -1,6 +1,6 @@
 package net.marcarni.easycheck;
 
-import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,11 +10,13 @@ import android.database.MergeCursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -121,8 +123,28 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                 mTimePicker.show();
                 break;
             case R.id.seleccionar_data:
-                Intent intent = new Intent(ConsultaServeisActivity.this, CalendarActivity.class);
-                startActivityForResult(intent, DATE_PICKER_REQUEST);
+                Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker;
+                mDatePicker = new DatePickerDialog(ConsultaServeisActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        selectedmonth = selectedmonth + 1;
+                        fecha="" + selectedday + "/" + selectedmonth + "/" + selectedyear;
+                        (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
+                        (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
+                        carregarDataTreballador();
+
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Selecciona Data");
+                mDatePicker.show();
+                /*Intent intent = new Intent(ConsultaServeisActivity.this, CalendarActivity.class);
+                startActivityForResult(intent, DATE_PICKER_REQUEST);*/
                 break;
             case R.id.cancelar_filtros:
 
@@ -183,8 +205,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
      * @param resultCode
      * @param intent
      */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+   /* protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         switch (requestCode) {
             case DATE_PICKER_REQUEST:
@@ -197,7 +219,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                 }
                 break;
         }
-    }
+    }*/
 
     public void carregarHoraTreballador() {
         db.obre();

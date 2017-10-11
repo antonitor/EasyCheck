@@ -116,7 +116,7 @@ public class DniActivity extends MenuAppCompatActivity {
             }
         });
 
-
+    }
 
 
 
@@ -125,7 +125,7 @@ public class DniActivity extends MenuAppCompatActivity {
                /* Intent intent = new Intent (DniActivity.this,CalendarActivity.class);
                 startActivityForResult(intent, 1); // L'activitat retornarà un resultat.*/
 
-    }
+
    /* public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
         //Comprovem a quina activitat correspon
