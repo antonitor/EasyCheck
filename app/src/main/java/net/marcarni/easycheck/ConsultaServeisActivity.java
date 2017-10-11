@@ -117,9 +117,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
     @Override
     public boolean onLongClick(View view) {
-        String variable = null;
-        String titol = null;
-        String vacio = null;
+        String variable = null, titol = null, vacio = null;
         switch(view.getId()){
             case R.id.seleccionar_data:
                 variable = fecha; titol = "Data Seleccionada:"; vacio = "Selecciona data!";
@@ -151,7 +149,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         Cursor[] cursors = { extras, cursor };
         return new MergeCursor(cursors);
     }
-
     /**
      * Recull el resultat de CalendarActivity
      * @param requestCode
@@ -215,22 +212,54 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             Cursor cursor=null;
             treballador = id;
             if (fecha==null){
-                db.obre();
                 if (treballador == 0) {
+                    db.obre();
                     myDataset = new ArrayList<Header_Consulta>();
                     cursor = db.RetornaTotsElsServeis();
                     myDataset=mouCursor(cursor);
                     headerAdapter_consulta.actualitzaRecycler(myDataset);
+                    db.tanca();
                 } else {
+                    db.obre();
                     myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaServei_Treballador((int) id);
+                    cursor = db.RetornaServei_Treballador((int)treballador);
+                    myDataset = mouCursor(cursor);
+                    headerAdapter_consulta.actualitzaRecycler(myDataset);
+                    db.tanca();
+                }
+
+            }
+            else  if (time !=null && fecha !=null){
+                if (treballador == 0) {
+                    db.obre();
+                    myDataset = new ArrayList<Header_Consulta>();
+                    cursor = db.RetornaServei_data_hora(fecha,time);
                     myDataset=mouCursor(cursor);
                     headerAdapter_consulta.actualitzaRecycler(myDataset);
+                    db.tanca();
+                } else {
+                    db.obre();
+                    myDataset = new ArrayList<Header_Consulta>();
+                    cursor = db.RetornaServei_Treballador_data_hora((int)treballador,fecha,time);
+                    myDataset=mouCursor(cursor);
+                    headerAdapter_consulta.actualitzaRecycler(myDataset);
+                    db.tanca();
                 }
-            } else {
-                carregarDataTreballador();
+
+
+            } else if (time==null && fecha!=null){
+
+                if (treballador == 0) {
+                    carregarDataTreballador();
+                } else {
+                    db.obre();
+                    myDataset = new ArrayList<Header_Consulta>();
+                    cursor = db.RetornaServei_Treballador_data((int)treballador,fecha);
+                    myDataset=mouCursor(cursor);
+                    headerAdapter_consulta.actualitzaRecycler(myDataset);
+                    db.tanca();
+                }
             }
-            db.tanca();
         }
 
         @Override
