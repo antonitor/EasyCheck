@@ -91,7 +91,7 @@ public class DniActivity extends MenuAppCompatActivity {
             //////////////              PICKER AÑADIDO      //////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////
-            
+
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
@@ -111,7 +111,7 @@ public class DniActivity extends MenuAppCompatActivity {
                         textViewData.setText(data_);
                     }
                 }, mYear, mMonth, mDay);
-                mDatePicker.setTitle("Select Date");
+                mDatePicker.setTitle("Selecciona Data");
                 mDatePicker.show();
             }
         });
