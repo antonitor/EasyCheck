@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:text="servei" />
         <LinearLayout
@@ -53,12 +53,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="12sp"
                 android:text="dni" />
 
             <TextView
                 android:id="@+id/data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_weight="1"
                 android:text="data" />
         </LinearLayout>
@@ -72,11 +74,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="12sp"
                 android:text="localitzacio" />
             <TextView
                 android:id="@+id/qr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_weight="1"
                 android:text="qr" />
         </LinearLayout>
@@ -90,6 +94,7 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_weight="1"
                 android:text="email" />
 
@@ -98,7 +103,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="12sp"
                 android:text="Check-in: "
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
