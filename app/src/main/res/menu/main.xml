@@ -14,7 +14,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_gestor"
-        android:icon="@drawable/ic_gestor"
+        android:icon="@drawable/ic_search__"
         android:title="submenu"
         app:showAsAction="always" />
 </menu>
