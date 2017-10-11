@@ -28,6 +28,7 @@ import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static net.marcarni.easycheck.R.id.cancelar_filtros;
 import static net.marcarni.easycheck.R.id.seleccionar_hora;
 
 public class ConsultaServeisActivity extends MenuAppCompatActivity implements View.OnClickListener,View.OnLongClickListener{
@@ -68,6 +69,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        (findViewById(R.id.cancelar_filtros)).setOnClickListener(this);
         (findViewById(R.id.seleccionar_data)).setOnClickListener(this);
         (findViewById(R.id.seleccionar_data)).setOnLongClickListener(this);
         (findViewById(seleccionar_hora)).setOnClickListener(this);
@@ -83,7 +85,10 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(headerAdapter_consulta);
         db.tanca();
-        if (fecha==null) (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
+        if (fecha==null) {
+            (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
+            (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -112,6 +117,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                 Intent intent = new Intent(ConsultaServeisActivity.this, CalendarActivity.class);
                 startActivityForResult(intent, DATE_PICKER_REQUEST);
                 break;
+            case R.id.cancelar_filtros:
+                fecha = null; time = null;
+                (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
+                (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
+                llistatSenseFiltre();
         }
     }
 
@@ -164,6 +174,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                     String data = intent.getStringExtra("DATA");
                     fecha = data;
                     (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
+                    (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
                     carregarDataTreballador();
                 }
                 break;
@@ -201,6 +212,14 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         }
         db.tanca();
     }
+    public void llistatSenseFiltre() {
+        db.obre();
+        myDataset = new ArrayList<Header_Consulta>();
+        Cursor cursor = db.RetornaTotsElsServeis();
+        myDataset=mouCursor(cursor);
+        headerAdapter_consulta.actualitzaRecycler(myDataset);
+        db.tanca();
+    }
 
     class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
@@ -213,12 +232,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             treballador = id;
             if (fecha==null){
                 if (treballador == 0) {
-                    db.obre();
-                    myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaTotsElsServeis();
-                    myDataset=mouCursor(cursor);
-                    headerAdapter_consulta.actualitzaRecycler(myDataset);
-                    db.tanca();
+                    llistatSenseFiltre();
                 } else {
                     db.obre();
                     myDataset = new ArrayList<Header_Consulta>();

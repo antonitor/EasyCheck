@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         db.InserirServei("Barcelona - Seu d'urgell", "1","31/1/2018","10:00","23:00");
         db.InserirServei("Sabadell - Girona", "3","31/1/2018","23:00","00:00");
 
-        // localitzador, dataReserva, idServei, nomTitular, cognom1Titular, cognom2Titular, telefonTitular, emailTitular, qrCode, checkIn, dniTitular
+                       // localitzador, dataReserva, idServei, nomTitular, cognom1Titular, cognom2Titular, telefonTitular, emailTitular, qrCode, checkIn, dniTitular
         db.InserirReserva("123456","16/1/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","45R545WE45","0","41471860P");
         db.InserirReserva("123446","16/3/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","45R545WE45","0","38039532Q");
         db.InserirReserva("55546","3/3/2017",2,"Pere","Fernandez","Pujol","22342998","perean@gmail.com","854HFHH945","0","99392359K");
