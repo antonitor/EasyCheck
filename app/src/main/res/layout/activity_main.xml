@@ -6,6 +6,16 @@
     android:orientation="vertical">
 
 
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Administrador?" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/isAdmin"/>
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
@@ -16,6 +26,6 @@
         android:id="@+id/exemples_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inserir Exemles" />
+        android:text="Inserir Exemples" />
 
 </LinearLayout>

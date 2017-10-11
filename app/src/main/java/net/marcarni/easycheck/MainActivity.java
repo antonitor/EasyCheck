@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.SQLite.DBInterface;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     Button mLoginButton, mExemplesButton;
     Intent mDniIntent;
     DBInterface db;
+    CheckBox isAdmin;
+    public static String IS_ADMIN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mLoginButton = (Button) findViewById(R.id.login_button);
         mExemplesButton = (Button) findViewById(R.id.exemples_button);
+        isAdmin=(CheckBox)findViewById(R.id.isAdmin);
         db = new DBInterface(this);
 
         //Recull el gestor per defecte de SharedPreferences, que per defecte es QR
@@ -35,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     startActivity(new Intent(MainActivity.this, CheckCameraPermissionsActivity.class));
+                    boolean c=isAdmin.isChecked();
+                    if (c){
+                        IS_ADMIN="1";
+                    }else{IS_ADMIN="0";}
+
+
                 }
             });
         //Si el gestor per defecte és DNI, el botó login llença dniactivity amb dni

@@ -83,5 +83,8 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
     public void actualitzaRecycler(ArrayList<Header_Consulta> llistaConsultes) {
         mDataset = llistaConsultes;
         this.notifyDataSetChanged();
+
+
     }
+
 }

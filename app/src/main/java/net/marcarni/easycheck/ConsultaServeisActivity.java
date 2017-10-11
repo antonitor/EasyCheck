@@ -28,10 +28,11 @@ import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static net.marcarni.easycheck.MainActivity.IS_ADMIN;
 import static net.marcarni.easycheck.R.id.cancelar_filtros;
 import static net.marcarni.easycheck.R.id.seleccionar_hora;
 
-public class ConsultaServeisActivity extends MenuAppCompatActivity implements View.OnClickListener,View.OnLongClickListener{
+public class ConsultaServeisActivity extends MenuAppCompatActivity implements View.OnClickListener,View.OnLongClickListener {
 
     private static final int DATE_PICKER_REQUEST = 22;
     private static final int HOUR_PICKER_REQUEST = 25;
@@ -40,11 +41,12 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     ArrayList<Header_Consulta> myDataset;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
-    long treballador=0;
+    long treballador = 0;
     String fecha = null;
-    String time=null;
+    String time = null;
     android.widget.SimpleCursorAdapter adapter;
     Spinner spinnerTreballadors;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         setContentView(R.layout.activity_consulta_serveis);
         myDataset = new ArrayList<>();
         headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
-        db=new DBInterface(this);
+        db = new DBInterface(this);
         db.obre();
         //Configuració del toolbar amb els filtres
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
@@ -62,7 +64,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
         Cursor cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
-         adapter = new android.widget.SimpleCursorAdapter(this,
+        adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 cursor,
                 new String[]{"nom"}, //Columna del cursor que volem agafar
@@ -80,22 +82,25 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         if (spinnerTreballadors != null) {
             spinnerTreballadors.setAdapter(adapter);
             spinnerTreballadors.setOnItemSelectedListener(new myOnItemSelectedListener());
+            spinnerTreballadors.setVisibility(View.VISIBLE);
         }
-
+        comprobaAdmin();
         // Afegim Recycler
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(headerAdapter_consulta);
         db.tanca();
-        if (fecha==null) {
+        if (fecha == null) {
             (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
             (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
+
         }
+        Toast.makeText(this, IS_ADMIN, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.seleccionar_hora:
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -106,9 +111,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         String hora = Integer.toString(selectedHour);
                         String minuts = Integer.toString(selectedMinute);
-                        if (hora.length()==1) hora="0"+hora;
-                        if (minuts.length()==1) minuts="0"+minuts;
-                        time=(hora + ":" + minuts);
+                        if (hora.length() == 1) hora = "0" + hora;
+                        if (minuts.length() == 1) minuts = "0" + minuts;
+                        time = (hora + ":" + minuts);
                         carregarHoraTreballador();
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -121,7 +126,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                 break;
             case R.id.cancelar_filtros:
 
-                fecha = null; time = null; treballador = 0;
+                fecha = null;
+                time = null;
+                treballador = 0;
                 (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
                 (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
                 spinnerTreballadors.setAdapter(adapter);
@@ -133,15 +140,19 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     @Override
     public boolean onLongClick(View view) {
         String variable = null, titol = null, vacio = null;
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.seleccionar_data:
-                variable = fecha; titol = "Data Seleccionada:"; vacio = "Selecciona data!";
+                variable = fecha;
+                titol = "Data Seleccionada:";
+                vacio = "Selecciona data!";
                 break;
             case R.id.seleccionar_hora:
-                variable = time; titol = "Hora Seleccionada:"; vacio = "Selecciona hora!";
+                variable = time;
+                titol = "Hora Seleccionada:";
+                vacio = "Selecciona hora!";
                 break;
         }
-        if (variable != null){
+        if (variable != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
             builder.setMessage(variable)
                     .setTitle(titol)
@@ -158,22 +169,24 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         return false;
     }
 
-    private Cursor getCursorSpinner(Cursor cursor){
-        MatrixCursor extras = new MatrixCursor(new String[] { "_id", "nom" });
-        extras.addRow(new String[] { "0", "Tots" });
-        Cursor[] cursors = { extras, cursor };
+    private Cursor getCursorSpinner(Cursor cursor) {
+        MatrixCursor extras = new MatrixCursor(new String[]{"_id", "nom"});
+        extras.addRow(new String[]{"0", "Tots"});
+        Cursor[] cursors = {extras, cursor};
         return new MergeCursor(cursors);
     }
+
     /**
      * Recull el resultat de CalendarActivity
+     *
      * @param requestCode
      * @param resultCode
      * @param intent
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode,resultCode,intent);
-        switch (requestCode){
+        super.onActivityResult(requestCode, resultCode, intent);
+        switch (requestCode) {
             case DATE_PICKER_REQUEST:
                 if (resultCode == RESULT_OK) {
                     String data = intent.getStringExtra("DATA");
@@ -185,43 +198,46 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                 break;
         }
     }
-    public void carregarHoraTreballador(){
+
+    public void carregarHoraTreballador() {
         db.obre();
         Cursor cursor;
-        if (treballador==0) {
+        if (treballador == 0) {
             myDataset = new ArrayList<Header_Consulta>();
-            cursor = db.RetornaServei_data_hora(fecha,time);
-            myDataset=mouCursor(cursor);
+            cursor = db.RetornaServei_data_hora(fecha, time);
+            myDataset = mouCursor(cursor);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
         } else {
             myDataset = new ArrayList<Header_Consulta>();
-            cursor = db.RetornaServei_Treballador_data_hora((int)treballador,fecha,time);
-            myDataset=mouCursor(cursor);
+            cursor = db.RetornaServei_Treballador_data_hora((int) treballador, fecha, time);
+            myDataset = mouCursor(cursor);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
         }
         db.tanca();
     }
-    public void carregarDataTreballador (){
+
+    public void carregarDataTreballador() {
         db.obre();
         Cursor cursor = null;
-        if (treballador==0) {
+        if (treballador == 0) {
             myDataset = new ArrayList<Header_Consulta>();
             cursor = db.RetornaServei_data(fecha);
-            myDataset=mouCursor(cursor);
+            myDataset = mouCursor(cursor);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
         } else {
             myDataset = new ArrayList<Header_Consulta>();
-            cursor = db.RetornaServei_Treballador_data((int)treballador,fecha);
-            myDataset=mouCursor(cursor);
+            cursor = db.RetornaServei_Treballador_data((int) treballador, fecha);
+            myDataset = mouCursor(cursor);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
         }
         db.tanca();
     }
+
     public void llistatSenseFiltre() {
         db.obre();
         myDataset = new ArrayList<Header_Consulta>();
         Cursor cursor = db.RetornaTotsElsServeis();
-        myDataset=mouCursor(cursor);
+        myDataset = mouCursor(cursor);
         headerAdapter_consulta.actualitzaRecycler(myDataset);
         db.tanca();
     }
@@ -233,48 +249,47 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             //TODO 3: Recarregar aquí el RecyclerView segons el treballador seleccionat (el paràmetre id correspón a la columna _id de treballadors)
 
             // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
-            Cursor cursor=null;
+            Cursor cursor = null;
             treballador = id;
-            if (fecha==null){
+            if (fecha == null) {
                 if (treballador == 0) {
                     llistatSenseFiltre();
                 } else {
                     db.obre();
                     myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaServei_Treballador((int)treballador);
+                    cursor = db.RetornaServei_Treballador((int) treballador);
                     myDataset = mouCursor(cursor);
                     headerAdapter_consulta.actualitzaRecycler(myDataset);
                     db.tanca();
                 }
 
-            }
-            else  if (time !=null && fecha !=null){
+            } else if (time != null && fecha != null) {
                 if (treballador == 0) {
                     db.obre();
                     myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaServei_data_hora(fecha,time);
-                    myDataset=mouCursor(cursor);
+                    cursor = db.RetornaServei_data_hora(fecha, time);
+                    myDataset = mouCursor(cursor);
                     headerAdapter_consulta.actualitzaRecycler(myDataset);
                     db.tanca();
                 } else {
                     db.obre();
                     myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaServei_Treballador_data_hora((int)treballador,fecha,time);
-                    myDataset=mouCursor(cursor);
+                    cursor = db.RetornaServei_Treballador_data_hora((int) treballador, fecha, time);
+                    myDataset = mouCursor(cursor);
                     headerAdapter_consulta.actualitzaRecycler(myDataset);
                     db.tanca();
                 }
 
 
-            } else if (time==null && fecha!=null){
+            } else if (time == null && fecha != null) {
 
                 if (treballador == 0) {
                     carregarDataTreballador();
                 } else {
                     db.obre();
                     myDataset = new ArrayList<Header_Consulta>();
-                    cursor = db.RetornaServei_Treballador_data((int)treballador,fecha);
-                    myDataset=mouCursor(cursor);
+                    cursor = db.RetornaServei_Treballador_data((int) treballador, fecha);
+                    myDataset = mouCursor(cursor);
                     headerAdapter_consulta.actualitzaRecycler(myDataset);
                     db.tanca();
                 }
@@ -282,17 +297,26 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {}
+        public void onNothingSelected(AdapterView<?> adapterView) {
+        }
 
     }
-    public ArrayList mouCursor(Cursor cursor){
+
+    public ArrayList mouCursor(Cursor cursor) {
         if (cursor.moveToFirst()) {
             do {
-                myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
-                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)),cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
+                myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM)) + " " + cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1)) + " " + cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
+                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)), cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)), cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)), cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)), cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
             } while (cursor.moveToNext());
         }
         return myDataset;
     }
-}
 
+    public void comprobaAdmin() {
+        if (IS_ADMIN == "0") {
+            spinnerTreballadors.setVisibility(View.INVISIBLE);
+        } else {
+            spinnerTreballadors.setVisibility(View.VISIBLE);
+        }
+    }
+}
