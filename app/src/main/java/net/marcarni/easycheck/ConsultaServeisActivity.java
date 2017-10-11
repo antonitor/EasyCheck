@@ -43,6 +43,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     long treballador=0;
     String fecha = null;
     String time=null;
+    android.widget.SimpleCursorAdapter adapter;
+    Spinner spinnerTreballadors;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,12 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         //Configuració del toolbar amb els filtres
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         editToolbar.inflateMenu(R.menu.toolbar_menu);
-        Spinner spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
+        spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
         // Afegeixo Recycler per instanciar
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
         Cursor cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
-        android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(this,
+         adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 cursor,
                 new String[]{"nom"}, //Columna del cursor que volem agafar
@@ -118,9 +120,12 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                 startActivityForResult(intent, DATE_PICKER_REQUEST);
                 break;
             case R.id.cancelar_filtros:
-                fecha = null; time = null;
+
+                fecha = null; time = null; treballador = 0;
                 (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
                 (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
+                spinnerTreballadors.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
                 llistatSenseFiltre();
         }
     }
