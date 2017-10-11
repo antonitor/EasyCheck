@@ -314,7 +314,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
     public void comprobaAdmin() {
         if (IS_ADMIN == "0") {
-            spinnerTreballadors.setVisibility(View.INVISIBLE);
+            spinnerTreballadors.setVisibility(View.GONE);
         } else {
             spinnerTreballadors.setVisibility(View.VISIBLE);
         }
