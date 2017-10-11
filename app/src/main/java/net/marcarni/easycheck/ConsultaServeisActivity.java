@@ -117,7 +117,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                         carregarHoraTreballador();
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Selecciona horari");
+                mTimePicker.setTitle("Seleccionar horari");
                 mTimePicker.show();
                 break;
             case R.id.seleccionar_data:
