@@ -49,5 +49,6 @@
     <string name="spinner_treballadors">Selecciona Treballador</string>
     <string name="filter">Filtres: </string>
     <string name="menu_time_picker">Seleccionar hora</string>
+    <string name="filter_cancell">cancelar filtros</string>
 
 </resources>
