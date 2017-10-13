@@ -97,57 +97,19 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
 
         }
-        Toast.makeText(this, IS_ADMIN, Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.seleccionar_hora:
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ConsultaServeisActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        String hora = Integer.toString(selectedHour);
-                        String minuts = Integer.toString(selectedMinute);
-                        if (hora.length() == 1) hora = "0" + hora;
-                        if (minuts.length() == 1) minuts = "0" + minuts;
-                        time = (hora + ":" + minuts);
-                        carregarHoraTreballador();
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Seleccionar horari");
-                mTimePicker.show();
+                PickerHora();
                 break;
             case R.id.seleccionar_data:
-                Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog mDatePicker;
-                mDatePicker = new DatePickerDialog(ConsultaServeisActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                        // TODO Auto-generated method stub
-                    /*      Your code   to get date and time    */
-                        selectedmonth = selectedmonth + 1;
-                        fecha="" + selectedday + "/" + selectedmonth + "/" + selectedyear;
-                        (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
-                        (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
-                        carregarDataTreballador();
-
-                    }
-                }, mYear, mMonth, mDay);
-                mDatePicker.setTitle("Selecciona Data");
-                mDatePicker.show();
-                /*Intent intent = new Intent(ConsultaServeisActivity.this, CalendarActivity.class);
-                startActivityForResult(intent, DATE_PICKER_REQUEST);*/
+                PickerData();
                 break;
             case R.id.cancelar_filtros:
-
                 fecha = null;
                 time = null;
                 treballador = 0;
@@ -327,8 +289,14 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     public ArrayList mouCursor(Cursor cursor) {
         if (cursor.moveToFirst()) {
             do {
-                myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM)) + " " + cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1)) + " " + cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
-                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)), cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)), cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)), cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)), cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
+                myDataset.add(new Header_Consulta(cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.NOM))
+                        + " " + cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM1))
+                        + " " + cursor.getString(cursor.getColumnIndex(ContracteBD.Treballador.COGNOM2)),
+                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DESCRIPCIO)),
+                        cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.ID_SERVEI)),
+                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.DATA_SERVEI)),
+                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_INICI)),
+                        cursor.getString(cursor.getColumnIndex(ContracteBD.Serveis.HORA_FI))));
             } while (cursor.moveToNext());
         }
         return myDataset;
@@ -340,5 +308,45 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         } else {
             spinnerTreballadors.setVisibility(View.VISIBLE);
         }
+    }
+    public void PickerHora(){
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(ConsultaServeisActivity.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                String hora = Integer.toString(selectedHour);
+                String minuts = Integer.toString(selectedMinute);
+                if (hora.length() == 1) hora = "0" + hora;
+                if (minuts.length() == 1) minuts = "0" + minuts;
+                time = (hora + ":" + minuts);
+                carregarHoraTreballador();
+            }
+        }, hour, minute, true);//Yes 24 hour time
+        mTimePicker.setTitle("Seleccionar horari");
+        mTimePicker.show();
+    }
+    public void PickerData(){
+        Calendar mcurrentDate = Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth = mcurrentDate.get(Calendar.MONTH);
+        int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog mDatePicker;
+        mDatePicker = new DatePickerDialog(ConsultaServeisActivity.this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+
+                selectedmonth = selectedmonth + 1;
+                fecha="" + selectedday + "/" + selectedmonth + "/" + selectedyear;
+                (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
+                (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
+                carregarDataTreballador();
+
+            }
+        }, mYear, mMonth, mDay);
+        mDatePicker.setTitle("Selecciona Data");
+        mDatePicker.show();
     }
 }

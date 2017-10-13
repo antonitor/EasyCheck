@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     DBInterface db;
     CheckBox isAdmin;
     public static String IS_ADMIN;
+    boolean c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +40,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     startActivity(new Intent(MainActivity.this, CheckCameraPermissionsActivity.class));
-                    boolean c=isAdmin.isChecked();
-                    if (c){
-                        IS_ADMIN="1";
-                    }else{IS_ADMIN="0";}
 
+                comprobaAdmin();
 
                 }
             });
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     startActivity(mDniIntent);
+                    comprobaAdmin();
                 }
             });
         //Si el gestor per defecte és Loc, el botó login llença dniactivity amb Loc
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     startActivity(mDniIntent);
+                    comprobaAdmin();
                 }
             });
         }
@@ -111,5 +111,11 @@ public class MainActivity extends AppCompatActivity {
         db.InserirReserva("55669","10/3/2017",3,"Maria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","17370830B");
         db.InserirReserva("556665","10/3/2017",7,"Nuria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","47169530A");
         db.tanca();
+    }
+    public void comprobaAdmin(){
+        c=isAdmin.isChecked();
+        if (c){
+            IS_ADMIN="1";
+        }else{IS_ADMIN="0";}
     }
 }
