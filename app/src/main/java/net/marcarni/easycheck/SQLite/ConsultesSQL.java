@@ -62,6 +62,6 @@ public class ConsultesSQL {
 
         return cursor;
     }
-    }
+}
 
 

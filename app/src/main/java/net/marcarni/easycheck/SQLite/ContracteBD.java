@@ -3,12 +3,20 @@ package net.marcarni.easycheck.SQLite;
 import android.provider.BaseColumns;
 
 /**
- * Created by Toni on 07/10/2017.
+ * Una classe Contract és un contenidor per constants que defineixen noms d'URI (identificadors
+ * uniformes de recursos), taules i columnes. La classe Contract et permet utilitzar les mateixes
+ * constants en totes les altres classes del mateix paquet. Això et permet canviar el nom d'una
+ * columna en un lloc i que aquest canvi es propagui a tot el codi.
  */
-
 public class ContracteBD {
 
-    //BaseColumns és una interficie que afegeix la String _id i _count
+    /**
+     * Per prevenir que algú accidentalment instancii aquest contracte,
+     * el constructor s'ha fet private
+     */
+    private ContracteBD(){}
+
+    //Inner class que defineix els continguts de la taula Reserva
     public static final class Reserves implements BaseColumns {
         public static final String NOM_TAULA = "Reserva";
         public static final String LOCALITZADOR = "localitzador";
@@ -24,6 +32,7 @@ public class ContracteBD {
         public static final String DNI_TITULAR = "dniTitular";
     }
 
+    //Inner class que defineix els continguts de la taula Treballador
     public static final class Treballador implements BaseColumns {
         public static final String NOM_TAULA = "Treballador";
         public static final String NOM = "nom";
@@ -33,6 +42,7 @@ public class ContracteBD {
         public static final String LOGIN = "login";
     }
 
+    //Inner class que defineix els continguts de la taula Serveis
     public static final class Serveis implements BaseColumns {
         public static final String NOM_TAULA = "Serveis";
         public static final String DESCRIPCIO = "descripcio";

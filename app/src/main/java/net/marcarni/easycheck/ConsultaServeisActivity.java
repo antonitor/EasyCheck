@@ -3,7 +3,6 @@ package net.marcarni.easycheck;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
@@ -38,16 +37,16 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
     private static final int DATE_PICKER_REQUEST = 22;
     private static final int HOUR_PICKER_REQUEST = 25;
-    DBInterface db;
+    private DBInterface db;
     private HeaderAdapter_Consulta headerAdapter_consulta;
-    ArrayList<Header_Consulta> myDataset;
-    RecyclerView recyclerView;
-    LinearLayoutManager linearLayoutManager;
-    long treballador = 0;
-    String fecha = null;
-    String time = null;
-    android.widget.SimpleCursorAdapter adapter;
-    Spinner spinnerTreballadors;
+    private ArrayList<Header_Consulta> myDataset;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private long treballador = 0;
+    private String fecha = null;
+    private String time = null;
+    private android.widget.SimpleCursorAdapter adapter;
+    private Spinner spinnerTreballadors;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -65,13 +64,18 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         // Afegeixo Recycler per instanciar
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
+        //Recull el cursor amb els treballadors de la base de dades i el passa per el mètode
+        //getCursorSpinner per tal d'afegirli la columna amb id=0 i nom=Tots
         Cursor cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
+        //Instància un SimpleCursorAdapter amb el cursor creat anteriorment que mostrarà
+        //les dades de la columna "nom"
         adapter = new android.widget.SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 cursor,
                 new String[]{"nom"}, //Columna del cursor que volem agafar
                 new int[]{android.R.id.text1}, 0);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Afegeix l'adapter al Spinner de treballadors
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -153,6 +157,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         return false;
     }
 
+    /**
+     * Torna el cursor afegint-li una línia extra amb _id = 0 i nom "Tots"
+     * @param cursor cursor al que se li afegeix la nova línia
+     * @return cursor amb nova línia
+     */
     private Cursor getCursorSpinner(Cursor cursor) {
         MatrixCursor extras = new MatrixCursor(new String[]{"_id", "nom"});
         extras.addRow(new String[]{"0", "Tots"});

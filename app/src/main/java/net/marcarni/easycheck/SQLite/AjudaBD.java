@@ -14,13 +14,15 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 /*****************************************************************************************
  *********************************  CREACIÓ DE BASE DE DADES *****************************
  *****************************************************************************************
- *****************************************************************************************
+ ****************************************************************************************/
 
- la classe SQLiteOpenHelper, que és una classe que serveix
- d’ajuda per gestionar la creació de bases de dades i gestió de versions.
- AjudaBD  hereta d’aquesta d’SQLiteOpenHelper s'’ocupa d’obrir la base de dades si aquesta existeix
- o crear-la en cas contrari, i actualitzar-la si és necessari.*/
 
+/**
+ * La classe SQLiteOpenHelper, que és una classe que serveix
+ * d’ajuda per gestionar la creació de bases de dades i gestió de versions.
+ * AjudaBD  hereta d’aquesta d’SQLiteOpenHelper s'’ocupa d’obrir la base de dades si aquesta existeix
+ * o crear-la en cas contrari, i actualitzar-la si és necessari.
+ */
 class AjudaBD extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "easycheck.db";
