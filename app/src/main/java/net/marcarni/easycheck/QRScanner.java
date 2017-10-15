@@ -2,22 +2,13 @@ package net.marcarni.easycheck;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
-import android.Manifest;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -25,12 +16,18 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
-import net.marcarni.easycheck.settings.SettingsActivity;
 
 import java.io.IOException;
 
-public class QRScanner extends MenuAppCompatActivity {
 
+/**
+ * Aquesta Activity hereta de MenuAppCompatActivity per tal de mostrar el menú principal de l'App
+ *
+ * Implementa BarcodeDetector de les Apis de Google que, mitjançant la càmera del dispositiu,
+ * capturarà el primer Codi De Barres (EAN_13 o EAN_8) o codi QR, i en pasarà el contingut a
+ * l'Activity DetallActivity.class en forma de Extra.
+ */
+public class QRScanner extends MenuAppCompatActivity {
 
     private SurfaceView mCameraView;
     private CameraSource mCameraSource;
@@ -41,16 +38,30 @@ public class QRScanner extends MenuAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscanner);
         Intent intentThatStartedThisActivity = getIntent();
+        //Aquesta Activity reb un Extra booleà que indicarà si la opció AutoFocus de la càmera
+        //ha de estar operatiu o no.
         boolean autoFocus = intentThatStartedThisActivity.getBooleanExtra(getString(R.string.auto_focus_extra),true);
         startScanning(autoFocus);
     }
 
+    /**
+     * Engega la càmera del dispositiu i en mostra la captura al SurfaceView
+     * Afegeix una nova instància de BarcodeDetector i l'afegeix al CameraSource
+     * Afegeix els CallBacks al SurfaceView per tal de recollir els esdeveniments recollits
+     * per la intància de BarcodeDetector dins aquesta classe
+     * @param autoFocus opció AutoFocus de la càmera
+     */
     public void startScanning(boolean autoFocus) {
         mCameraView = (SurfaceView) findViewById(R.id.camera);
         mBarcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE | Barcode.EAN_13 | Barcode.EAN_8).build();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mCameraSource = new CameraSource.Builder(this, mBarcodeDetector).setFacing(CameraSource.CAMERA_FACING_BACK).setRequestedPreviewSize(1600, 1024).setAutoFocusEnabled(autoFocus).build();
         mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
+
+            /**
+             * Torna a comprovar que s'han otorgat els permissos corresponents per utilitzar la
+             * camèra del dispositiu
+             * @param holder Holder del SurfaceView que implementa els Callbacks
+             */
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
@@ -71,12 +82,19 @@ public class QRScanner extends MenuAppCompatActivity {
             }
         });
 
+        //S'afegeix una nova instancia de Detector.Processor que serà el que recullirà
+        //les captures de codis de barres o qr
         mBarcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
 
             }
 
+            /**
+             * Quan es reb la primera detecció de codi de barres o QR es tanca aquesta
+             * Activity i se n'envia el contingut a l'Activity DetallActivity.class
+             * @param detections
+             */
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
@@ -92,10 +110,17 @@ public class QRScanner extends MenuAppCompatActivity {
         });
     }
 
+    /**
+     * Aquesta Activity sobreescriu el mètode onMenuItemClick de MenuAppCompatActivity per tal
+     * d'anul·lar l'esdeveniment que truca CheckCameraPermissionsActivity ja que si s'intentas
+     * obrir una segona càmera l'aplicació fallaria
+     * @param item MenuItem seleccionat
+     * @return
+     */
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
         switch (item.getItemId()) {
+            //Si es sel·lecciona l'opció per engegar el QRScanner no fa res
             case R.id.action_qr:
                 return true;
             case R.id.action_dni:
@@ -120,7 +145,9 @@ public class QRScanner extends MenuAppCompatActivity {
         }
     }
 
-
+    /**
+     * Al destruir aquesta Activity es tanca la instància de BarcodeDetector i el CameraSource
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

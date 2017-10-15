@@ -6,21 +6,19 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import net.marcarni.easycheck.R;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
-import net.marcarni.easycheck.settings.SettingsActivity;
 
+/**
+ * Aquesta Activity hereta de MenuAppCompatActivity per tal de mostrar el menú principal de l'App
+ *
+ * Fa les comprovacions preliminars abans de obrir la Activty QRScanner per tal de comprovar si
+ * s'han concedir permissos corresponents per tal d'utilitzar la cámara del dispositiu
+ */
 public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
 
     private static final int REQUEST_CAMERA_PERMISSIONS = 2;
@@ -38,9 +36,14 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
         mTextView.setVisibility(View.INVISIBLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         checkPermissions(null);
-
     }
 
+    /**
+     * Aquest mètode comprova si s'han otorgat els permissos corresponents per tal d'utilitzar
+     * la camera del dispositiu. Si és afirmatiu, llença l'Activity QRScanner.class trucant al mètode
+     * startScanning()
+     * @param view View per tal de gestionar esdeveniments onClick
+     */
     public void checkPermissions(View view){
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (rc == PackageManager.PERMISSION_DENIED) {
@@ -52,6 +55,15 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
         }
     }
 
+    /**
+     * Controla si s'han concedit els permissos corresponents per utilitzar la càmera del dispositiu
+     * En cas negatiu, es mostra un missatge informat a l'usuari i un botó per tal de solicitar
+     * els permisos de nou. En cas afirmatiu es llença l'Activity QRScanner.class trucant al mètode
+     * startScanning()
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -68,6 +80,12 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
         }
     }
 
+    /**
+     * Mètode que llença l'Activty QRScanner.class pasant-li com Extra la preferencia AutoFocus
+     * definida al PreferenceFragment i emmagatzemada a SharedPreferences
+     *
+     * Abans de llençar l'Activty QRScanner.class tanca aquesta.
+     */
     private void startScanning(){
         Intent intent = new Intent(this, QRScanner.class);
         boolean autoFocus = sharedPreferences.getBoolean(getString(R.string.pref_autofocus_key), getResources().getBoolean(R.bool.pref_autofocus_default));
