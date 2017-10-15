@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import net.marcarni.easycheck.SQLite.DBInterface;
 
+/**
+ * Classe provisional on s'haurá d'implementar la pantalla de Login
+ */
 public class MainActivity extends AppCompatActivity {
 
     Button mLoginButton, mExemplesButton;
@@ -78,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*
-* Crea els exemples per tal de provar l'app, l'ordre és important:
-* primer treballador, després servei i per últim reserva, per tal de
-* no crear conflictes amb les claus primaries.
-*/
+    /**
+    * Crea els exemples per tal de provar l'app, l'ordre és important:
+    * primer treballador, després servei i per últim reserva, per tal de
+    * no crear conflictes amb les claus primaries.
+    */
     public void CrearExemplesBD(){
         db.obre();
         db.Esborra();
