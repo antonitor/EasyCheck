@@ -17,20 +17,33 @@ import java.util.ArrayList;
 public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_Consulta.ViewHolder> {
     private ArrayList<Header_Consulta> mDataset;
 
-
+    /**
+     * Constructor de la clase Headeradapter_Consulta
+     * @param myDataset dataSet
+     */
     public HeaderAdapter_Consulta(ArrayList<Header_Consulta> myDataset) {
         mDataset = myDataset;
     }
 
+    /**
+     * Mètode que crea vistes noves (invocades pel gestor de disseny)
+     * @param parent view parent
+     * @param viewType tipus view
+     * @return viewHolder
+     */
     @Override
     public HeaderAdapter_Consulta.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
+        // crea una nova vista
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_consulta, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+        // Estableix la mida de la vista, els marges, els farcits i els paràmetres de disseny
         return  new ViewHolder(v);
     }
-
+    /**
+     * Mètode que reemplaça els continguts d'una vista (invocada pel gestor de disseny)
+     * @param holder holder
+     * @param position posició
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.nomTreballador.setText(mDataset.get(position).getNomTreballador());
@@ -41,7 +54,10 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
         holder.horaFi.setText(mDataset.get(position).getHoraFi());
     }
 
-
+    /**
+     * Mètode per retornar el tamany del dataset invocat per el layout manager
+     * @return tamany de mDataset.
+     */
     @Override
     public int getItemCount() {
        return mDataset.size();
@@ -56,7 +72,10 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
         TextView horaFi;
         View v;
         Context context;
-
+        /**
+         * Constructor de classe statica View Holder
+         * @param v view
+         */
         public ViewHolder(View v) {
             super(v);
             nomTreballador=(TextView)v.findViewById(R.id.nomTreballador);
@@ -71,6 +90,10 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
             v.setOnClickListener(this);
         }
 
+        /**
+         * Mètode per gestionar l'esdeveniment onClick
+         * @param view que interacturarà
+         */
         @Override
         public void onClick(View view) {
           //  Toast.makeText(view.getContext(), idServei.getText().toString(), Toast.LENGTH_LONG).show();
@@ -80,11 +103,12 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
         }
     }
 
+    /**
+     * Mètode per actualitzar el recycler un cop canviat el filtratge.
+     * @param llistaConsultes arrayList
+     */
     public void actualitzaRecycler(ArrayList<Header_Consulta> llistaConsultes) {
         mDataset = llistaConsultes;
         this.notifyDataSetChanged();
-
-
     }
-
 }

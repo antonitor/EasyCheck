@@ -104,6 +104,10 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
     }
 
+    /**
+     * Mètode per gestionar l'esdeveniment onClick
+     * @param view que interacturarà
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -125,6 +129,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         }
     }
 
+    /**
+     * Mètode per gestionar l'esdeveniment onLongClick
+     * @param view que interacturarà
+     * @return false
+     */
     @Override
     public boolean onLongClick(View view) {
         String variable = null, titol = null, vacio = null;
@@ -169,15 +178,14 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         return new MergeCursor(cursors);
     }
 
-    /**
+   /*
+   /**
      * Recull el resultat de CalendarActivity
      *
      * @param requestCode
      * @param resultCode
      * @param intent
-     */
-
-   /* protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         switch (requestCode) {
             case DATE_PICKER_REQUEST:
@@ -192,6 +200,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         }
     }*/
 
+    /**
+     * Mètode per carregar Llistats amb la data y Hora + (treballador opcionalment)
+     */
     public void carregarHoraTreballador() {
         db.obre();
         Cursor cursor;
@@ -209,6 +220,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         db.tanca();
     }
 
+    /**
+     * Mètode per carregar Llistats amb la data + (treballador opcionalment)
+     */
     public void carregarDataTreballador() {
         db.obre();
         Cursor cursor = null;
@@ -225,7 +239,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         }
         db.tanca();
     }
-
+    /**
+     * Mètode per carregar Llistats de tots el treballadors (sense cap filtre)
+     */
     public void llistatSenseFiltre() {
         db.obre();
         myDataset = new ArrayList<Header_Consulta>();
@@ -235,13 +251,18 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         db.tanca();
     }
 
+
     class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
+        /**
+         * Mètode per fer una acció una vegada seleccionat un treballador a l'spinner de treballadors.
+         * @param adapterView adaptador
+         * @param view spinner
+         * @param position posició a l'spinner
+         * @param id correspón a la columna _id de treballadors
+         */
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-            //TODO 3: Recarregar aquí el RecyclerView segons el treballador seleccionat (el paràmetre id correspón a la columna _id de treballadors)
-
-            // Toast.makeText(view.getContext(), "Treballador amb _ID = " + id + " seleccionat.", Toast.LENGTH_SHORT ).show();
             Cursor cursor = null;
             treballador = id;
             if (fecha == null) {
@@ -272,10 +293,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
                     headerAdapter_consulta.actualitzaRecycler(myDataset);
                     db.tanca();
                 }
-
-
             } else if (time == null && fecha != null) {
-
                 if (treballador == 0) {
                     carregarDataTreballador();
                 } else {
@@ -289,6 +307,10 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             }
         }
 
+        /**
+         * Mètode per realitzar una acció quan no hi ha rés seleccionat. Al nostre cas sempre hi ha selecció.
+         * @param adapterView adaptador
+         */
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
         }

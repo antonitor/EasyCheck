@@ -20,33 +20,38 @@ import java.util.ArrayList;
 public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> {
 private ArrayList<Header> mDataset;
 
-// Provide a reference to the views for each data item
-// Complex data items may need more than one view per item, and
-// you provide access to all the views for a data item in a view holder
-
-
-
-    // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * Constructor de la clase Headeradapter
+     * @param myDataset dataSet
+     */
     public HeaderAdapter(ArrayList<Header> myDataset) {
         mDataset = myDataset;
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * Mètode que crea vistes noves (invocades pel gestor de disseny)
+     * @param parent view parent
+     * @param viewType tipus view
+     * @return viewHolder
+     */
     @Override
-    public HeaderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType) {
-        // create a new view
+    public HeaderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // crea una nova vista
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_header, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+        // Estableix la mida de la vista, els marges, els farcits i els paràmetres de disseny
         return  new ViewHolder(v);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * Mètode que reemplaça els continguts d'una vista (invocada pel gestor de disseny)
+     * @param holder holder
+     * @param position posició
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+        // Obteniu un element del vostre conjunt de dades en aquesta posició
+        // Reemplaça els continguts de la vista amb aquest element
         holder.nom.setText(mDataset.get(position).getNom());
         holder.dni.setText(mDataset.get(position).getDni());
         holder.data.setText(mDataset.get(position).getData());
@@ -61,7 +66,10 @@ private ArrayList<Header> mDataset;
         holder.checkText.setText(checkin);
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * Mètode per retornar el tamany del dataset invocat per el layout manager
+     * @return tamany de mDataset.
+     */
     @Override
     public int getItemCount() {
         return mDataset.size();
@@ -70,6 +78,11 @@ private ArrayList<Header> mDataset;
         // nom,dni,data,qr,localitzacio,email,check;
         TextView nom,dni,data,qr,localitzacio,email,check,checkText,servei;
         View v;
+
+        /**
+         * Constructor de classe statica View Holder
+         * @param v view
+         */
         ViewHolder(View v) {
             super(v);
             nom = (TextView) v.findViewById(R.id.nomTreballador);
@@ -84,6 +97,11 @@ private ArrayList<Header> mDataset;
             check.setVisibility(View.GONE);
             v.setOnClickListener(this);
         }
+
+        /**
+         * Mètode per gestionar l'esdeveniment onClick
+         * @param view que interacturarà
+         */
         @Override
         public void onClick(View view) {
             v = view;
