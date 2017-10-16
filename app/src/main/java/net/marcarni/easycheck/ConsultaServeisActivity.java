@@ -99,9 +99,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         if (fecha == null) {
             (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
             (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
-
         }
-
     }
 
     /**
@@ -178,28 +176,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         return new MergeCursor(cursors);
     }
 
-   /*
-   /**
-     * Recull el resultat de CalendarActivity
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param intent
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        switch (requestCode) {
-            case DATE_PICKER_REQUEST:
-                if (resultCode == RESULT_OK) {
-                    String data = intent.getStringExtra("DATA");
-                    fecha = data;
-                    (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
-                    (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
-                    carregarDataTreballador();
-                }
-                break;
-        }
-    }*/
-
     /**
      * Mètode per carregar Llistats amb la data y Hora + (treballador opcionalment)
      */
@@ -250,7 +226,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         headerAdapter_consulta.actualitzaRecycler(myDataset);
         db.tanca();
     }
-
 
     class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
@@ -317,6 +292,11 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
     }
 
+    /**
+     * Mètode per afegir entrada al dataset
+     * @param cursor que conté les dades
+     * @return myDataset
+     */
     public ArrayList mouCursor(Cursor cursor) {
         if (cursor.moveToFirst()) {
             do {
@@ -333,6 +313,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         return myDataset;
     }
 
+    /**
+     * Mètode per comprobar si el treballador es admin
+     */
     public void comprobaAdmin() {
         if (IS_ADMIN == "0") {
             spinnerTreballadors.setVisibility(View.GONE);
@@ -340,6 +323,10 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             spinnerTreballadors.setVisibility(View.VISIBLE);
         }
     }
+
+    /**
+     * Mètode per obrir el TimePickerDialog
+     */
     public void PickerHora(){
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -359,6 +346,10 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         mTimePicker.setTitle("Seleccionar horari");
         mTimePicker.show();
     }
+
+    /**
+     * Mètode per obrir el DataPickerDialog
+     */
     public void PickerData(){
         Calendar mcurrentDate = Calendar.getInstance();
         int mYear = mcurrentDate.get(Calendar.YEAR);

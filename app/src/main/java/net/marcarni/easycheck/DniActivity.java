@@ -30,6 +30,10 @@ public class DniActivity extends MenuAppCompatActivity {
     ValidaDNI validaDni = new ValidaDNI();
     String data_="";
 
+    /**
+     * Mètode onCreate de la classe DniActivity
+     * @param savedInstanceState Buncle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,10 @@ public class DniActivity extends MenuAppCompatActivity {
             textViewData.setText(data);
         }
         buttonCheckIn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Mètode per gestionar l'esdeveniment onClick del view buttonCheckIn
+             * @param view buttonChenckIn
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DniActivity.this,DetallActivity.class);
@@ -79,23 +87,17 @@ public class DniActivity extends MenuAppCompatActivity {
                     } else {
                         Toast.makeText(DniActivity.this, "Introdueix Localitzador!", Toast.LENGTH_LONG).show();
                     }
-
                 }
-
-
             }
         });
         buttonData.setOnClickListener(new View.OnClickListener(){
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /////////////////////////////////////////////////////////////////////////////////////////
-            //////////////              PICKER AÑADIDO      //////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////
-
+            /**
+             * Metode per gestionar l'esdeveniment onClick del view buttonData
+             * @param view buttonData
+             */
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-
                 Calendar mcurrentDate = Calendar.getInstance();
                 int mYear = mcurrentDate.get(Calendar.YEAR);
                 int mMonth = mcurrentDate.get(Calendar.MONTH);
@@ -103,9 +105,14 @@ public class DniActivity extends MenuAppCompatActivity {
 
                 DatePickerDialog mDatePicker;
                 mDatePicker = new DatePickerDialog(DniActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    /**
+                     * Mètode per seleccionar una data del DatePickerDialog
+                     * @param datepicker DatePicker
+                     * @param selectedyear any selccionat
+                     * @param selectedmonth mes seleccionat
+                     * @param selectedday dia seleccionat
+                     */
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                        // TODO Auto-generated method stub
-                    /*      Your code   to get date and time    */
                         selectedmonth = selectedmonth + 1;
                        data_="" + selectedday + "/" + selectedmonth + "/" + selectedyear;
                         textViewData.setText(data_);
@@ -115,34 +122,5 @@ public class DniActivity extends MenuAppCompatActivity {
                 mDatePicker.show();
             }
         });
-
     }
-
-
-
-
-
-               /* Intent intent = new Intent (DniActivity.this,CalendarActivity.class);
-                startActivityForResult(intent, 1); // L'activitat retornarà un resultat.*/
-
-
-   /* public void onActivityResult(int requestCode, int resultCode, Intent intent)
-    {
-        //Comprovem a quina activitat correspon
-        if(requestCode == ACTIVITAT_DATA)
-        {
-            //Si l'activitat ha acabat correctament
-            if(resultCode == RESULT_OK)
-            {
-                //Recollim el text escollit al calendar (format data)
-                String data = intent.getStringExtra("DATA");
-                textViewData.setText(data);
-            }
-        }
-    }*/
-
-
-
-
-
 }

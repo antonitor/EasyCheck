@@ -1,9 +1,7 @@
 package net.marcarni.easycheck;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
@@ -33,6 +31,10 @@ public class QRScanner extends MenuAppCompatActivity {
     private CameraSource mCameraSource;
     private BarcodeDetector mBarcodeDetector;
 
+    /**
+     * Mètode onCreate de la classe QRScanner
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +75,19 @@ public class QRScanner extends MenuAppCompatActivity {
                 }
             }
 
+            /**
+             * @param holder
+             * @param format
+             * @param width
+             * @param height
+             */
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
+            /**
+             * Metode per tancar la camera
+             * @param holder SurfaceHolder
+             */
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
                 mCameraSource.stop();

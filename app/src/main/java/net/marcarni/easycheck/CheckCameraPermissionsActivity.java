@@ -26,6 +26,10 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     private TextView mTextView;
     private SharedPreferences sharedPreferences;
 
+    /**
+     * Mètode onCreate de CheckCameraPermissionsActivity
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

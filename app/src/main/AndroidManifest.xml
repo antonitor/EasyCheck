@@ -48,13 +48,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".CalendarActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.CALENDARACTIVITY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".ConsultaServeisActivity" />
         <activity android:name=".HourActivity"></activity>

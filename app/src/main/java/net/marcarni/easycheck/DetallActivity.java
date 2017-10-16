@@ -23,6 +23,10 @@ public class DetallActivity extends MenuAppCompatActivity {
     private HeaderAdapter headerAdapter;
     ArrayList<Header> myDataset;
 
+    /**
+     * Mètode onCreate de DetallActivity
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +41,13 @@ public class DetallActivity extends MenuAppCompatActivity {
         recyclerView.setAdapter(headerAdapter);
         db = new DBInterface(this);
 
-        /*
-         * Per un correcte funcionament cal llençar "CrearExemplesBD()" el primer cop que
-         * s'instal·la l'app, a continuació comentar aquest mètode i tornar a instal·lar l'app
-         */
         consultes();
         verifica();
     }
+
+    /**
+     * Mètode que verigica si el dataSet es buit, es a dir sino hi ha reserva
+     */
     public void verifica(){
         if (myDataset.isEmpty()){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -59,9 +63,12 @@ public class DetallActivity extends MenuAppCompatActivity {
                             });
             AlertDialog alert = builder.create();
             alert.show();
-
         }
     }
+
+    /**
+     * Mètode per obtenir les dades de l'intent.
+     */
     public void consultes(){
         if (getIntent().hasExtra("LOCALITZADOR")){
             String loc = getIntent().getExtras().getString("LOCALITZADOR");
@@ -87,12 +94,22 @@ public class DetallActivity extends MenuAppCompatActivity {
             Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
         }
     }
+
+    /**
+     * Mètode per obtenir les reserves filtrades per id
+     * @param id_reserva a filtrar
+     */
     public void RetornaReservaId_Reserva(String id_reserva){
         db.obre();
         Cursor cursor=db.RetornaReservaId_Servei(id_reserva);
         CursorBD(cursor);
         db.tanca();
     }
+
+    /**
+     * Mètode per obtenir les reserves filtrades per dni
+     * @param dni a filtrar
+     */
     public void RetornaReservaDNI(String dni) {
         db.obre();
         Cursor cursor=db.RetornaReservaDNI(dni);
@@ -100,20 +117,33 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.tanca();
     }
 
+    /**
+     * Mètode per obtenir les reserves filtrades per dni i data
+     * @param dni a filtrar
+     * @param data a fitrar
+     */
     public void RetornaReservaDNI_DATA(String dni,String data){
-
         db.obre();
         Cursor cursor=db.RetornaReservaDNI_DATA(dni,data);
         CursorBD(cursor);
         db.tanca();
     }
-    public void RetornaReservaDATA(String data){
 
+    /**
+     * Mètode per obtenir les reserves filtrades per data
+     * @param data a filtrar
+     */
+    public void RetornaReservaDATA(String data){
         db.obre();
         Cursor cursor=db.RetornaReservaData(data);
         CursorBD(cursor);
         db.tanca();
     }
+
+    /**
+     * Mètode per obtenir les reserves filtrades per localitzador
+     * @param loc localitzador a filtrar
+     */
     private void RetornaReservaLoc(String loc) {
         Toast.makeText(getBaseContext(), loc, Toast.LENGTH_SHORT).show();
         db.obre();
@@ -122,13 +152,10 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.tanca();
     }
 
-    public void RetornaReserva(String dni, String data){
-
-        Cursor cursor=db.RetornaTotesLesReserves();
-        CursorBD(cursor);
-        db.tanca();
-    }
-
+    /**
+     * Mètode per obtenir les reserves filtrades per QR
+     * @param qrCode a filtrar
+     */
     public void RetornaReservaQR(String qrCode){
         db.obre();
         Cursor cursor=db.RetornaReservaQR(qrCode);
@@ -136,7 +163,10 @@ public class DetallActivity extends MenuAppCompatActivity {
         db.tanca();
     }
 
-
+    /**
+     * Mètode per afegir una nova entrada al dataSet
+     * @param cursor a afegir entrada
+     */
     public void CursorBD(Cursor cursor){
         if(cursor.moveToFirst()){
             do {
@@ -146,7 +176,6 @@ public class DetallActivity extends MenuAppCompatActivity {
                         , cursor.getString(cursor.getColumnIndex(Reserves.EMAIL_TITULAR)),cursor.getString(cursor.getColumnIndex(Reserves.CHECK_IN)),cursor.getString(cursor.getColumnIndex(Serveis.DESCRIPCIO))));
 
             }while(cursor.moveToNext());
-
         }
     }
 }

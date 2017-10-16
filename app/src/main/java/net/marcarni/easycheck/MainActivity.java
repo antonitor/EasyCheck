@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     public static String IS_ADMIN;
     boolean c;
 
+    /**
+     * Mètpde onCreate de la classe princial
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +44,14 @@ public class MainActivity extends AppCompatActivity {
         //Si el gestor per fefecte és QR, el botó login llença l'escaner
         if (defaultMethod.equals(getString(R.string.pref_manager_default_qr_value)) ) {
             mLoginButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Mètode per gestionar l'esdevenimnet onClick del view mLoginButton
+                 * @param view mLoginButton
+                 */
                 @Override
                 public void onClick(View view) {
                     startActivity(new Intent(MainActivity.this, CheckCameraPermissionsActivity.class));
-
-                comprobaAdmin();
-
+                    comprobaAdmin();
                 }
             });
         //Si el gestor per defecte és DNI, el botó login llença dniactivity amb dni
@@ -53,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
             mDniIntent = new Intent(this, DniActivity.class);
             mDniIntent.putExtra("DATO", "DNI");
             mLoginButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Mètode per gestionar l'esdeveniment del view mLogginButton
+                 * @param view mLoginButton
+                 */
                 @Override
                 public void onClick(View view) {
                     startActivity(mDniIntent);
@@ -64,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
             mDniIntent = new Intent(this, DniActivity.class);
             mDniIntent.putExtra("DATO", "LOCALITZADOR");
             mLoginButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Mètode per gestionar l'esdeveniment del view mLogginButton
+                 * @param view mLoginButton
+                 */
                 @Override
                 public void onClick(View view) {
                     startActivity(mDniIntent);
@@ -71,8 +85,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
         mExemplesButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Mètode per gestionar l'esdeveniment del view mExemplesButton
+             * @param view mExemplesButton
+             */
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), "S'han esborrat les dades de la base de dades i s'han tornat a crear.", Toast.LENGTH_SHORT).show();
@@ -115,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         db.InserirReserva("556665","10/3/2017",7,"Nuria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","47169530A");
         db.tanca();
     }
+
+    /**
+     * Mètode per comprovar si el treballador es Admin
+     */
     public void comprobaAdmin(){
         c=isAdmin.isChecked();
         if (c){
