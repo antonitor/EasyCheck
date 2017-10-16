@@ -90,7 +90,6 @@ public class DetallActivity extends MenuAppCompatActivity {
             String id_reserva = getIntent().getExtras().getString("ID_SERVEI");
             RetornaReservaId_Reserva(id_reserva);
         }else {
-            //NO S'HAURÍA D'ARRIBAR A AQUEST PUNT!!!
             Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
         }
     }
