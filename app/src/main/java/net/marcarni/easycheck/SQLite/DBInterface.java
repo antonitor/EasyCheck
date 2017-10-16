@@ -197,16 +197,16 @@ public class DBInterface {
     }
 
     /**
-     * Mètode per actualitzar l'estat del camp check
-     * @param localitzador camp de filtratge
+     * Mètode per actualitzar l'estat del camp check de la reserva segons el seu _id
+     * @param _id camp de filtratge
      */
-    public void ActalitzaCheckInReserva(String localitzador) {
-
+    public void ActalitzaCheckInReserva(int _id) {
+        Log.d("_id ===>>> ", ""+_id);
         Log.d("proba", Boolean.toString(bd.isOpen()));
         ContentValues valores = new ContentValues();
         valores.put(Reserves.CHECK_IN, "1");
-        String where = Reserves.LOCALITZADOR + " like ? ";
-        String[] selection = {localitzador};
+        String where = Reserves._ID + " = ? ";
+        String[] selection = {""+_id};
         bd.update(Reserves.NOM_TAULA, valores, where, selection);
         Log.d("proba", "Actualitzat");
 

@@ -4,6 +4,7 @@ package net.marcarni.easycheck.RecyclerView;
 public class Header{
 
     String nom,dni,data,qr,localitzacio,email,check,servei;
+    int _id;
 
     /**
      * Constructor clase Header
@@ -16,7 +17,8 @@ public class Header{
      * @param check de la reserva
      * @param servei de la reserva
      */
-    public Header(String nom, String dni, String data, String qr, String localitzacio, String email, String check, String servei) {
+    public Header(int _id, String nom, String dni, String data, String qr, String localitzacio, String email, String check, String servei) {
+        this._id = _id;
         this.nom = nom;
         this.dni = dni;
         this.data = data;
@@ -154,4 +156,10 @@ public class Header{
     public void setCheck(String check) {
         this.check = check;
     }
+
+    /**
+     * Metode per obtenir el _id corresponent
+     * @return _id
+     */
+    public int get_id() {return this._id; }
 }

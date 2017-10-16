@@ -52,6 +52,7 @@ private ArrayList<Header> mDataset;
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Obteniu un element del vostre conjunt de dades en aquesta posició
         // Reemplaça els continguts de la vista amb aquest element
+        holder._id = mDataset.get(position).get_id();
         holder.nom.setText(mDataset.get(position).getNom());
         holder.dni.setText(mDataset.get(position).getDni());
         holder.data.setText(mDataset.get(position).getData());
@@ -78,6 +79,7 @@ private ArrayList<Header> mDataset;
         // nom,dni,data,qr,localitzacio,email,check;
         TextView nom,dni,data,qr,localitzacio,email,check,checkText,servei;
         View v;
+        int _id;
 
         /**
          * Constructor de classe statica View Holder
@@ -124,10 +126,9 @@ private ArrayList<Header> mDataset;
                                         check.setText("1");
                                         Log.d("proba", "onClick: "+dni.getText().toString().substring(5,14));
                                         checkText.setText("Check-In:  Realitzat");
-                                        String loc = localitzacio.getText().toString().substring(14,20);
                                         DBInterface db=new DBInterface(v.getContext());
                                         db.obre();
-                                        db.ActalitzaCheckInReserva(loc);
+                                        db.ActalitzaCheckInReserva(_id);
                                         db.tanca();
                                     }
                                 }

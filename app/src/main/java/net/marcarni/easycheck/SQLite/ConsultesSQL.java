@@ -2,10 +2,14 @@ package net.marcarni.easycheck.SQLite;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
+import net.marcarni.easycheck.R;
 import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
+
+import java.util.HashMap;
 
 public class ConsultesSQL {
     String RetornaTotsElsTreballadors ="Select t."+ ContracteBD.Treballador._ID+", t."+ ContracteBD.Treballador.NOM+
@@ -51,12 +55,32 @@ public class ConsultesSQL {
             " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI + "";
 
     /**
-     * Metode per retonar el query
+     * Metode per retonar el query.
+     * Mitjançant un HashMap definim quines columnes es vol agafar entre les dues taules, i amb
+     * el mètode setTables, amb quines taules volem fer un Join
      * @return SQLiteQueryBuilder creat
      */
     public SQLiteQueryBuilder RetornaQuery(){
+
+        HashMap<String, String> gProjectionMap= new HashMap<>();
+        gProjectionMap.put(Reserves._ID,Reserves.NOM_TAULA+"."+Reserves._ID);
+        gProjectionMap.put(Reserves.LOCALITZADOR,Reserves.LOCALITZADOR);
+        gProjectionMap.put(Reserves.NOM_TITULAR,Reserves.NOM_TITULAR);
+        gProjectionMap.put(Reserves.COGNOM2_TITULAR,Reserves.COGNOM2_TITULAR);
+        gProjectionMap.put(Reserves.COGNOM1_TITULAR, Reserves.COGNOM1_TITULAR);
+        gProjectionMap.put(Reserves.EMAIL_TITULAR, Reserves.EMAIL_TITULAR);
+        gProjectionMap.put(Reserves.CHECK_IN, Reserves.CHECK_IN);
+        gProjectionMap.put(Reserves.QR_CODE,Reserves.QR_CODE);
+        gProjectionMap.put(Reserves.DNI_TITULAR, Reserves.DNI_TITULAR);
+        gProjectionMap.put(Serveis.DATA_SERVEI,Serveis.DATA_SERVEI);
+        gProjectionMap.put(Serveis.DESCRIPCIO,Serveis.DESCRIPCIO);
+        gProjectionMap.put(Serveis.HORA_INICI,Serveis.HORA_INICI);
+        gProjectionMap.put(Serveis.HORA_FI,Serveis.HORA_FI);
+
         SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
+        QBuilder.setProjectionMap(gProjectionMap);
         QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = " + Serveis.NOM_TAULA + "." + Serveis._ID);
+
         return QBuilder;
     }
 
