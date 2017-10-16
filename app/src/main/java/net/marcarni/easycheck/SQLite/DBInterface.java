@@ -10,6 +10,8 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 
+import static net.marcarni.easycheck.R.id.dni;
+
 
 public class DBInterface {
     public static final String TAG = "DBInterface";
@@ -196,15 +198,15 @@ public class DBInterface {
 
     /**
      * Mètode per actualitzar l'estat del camp check
-     * @param dni camp de filtratge
+     * @param localitzador camp de filtratge
      */
-    public void ActalitzaCheckInReserva(String dni) {
+    public void ActalitzaCheckInReserva(String localitzador) {
 
         Log.d("proba", Boolean.toString(bd.isOpen()));
         ContentValues valores = new ContentValues();
         valores.put(Reserves.CHECK_IN, "1");
-        String where = Reserves.DNI_TITULAR + " like ? ";
-        String[] selection = {dni};
+        String where = Reserves.LOCALITZADOR + " like ? ";
+        String[] selection = {localitzador};
         bd.update(Reserves.NOM_TAULA, valores, where, selection);
         Log.d("proba", "Actualitzat");
 

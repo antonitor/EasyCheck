@@ -124,10 +124,10 @@ private ArrayList<Header> mDataset;
                                         check.setText("1");
                                         Log.d("proba", "onClick: "+dni.getText().toString().substring(5,14));
                                         checkText.setText("Check-In:  Realitzat");
-                                        String numDni= dni.getText().toString().substring(5,14);
+                                        String loc = localitzacio.getText().toString().substring(14,20);
                                         DBInterface db=new DBInterface(v.getContext());
                                         db.obre();
-                                        db.ActalitzaCheckInReserva(numDni);
+                                        db.ActalitzaCheckInReserva(loc);
                                         db.tanca();
                                     }
                                 }
