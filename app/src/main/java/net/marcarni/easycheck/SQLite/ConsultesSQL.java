@@ -50,11 +50,21 @@ public class ConsultesSQL {
             " and s." + Serveis.DATA_SERVEI + " = ? " +
             " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI + "";
 
+    /**
+     * Metode per retonar el query
+     * @return SQLiteQueryBuilder creat
+     */
     public SQLiteQueryBuilder RetornaQuery(){
         SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
         QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = " + Serveis.NOM_TAULA + "." + Serveis._ID);
         return QBuilder;
     }
+
+    /**
+     * Metode per moure el cursor a la primera posició
+     * @param cursor a moure
+     * @return cursor a retornar
+     */
     public Cursor mouCursor(Cursor cursor){
         if (cursor != null) {
             cursor.moveToFirst();

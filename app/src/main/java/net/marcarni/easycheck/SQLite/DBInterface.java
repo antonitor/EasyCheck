@@ -35,21 +35,34 @@ public class DBInterface {
     private AjudaBD ajuda;
     private SQLiteDatabase bd;
 
+    /**
+     * Mètode constructor de la classe DBInterface
+     * @param con contexte
+     */
     public DBInterface(Context con) {
         this.context = con;
         ajuda = new AjudaBD(context);
     }
 
+    /**
+     * Mètode per obrir la bd
+     * @return this
+     */
     public DBInterface obre() {
         bd = ajuda.getWritableDatabase();
         return this;
     }
 
-    // mètode per tancar la base de dades
+    /**
+     * Mètode per tancar la base de dades
+     */
     public void tanca() {
         ajuda.close();
     }
 
+    /**
+     * Mètode per esborrar les taules de la base de dades
+     */
     public void Esborra() {
         bd.execSQL("drop table if exists " + Reserves.NOM_TAULA + " ;");
         bd.execSQL("drop table if exists " + Serveis.NOM_TAULA + " ;");
@@ -57,6 +70,10 @@ public class DBInterface {
         ajuda.onCreate(bd);
     }
 
+    /**
+     * Mètode per retornar totes les reserves sense filtres
+     * @return cursor amb les reserves a retornar
+     */
     public Cursor RetornaTotesLesReserves() {
 
         String orderBy = Reserves.NOM_TITULAR + " ASC";
@@ -65,15 +82,25 @@ public class DBInterface {
         return cursor;
     }
 
+    /**
+     * Mètode per retornar les reserves que coindideixen amb el dni del client i la data del servei
+     * @param dni del client
+     * @param data del servei
+     * @return cursor amb les reserves a retornar
+     */
     public Cursor RetornaReservaDNI_DATA(String dni, String data) {
 
         String orderBy = Serveis.HORA_INICI + " ASC";
         Cursor  cursor = consulta.RetornaQuery().query(bd, null, Reserves.DNI_TITULAR + " = ? AND " + Serveis.DATA_SERVEI + " = ? ", new String[]{dni, data},null,null,orderBy);
         consulta.mouCursor(cursor);
-
         return cursor;
     }
 
+    /**
+     * Mètode per retornar les reserves que coincideixen amb el identificador del QR de la reserva
+     * @param qr a filtrar
+     * @return cursor amb les reserves a retornar
+     */
     public Cursor RetornaReservaQR(String qr) {
 
         String orderBy = Serveis.HORA_INICI + " ASC";
@@ -82,6 +109,11 @@ public class DBInterface {
         return cursor;
     }
 
+    /**
+     * Mètode per retornar les reserves que coincideixen amb el localitzador de la reserva
+     * @param loc localitzador de la reserva
+     * @return cursor amb les reserves a retornar
+     */
     public Cursor RetornaReservaLocalitzador(String loc) {
 
         String orderBy = Serveis.HORA_INICI + " ASC";
@@ -90,7 +122,11 @@ public class DBInterface {
         return cursor;
     }
 
-
+    /**
+     * Mètode per retornar les reserves que coincideixen amb el dni de la reserva
+     * @param dni de la reserva
+     * @return cursor amb les reserves a retornar
+     */
     public Cursor RetornaReservaDNI(String dni) {
         String orderBy = Serveis.HORA_INICI + " ASC";
         Cursor cursor = consulta.RetornaQuery().query(bd, null, Reserves.DNI_TITULAR + " = ? ", new String[]{dni},null,null,orderBy);
@@ -98,6 +134,21 @@ public class DBInterface {
         return cursor;
     }
 
+    /**
+     * Mètode per inserir una reserva
+     * @param localizador de la reserva
+     * @param fechaReserva data de la reserva
+     * @param idServicio id del servei
+     * @param nombreTitular nom del client
+     * @param apellido1Titular 1 cognom del client
+     * @param apellido2Titular 2 cognom del client
+     * @param telefonoTitular telèfon del client
+     * @param emailTitular email del client
+     * @param qrCode codi qr de la reserva
+     * @param checkIn estat de la reserva
+     * @param dniTitular dni de el client
+     * @return
+     */
     public long InserirReserva(String localizador, String fechaReserva, int idServicio, String nombreTitular,
                                String apellido1Titular, String apellido2Titular, String telefonoTitular,
                                String emailTitular, String qrCode, String checkIn, String dniTitular) {
@@ -117,6 +168,11 @@ public class DBInterface {
         return bd.insert(Reserves.NOM_TAULA, null, initialValues);
     }
 
+    /**
+     * Mètode per retornar les reserves filtrades per una data concreta
+     * @param data per filtrar
+     * @return cursor amb les reserves a retornar
+     */
     public Cursor RetornaReservaData(String data) {
 
         String orderBy = Serveis.HORA_INICI + " ASC";
@@ -124,14 +180,24 @@ public class DBInterface {
         consulta.mouCursor(cursor);
         return cursor;
     }
-    public Cursor RetornaReservaId_Servei(String idServei) {
 
+    /**
+     * Mètode per retornar totes les reserves d'un servei
+     * @param idServei a filtrar
+     * @return cursor amb les reserves a retornar
+     */
+    public Cursor RetornaReservaId_Servei(String idServei) {
 
         String orderBy = Serveis.HORA_INICI + " ASC";
         Cursor cursor =consulta.RetornaQuery().query(bd, null, Reserves.ID_SERVEI + " = ? ", new String[]{idServei},null,null,orderBy);
         consulta.mouCursor(cursor);
         return cursor;
     }
+
+    /**
+     * Mètode per actualitzar l'estat del camp check
+     * @param dni camp de filtratge
+     */
     public void ActalitzaCheckInReserva(String dni) {
 
         Log.d("proba", Boolean.toString(bd.isOpen()));
@@ -144,9 +210,17 @@ public class DBInterface {
 
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////   TREBALLADORS   //////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                             /** TREBALLADORS */
+
+    /**
+     * Mètode per inserir Treballadors
+     * @param nom del treballador
+     * @param cognom1 del treballador
+     * @param cognom2 del treballador
+     * @param login del treballador
+     * @param admin camp per verificar si el treballador es admin o no
+     * @return posicio a taula treballadors
+     */
     public long InserirTreballador(String nom, String cognom1, String cognom2, String login, String admin) {
 
         ContentValues initialValues = new ContentValues();
@@ -159,25 +233,34 @@ public class DBInterface {
         return bd.insert(Treballador.NOM_TAULA, null, initialValues);
     }
 
-    // array amb tots els atributs de la classe treballador
+    /**
+     * Mètode per obtenir tots els atributs de els trebalaldors
+     * @return  array amb tots els atributs de la classe treballador
+     */
     public String[] arrayTreballadors() {
         String[] Treballadors = {Treballador._ID, Treballador.NOM, Treballador.COGNOM1, Treballador.COGNOM2, Treballador.LOGIN, Treballador.ADMIN};
         return Treballadors;
     }
 
-    //Query que retorna tots els treballadors
+    /**
+     * Query que retorna tots els treballadors
+     * @return cursors amb tots els treballadors
+     */
     public Cursor RetornaTotsElsTreballadors() {
-
         return bd.rawQuery(consulta.RetornaTotsElsTreballadors,null);
-
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////    SERVEIS   //////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                        /** SERVEIS **/
 
-
-
+    /**
+     *
+     * @param descripcio del servei
+     * @param idTreballador que realitzarà el servei
+     * @param dataServei a realitzar
+     * @param horaInici del servei a realitzar
+     * @param horaFi del servei a realitzar
+     * @return posició del servei a la taula
+     */
     public long InserirServei(String descripcio, String idTreballador, String dataServei, String horaInici, String horaFi) {
 
         ContentValues initialValues = new ContentValues();
@@ -190,46 +273,65 @@ public class DBInterface {
         return bd.insert(Serveis.NOM_TAULA, null, initialValues);
     }
 
+    /**
+     * Mètode per retornar tots els serveis sense filtrat.
+     * @return cursor amb els serveis a retornar
+     */
     public Cursor RetornaTotsElsServeis() {
         return bd.rawQuery(consulta.RetornaTotsElsServeis, null);
     }
 
+    /**
+     * Metode per retornar els serveis d'un treballador
+     * @param id del treballador a filtrar
+     * @return cursor amb els serveis a retornar
+     */
     public Cursor RetornaServei_Treballador(int id) {
-
         String[] args = new String[]{String.valueOf(id)};
         return bd.rawQuery(consulta.RetornaServeiTreballadorPerID, args);
-
-
     }
+
+    /**
+     * Mètode per retornar els serveis filtrats per treballador i data
+     * @param id del treballador a filtrar
+     * @param data a filtrar
+     * @return cursor amb els serveis a retornar
+     */
     public Cursor RetornaServei_Treballador_data(int id,String data) {
         String[] args = new String[]{String.valueOf(id), data};
         return bd.rawQuery(consulta.RetornaServeiPerID_DATA, args);
-
     }
+
+    /**
+     * Mètode per retornar serveis filtrats per treballador, data i hora.
+     * @param id del treballador a filrar
+     * @param data a filtrar
+     * @param hora a filtrar
+     * @return cursor amb els serveis a retornar
+     */
     public Cursor RetornaServei_Treballador_data_hora(int id,String data,String hora) {
         String[] args = new String[]{String.valueOf(id), data,hora};
         return bd.rawQuery(consulta.RetornaServei_Treballador_data_hora, args);
-
     }
+
+    /**
+     * Mètode per retornar els serveis filtrats per data i hora
+     * @param data a filtrar
+     * @param hora a filtrar
+     * @return cursor amb els serveis a retornar
+     */
     public Cursor RetornaServei_data_hora(String data,String hora) {
         String[] args = new String[]{data,hora};
         return bd.rawQuery(consulta.RetornaServei_data_hora, args);
     }
-    public Cursor RetornaServei_data(String data) {
 
+    /**
+     * Mètode per retornar els serveis filtrats per data
+     * @param data a filtrar
+     * @return cursor amb els serveis a retornar
+     */
+    public Cursor RetornaServei_data(String data) {
         String[] args = new String[]{data};
         return bd.rawQuery(consulta.RetornaServeiData, args);
-
     }
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void proba() {
-        Log.d("proba", "Conectat!");
-        Log.d("proba", Boolean.toString(bd.isOpen()));
-    }
-
-
-
 }
