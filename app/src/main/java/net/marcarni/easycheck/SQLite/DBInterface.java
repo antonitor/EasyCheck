@@ -209,7 +209,6 @@ public class DBInterface {
         String[] selection = {""+_id};
         bd.update(Reserves.NOM_TAULA, valores, where, selection);
         Log.d("proba", "Actualitzat");
-
     }
 
                                              /** TREBALLADORS */

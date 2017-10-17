@@ -24,12 +24,12 @@ import static android.content.ContentValues.TAG;
  * AjudaBD  hereta d’aquesta d’SQLiteOpenHelper s'’ocupa d’obrir la base de dades si aquesta existeix
  * o crear-la en cas contrari, i actualitzar-la si és necessari.
  */
-class AjudaBD extends SQLiteOpenHelper {
+public class AjudaBD extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "easycheck.db";
     private static final int DATABASE_VERSION = 1;
 
-    AjudaBD(Context con)
+    public AjudaBD(Context con)
     {
         super(con, DATABASE_NAME, null, DATABASE_VERSION);
     }
