@@ -101,6 +101,7 @@ private ArrayList<Header> mDataset;
         }
 
         /**
+         * Created by Carlos
          * Mètode per gestionar l'esdeveniment onClick
          * @param view que interacturarà
          */

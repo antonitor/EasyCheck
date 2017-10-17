@@ -78,7 +78,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         //Afegeix l'adapter al Spinner de treballadors
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        /**
+         * Created by Carlos
+         */
         (findViewById(R.id.cancelar_filtros)).setOnClickListener(this);
         (findViewById(R.id.seleccionar_data)).setOnClickListener(this);
         (findViewById(R.id.seleccionar_data)).setOnLongClickListener(this);
@@ -103,6 +105,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
+     * Created by Carlos
      * Mètode per gestionar l'esdeveniment onClick
      * @param view que interacturarà
      */
@@ -128,6 +131,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
+     * Created by Carlos
      * Mètode per gestionar l'esdeveniment onLongClick
      * @param view que interacturarà
      * @return false
@@ -177,6 +181,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
+     * Created by Carlos
      * Mètode per carregar Llistats amb la data y Hora + (treballador opcionalment)
      */
     public void carregarHoraTreballador() {
@@ -197,6 +202,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
+     * Created by Carlos
      * Mètode per carregar Llistats amb la data + (treballador opcionalment)
      */
     public void carregarDataTreballador() {
@@ -216,6 +222,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         db.tanca();
     }
     /**
+     * Created by Carlos
      * Mètode per carregar Llistats de tots el treballadors (sense cap filtre)
      */
     public void llistatSenseFiltre() {
@@ -238,6 +245,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
          */
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            /**
+             * Created by Carlos
+             */
             Cursor cursor = null;
             treballador = id;
             if (fecha == null) {
@@ -348,6 +358,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
+     * Created by Carlos
      * Mètode per obrir el DataPickerDialog
      */
     public void PickerData(){

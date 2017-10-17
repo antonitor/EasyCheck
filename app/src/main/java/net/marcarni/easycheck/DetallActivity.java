@@ -24,6 +24,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     ArrayList<Header> myDataset;
 
     /**
+     * Created by Carlos
      * Mètode onCreate de DetallActivity
      * @param savedInstanceState Bundle
      */
@@ -46,6 +47,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode que verigica si el dataSet es buit, es a dir sino hi ha reserva
      */
     public void verifica(){
@@ -67,6 +69,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per obtenir les dades de l'intent.
      */
     public void consultes(){
@@ -95,6 +98,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per obtenir les reserves filtrades per id
      * @param id_reserva a filtrar
      */
@@ -106,6 +110,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per obtenir les reserves filtrades per dni
      * @param dni a filtrar
      */
@@ -117,6 +122,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per obtenir les reserves filtrades per dni i data
      * @param dni a filtrar
      * @param data a fitrar
@@ -129,6 +135,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per obtenir les reserves filtrades per data
      * @param data a filtrar
      */
@@ -140,11 +147,12 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per obtenir les reserves filtrades per localitzador
      * @param loc localitzador a filtrar
      */
     private void RetornaReservaLoc(String loc) {
-        Toast.makeText(getBaseContext(), loc, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getBaseContext(), loc, Toast.LENGTH_SHORT).show();
         db.obre();
         Cursor cursor=db.RetornaReservaLocalitzador(loc);
         CursorBD(cursor);
@@ -152,6 +160,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per obtenir les reserves filtrades per QR
      * @param qrCode a filtrar
      */
@@ -163,6 +172,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Carlos
      * Mètode per afegir una nova entrada al dataSet
      * @param cursor a afegir entrada
      */
