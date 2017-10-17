@@ -2,9 +2,7 @@ package net.marcarni.easycheck.SQLite;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.util.Log;
 
-import net.marcarni.easycheck.R;
 import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
@@ -19,40 +17,48 @@ public class ConsultesSQL {
             ", s." + ContracteBD.Serveis.DESCRIPCIO + ", r." + ContracteBD.Reserves.ID_SERVEI + ", s." + ContracteBD.Serveis.DATA_SERVEI+", s." + Serveis.HORA_INICI+", s." + Serveis.HORA_FI+
             " FROM " + ContracteBD.Serveis.NOM_TAULA + " s " +
             " LEFT JOIN  " + ContracteBD.Treballador.NOM_TAULA + " t ON t." + ContracteBD.Treballador._ID + " = s." + ContracteBD.Serveis.ID_TREBALLADOR +
-            " LEFT join " + ContracteBD.Reserves.NOM_TAULA + " r  ON s." + ContracteBD.Serveis._ID + " = r." + ContracteBD.Reserves.ID_SERVEI +"";
+            " LEFT join " + ContracteBD.Reserves.NOM_TAULA + " r  ON s." + ContracteBD.Serveis._ID + " = r." + ContracteBD.Reserves.ID_SERVEI +
+            " ORDER BY s." + Serveis.DATA_SERVEI+"";
 
     String RetornaServeiTreballadorPerID= "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
             ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI+", s." + Serveis.HORA_INICI+", s." + Serveis.HORA_FI+
             " FROM " + Serveis.NOM_TAULA + " s " +
             " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
             " and t."+ Treballador._ID+"= ?" +
-            " LEFT join " +  Reserves.NOM_TAULA  +" r  on s."+ Serveis._ID+" = r."+ Reserves.ID_SERVEI +"";
+            " LEFT join " +  Reserves.NOM_TAULA  +" r  on s."+ Serveis._ID+" = r."+ Reserves.ID_SERVEI +
+            " ORDER BY s." + Serveis.DATA_SERVEI+"";
+
     String  RetornaServeiPerID_DATA = "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
             ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI + ", s." + Serveis.HORA_INICI + ", s." + Serveis.HORA_FI +
             " FROM " + Serveis.NOM_TAULA + " s " +
             " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
             " and t." + Treballador._ID + "= ? and s." + Serveis.DATA_SERVEI + " = ? " +
-            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI + "";
+            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI +
+            " ORDER BY s." + Serveis.DATA_SERVEI+"";
 
     String RetornaServei_Treballador_data_hora = "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
             ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI + ", s." + Serveis.HORA_INICI + ", s." + Serveis.HORA_FI +
             " FROM " + Serveis.NOM_TAULA + " s " +
             " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
             " and t." + Treballador._ID + "= ? and s." + Serveis.DATA_SERVEI + " = ? and s."+ Serveis.HORA_INICI+" = ? " +
-            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI + "";
+            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI +
+            " ORDER BY s." + Serveis.DATA_SERVEI+"";
 
     String RetornaServei_data_hora = "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
             ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI + ", s." + Serveis.HORA_INICI + ", s." + Serveis.HORA_FI +
             " FROM " + Serveis.NOM_TAULA + " s " +
             " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
             " and s." + Serveis.DATA_SERVEI + " = ? and s."+ Serveis.HORA_INICI+" = ? " +
-            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI + "";
+            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI +
+            " ORDER BY s." + Serveis.DATA_SERVEI+"";
+
     String RetornaServeiData= "Select distinct t." + Treballador.NOM + ", t." + Treballador.COGNOM1 + ", t." + Treballador.COGNOM2 +
             ", s." + Serveis.DESCRIPCIO + ", r." + Reserves.ID_SERVEI + ", s." + Serveis.DATA_SERVEI + ", s." + Serveis.HORA_INICI + ", s." + Serveis.HORA_FI +
             " FROM " + Serveis.NOM_TAULA + " s " +
             " JOIN " + Treballador.NOM_TAULA + " t ON t." + Treballador._ID + " = s." + Serveis.ID_TREBALLADOR +
             " and s." + Serveis.DATA_SERVEI + " = ? " +
-            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI + "";
+            " LEFT join " + Reserves.NOM_TAULA + " r  on s." + Serveis._ID + " = r." + Reserves.ID_SERVEI +
+            " ORDER BY s." + Serveis.DATA_SERVEI+"";
 
     /**
      * Metode per retonar el query.
