@@ -1,5 +1,8 @@
 package net.marcarni.easycheck.eines;
 
+/**
+ * Created by Carlos
+ */
 public class ValidaDNI {
     /**
      * Métode que retorna true o false si el dni pasat per parametre es vàlid

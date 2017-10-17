@@ -31,6 +31,7 @@ public class DniActivity extends MenuAppCompatActivity {
     String data_="";
 
     /**
+     * Created by Carlos
      * Mètode onCreate de la classe DniActivity
      * @param savedInstanceState Buncle
      */
@@ -62,6 +63,7 @@ public class DniActivity extends MenuAppCompatActivity {
         }
         buttonCheckIn.setOnClickListener(new View.OnClickListener() {
             /**
+             * Created by Carlos
              * Mètode per gestionar l'esdeveniment onClick del view buttonCheckIn
              * @param view buttonChenckIn
              */
@@ -92,6 +94,7 @@ public class DniActivity extends MenuAppCompatActivity {
         });
         buttonData.setOnClickListener(new View.OnClickListener(){
             /**
+             * Created by Carlos
              * Metode per gestionar l'esdeveniment onClick del view buttonData
              * @param view buttonData
              */
