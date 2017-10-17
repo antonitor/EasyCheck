@@ -12,7 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -144,5 +145,34 @@ public class BDInterfaceTest {
         assertTrue(checkIn.equals("1"));
         db.tanca();
     }
+    @Test
+    public void inserirTreballador() throws Exception {
+        db = new DBInterface(mContext);
+        db.obre();
+        db.Esborra();
+        // nom - cognom1 - cognom2 - login - esAdmin
+       long treb= db.InserirTreballador("Pep","Barrau","Roig","sanfumut","1");
+        assertEquals(1,treb);
+        db.tanca();
+    }
+    @Test
+    public void inserirReserva()throws Exception{
 
+        db = new DBInterface(mContext);
+        db.obre();
+        db.Esborra();
+        long reserva= db.InserirReserva("123459","16/1/2017",1,"Pepa","Monda","Suiss","12345678","maria@gmail.com","45R545WE45","0","41471860P");
+        assertEquals(1,reserva);
+        db.tanca();
+    }
+    @Test
+    public void inserirServei()throws Exception{
+
+        db = new DBInterface(mContext);
+        db.obre();
+        db.Esborra();
+        long servei= db.InserirServei("Paris - Roma", "1","29/12/2017","10:00","11:00");
+        assertEquals(1,servei);
+        db.tanca();
+    }
 }

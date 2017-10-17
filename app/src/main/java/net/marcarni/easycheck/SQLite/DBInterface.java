@@ -10,8 +10,6 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 
-import static net.marcarni.easycheck.R.id.dni;
-
 
 public class DBInterface {
     public static final String TAG = "DBInterface";
@@ -335,4 +333,5 @@ public class DBInterface {
         String[] args = new String[]{data};
         return bd.rawQuery(consulta.RetornaServeiData, args);
     }
+
 }
