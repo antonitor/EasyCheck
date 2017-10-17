@@ -11,9 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * Created by Maria on 17/10/2017.
- */
 @RunWith(AndroidJUnit4.class)
 public class DetallActivityTest {
 
