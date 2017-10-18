@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         // descripcio  - idTreballador - dataServei - horaInici - horaFi
         db.InserirServei("Tarragona - Reus", "3","29/10/2017","10:00","11:00");
         db.InserirServei("Sabadell - Girona", "3","31/1/2018","23:00","00:00");
-        db.InserirServei("Barcelona - Seu d'urgell", "3","29/10/2017","10:00","17:00");
+        db.InserirServei("Barcelona - Seu d'urgell", "3","29/10/2017","12:00","17:00");
         db.InserirServei("Barcelona - Reus", "2","29/10/2017","12:00","16:00");
         db.InserirServei("Eivissa - Formentera", "2","19/11/2017","20:00","21:00");
         db.InserirServei("Formentera - Eivissa", "2","20/11/2017","08:00","10:00");
