@@ -18,6 +18,8 @@ import net.marcarni.easycheck.settings.MenuAppCompatActivity;
  *
  * Fa les comprovacions preliminars abans de obrir la Activty QRScanner per tal de comprovar si
  * s'han concedir permissos corresponents per tal d'utilitzar la cámara del dispositiu
+ *
+ *  @author Antoni Torres Marí
  */
 public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
 
@@ -27,6 +29,9 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     /**
+     *
+     * Created by Antoni Torres Marí
+     *
      * Mètode onCreate de CheckCameraPermissionsActivity
      * @param savedInstanceState Bundle
      */
@@ -43,6 +48,8 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Aquest mètode comprova si s'han otorgat els permissos corresponents per tal d'utilitzar
      * la camera del dispositiu. Si és afirmatiu, llença l'Activity QRScanner.class trucant al mètode
      * startScanning()
@@ -60,6 +67,8 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Controla si s'han concedit els permissos corresponents per utilitzar la càmera del dispositiu
      * En cas negatiu, es mostra un missatge informat a l'usuari i un botó per tal de solicitar
      * els permisos de nou. En cas afirmatiu es llença l'Activity QRScanner.class trucant al mètode
@@ -85,6 +94,8 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Mètode que llença l'Activty QRScanner.class pasant-li com Extra la preferencia AutoFocus
      * definida al PreferenceFragment i emmagatzemada a SharedPreferences
      *

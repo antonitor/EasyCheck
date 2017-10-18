@@ -6,6 +6,8 @@ import android.preference.PreferenceFragment;
 import net.marcarni.easycheck.R;
 
 /**
+ * Created by Antoni Torres Marí
+ *
  * Classe que hereta de PreferenceFragment. Serà l'encarregat de gestionar les preferencies
  * generals de l'aplicació
  */

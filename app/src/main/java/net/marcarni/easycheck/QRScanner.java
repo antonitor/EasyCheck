@@ -24,6 +24,8 @@ import java.io.IOException;
  * Implementa BarcodeDetector de les Apis de Google que, mitjançant la càmera del dispositiu,
  * capturarà el primer Codi De Barres (EAN_13 o EAN_8) o codi QR, i en pasarà el contingut a
  * l'Activity DetallActivity.class en forma de Extra.
+ *
+ * @Author Antoni Torres Marí
  */
 public class QRScanner extends MenuAppCompatActivity {
 
@@ -32,6 +34,8 @@ public class QRScanner extends MenuAppCompatActivity {
     private BarcodeDetector mBarcodeDetector;
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Mètode onCreate de la classe QRScanner
      * @param savedInstanceState Bundle
      */
@@ -47,6 +51,8 @@ public class QRScanner extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Engega la càmera del dispositiu i en mostra la captura al SurfaceView
      * Afegeix una nova instància de BarcodeDetector i l'afegeix al CameraSource
      * Afegeix els CallBacks al SurfaceView per tal de recollir els esdeveniments recollits
@@ -60,6 +66,8 @@ public class QRScanner extends MenuAppCompatActivity {
         mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
 
             /**
+             * Created by Antoni Torres Marí
+             *
              * Torna a comprovar que s'han otorgat els permissos corresponents per utilitzar la
              * camèra del dispositiu
              * @param holder Holder del SurfaceView que implementa els Callbacks
@@ -75,17 +83,13 @@ public class QRScanner extends MenuAppCompatActivity {
                 }
             }
 
-            /**
-             * @param holder
-             * @param format
-             * @param width
-             * @param height
-             */
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
             /**
-             * Metode per tancar la camera
+             * Created by Antoni Torres Marí
+             *
+             * Metode que tanca la camera quan es finalitza l'Activity
              * @param holder SurfaceHolder
              */
             @Override
@@ -103,6 +107,8 @@ public class QRScanner extends MenuAppCompatActivity {
             }
 
             /**
+             * Created by Antoni Torres Marí
+             *
              * Quan es reb la primera detecció de codi de barres o QR es tanca aquesta
              * Activity i se n'envia el contingut a l'Activity DetallActivity.class
              * @param detections
@@ -123,6 +129,8 @@ public class QRScanner extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Aquesta Activity sobreescriu el mètode onMenuItemClick de MenuAppCompatActivity per tal
      * d'anul·lar l'esdeveniment que truca CheckCameraPermissionsActivity ja que si s'intentas
      * obrir una segona càmera l'aplicació fallaria
@@ -158,6 +166,8 @@ public class QRScanner extends MenuAppCompatActivity {
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Al destruir aquesta Activity es tanca la instància de BarcodeDetector i el CameraSource
      */
     @Override

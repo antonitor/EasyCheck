@@ -64,6 +64,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         // Afegeixo Recycler per instanciar
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
+        /*
+         * Created by Antoni Torres Marí
+         */
         //Recull el cursor amb els treballadors de la base de dades i el passa per el mètode
         //getCursorSpinner per tal d'afegirli la columna amb id=0 i nom=Tots
         Cursor cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
@@ -78,6 +81,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         //Afegeix l'adapter al Spinner de treballadors
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         /**
          * Created by Carlos
          */
@@ -169,6 +173,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Torna el cursor afegint-li una línia extra amb _id = 0 i nom "Tots"
      * @param cursor cursor al que se li afegeix la nova línia
      * @return cursor amb nova línia

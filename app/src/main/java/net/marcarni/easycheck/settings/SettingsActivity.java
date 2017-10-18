@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import net.marcarni.easycheck.R;
 
 /**
+ * Created by Antoni Torres Marí
+ *
  * Activity encarregade de contenir el SettingsFragment
  */
 public class SettingsActivity extends AppCompatActivity {
@@ -19,6 +21,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Mostra el botó enrere al ToolBar
      * @param item item seleccionat al Toolbar
      * @return

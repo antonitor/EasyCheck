@@ -17,10 +17,14 @@ import net.marcarni.easycheck.R;
  * Aquesta clase hereta d'AppCompatActivty a l'hora que implementa PopupMenu.OnItemClickListener.
  * Afegeix el menú principal amb Logout i Settings, i dos PopupMenu, un pels gestors de reserves
  * i l'altre per les consultes de serveis, i gestiona els corresponents Listeners.
+ *
+ * @author Antoni Torres Marí
  */
 public class MenuAppCompatActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Infla el menú principal main.xml
      * @param menu menú de la toolbar
      * @return true
@@ -32,6 +36,8 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Gestiona l'esdeveniment quan es selecciona un MenuItem del menú principal
      * @param item MenuItem seleccionat
      * @return true si s'ha capturat un dels items del menú
@@ -62,6 +68,8 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * De aquet View que pasem per paràmetre s'hi desplega un PopupMenú inflat amb el recurs
      * gestor_submenu.xml i s'hi afegeix el listener PopupMenu.OnMenuItemClickListener que implementa
      * aquesta clase
@@ -75,6 +83,8 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
     }
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * De aquet View que pasem per paràmetre s'hi desplega un PopupMenú inflat amb el recurs
      * consultes_submenu.xml i s'hi afegeix el listener PopupMenu.OnMenuItemClickListener que implementa
      * aquesta clase
@@ -89,6 +99,8 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
 
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Metode implementat de l'interfície PopupMenu.OnMenuItemClickListener que gestiona els
      * esdeveniments que es llençen al premer un dels items d'un dels PopupMenu
      *

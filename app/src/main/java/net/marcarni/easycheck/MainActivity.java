@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     boolean c;
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Mètpde onCreate de la classe princial
      * @param savedInstanceState Bundle
      */
