@@ -12,6 +12,12 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 
 import static android.content.ContentValues.TAG;
 
+
+/**
+ * @author Maria Remedios Ortega
+ *
+ */
+
 /*****************************************************************************************
  *********************************  CREACIÓ DE BASE DE DADES *****************************
  *****************************************************************************************

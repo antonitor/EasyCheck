@@ -8,6 +8,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+
+/**
+ * @author  Carlos
+ *
+ * Comprovació del funcionament per validar numeració correcta del DNI
+ */
 @RunWith(AndroidJUnit4.class)
 public class ValidarDniTest {
 

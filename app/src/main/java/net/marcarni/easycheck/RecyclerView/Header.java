@@ -1,5 +1,14 @@
 package net.marcarni.easycheck.RecyclerView;
 
+/**
+ * @author Maria Remedios Ortega
+ *
+ *
+ *
+ * Aquesta classe esta creada per representar l'objecte amb que el adaptador del Recycler
+ * treballarà. Definirem els atributs i mètodes necessaris.
+ */
+
 
 public class Header{
 

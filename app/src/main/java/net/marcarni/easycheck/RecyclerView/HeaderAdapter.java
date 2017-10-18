@@ -16,6 +16,13 @@ import net.marcarni.easycheck.SQLite.DBInterface;
 
 import java.util.ArrayList;
 
+/**
+ * @author Maria  Remedios Ortega Cobos
+ *
+ * Classe adaptador que segueix el patró de disseny viewHolder i defineix classe interna que extend
+ * de RecyclerView.ViewHolder
+ */
+
 
 public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> {
 private ArrayList<Header> mDataset;

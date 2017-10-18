@@ -10,7 +10,13 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 
-
+/**
+ * @author Maria Remedios Ortega
+ *
+ * Classe per crear la base de dades amb ajuda de la classe AjudaBD
+ * i retornar consultes de dades emmagatzemada a la base de dades.
+ *
+ */
 public class DBInterface {
     public static final String TAG = "DBInterface";
     ConsultesSQL consulta=new ConsultesSQL();
