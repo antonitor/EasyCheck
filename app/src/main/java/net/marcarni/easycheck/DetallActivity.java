@@ -1,7 +1,9 @@
 package net.marcarni.easycheck;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,14 +45,14 @@ public class DetallActivity extends MenuAppCompatActivity {
         db = new DBInterface(this);
 
         consultes();
-        verifica();
+        verifica(this);
     }
 
     /**
      * Created by Carlos
      * Mètode que verigica si el dataSet es buit, es a dir sino hi ha reserva
      */
-    public void verifica(){
+    public void verifica(final Context context){
         if (myDataset.isEmpty()){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Reserva no trobada!")
@@ -60,6 +62,10 @@ public class DetallActivity extends MenuAppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    if (getIntent().hasExtra(getString(R.string.scanner_result))) {
+                                        Intent intent = new Intent(context, CheckCameraPermissionsActivity.class);
+                                        startActivity(intent);
+                                    }
                                     finish();
                                 }
                             });
