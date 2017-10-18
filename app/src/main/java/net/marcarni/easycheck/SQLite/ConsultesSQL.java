@@ -61,9 +61,14 @@ public class ConsultesSQL {
             " ORDER BY s." + Serveis.DATA_SERVEI+"";
 
     /**
-     * Metode per retonar el query.
+     * Created by Antoni Torres Marí
+     *
+     * Metode per retonar el query que recollirà tots els treballadors junt amb la data i hora del
+     * servei al qual estàn lligats.
+     *
      * Mitjançant un HashMap definim quines columnes es vol agafar entre les dues taules, i amb
      * el mètode setTables, amb quines taules volem fer un Join
+     *
      * @return SQLiteQueryBuilder creat
      */
     public SQLiteQueryBuilder RetornaQuery(){

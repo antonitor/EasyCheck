@@ -3,6 +3,8 @@ package net.marcarni.easycheck.SQLite;
 import android.provider.BaseColumns;
 
 /**
+ * Created by Antoni Torres Marí
+ *
  * Una classe Contract és un contenidor per constants que defineixen noms d'URI (identificadors
  * uniformes de recursos), taules i columnes. La classe Contract et permet utilitzar les mateixes
  * constants en totes les altres classes del mateix paquet. Això et permet canviar el nom d'una
@@ -11,6 +13,8 @@ import android.provider.BaseColumns;
 public class ContracteBD {
 
     /**
+     * Created by Antoni Torres Marí
+     *
      * Per prevenir que algú accidentalment instancii aquest contracte,
      * el constructor s'ha fet private
      */
