@@ -53,16 +53,24 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_serveis);
-        myDataset = new ArrayList<>();
-        headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
-        db = new DBInterface(this);
-        db.obre();
+
         //Configuració del toolbar amb els filtres
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         editToolbar.inflateMenu(R.menu.toolbar_menu);
         spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
-        // Afegeixo Recycler per instanciar
+
+
+        /**
+         * Created by Maria Remedios Ortega
+         * Instanciació del Recycler i de l'arrayList
+         */
+
+        myDataset = new ArrayList<>();
+        headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
+        db = new DBInterface(this);
+        db.obre();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
+
 
         /*
          * Created by Antoni Torres Marí
@@ -96,12 +104,18 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             spinnerTreballadors.setOnItemSelectedListener(new myOnItemSelectedListener());
             spinnerTreballadors.setVisibility(View.VISIBLE);
         }
+
+        /**
+         *  Implementat by Maria
+         *  Afegim Recycler, adaptador i comprovem si es administrador
+         */
         comprobaAdmin();
-        // Afegim Recycler
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(headerAdapter_consulta);
         db.tanca();
+
+
         if (fecha == null) {
             (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
             (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
@@ -330,7 +344,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Mètode per comprobar si el treballador es admin
+     *  @author Maria Remedios Ortega
+     *  Mètode per comprobar si el treballador es admin
      */
     public void comprobaAdmin() {
         if (IS_ADMIN == "0") {
@@ -341,7 +356,9 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Mètode per obrir el TimePickerDialog
+     * @author Maria Remedios Ortega
+     * Mètode per obrir el TimePickerDialog, seleccionar la hora i retornarla
+     * per consulta posterior.
      */
     public void PickerHora(){
         Calendar mcurrentTime = Calendar.getInstance();

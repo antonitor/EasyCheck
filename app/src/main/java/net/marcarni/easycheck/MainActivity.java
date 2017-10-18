@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Created by Maria Remedios Ortega
+     *
     * Crea els exemples per tal de provar l'app, l'ordre és important:
     * primer treballador, després servei i per últim reserva, per tal de
     * no crear conflictes amb les claus primaries.
@@ -145,7 +147,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Created by Maria Remedios Ortega
+     *
      * Mètode per comprovar si el treballador es Admin
+     * Aquest mètode es temporal, posteriorment quan s'implementi la
+     * base de dades al servidor, s'haurà de sustituir o replantejar
+     * d'una altre manera.
+     *
      */
     public void comprobaAdmin(){
         c=isAdmin.isChecked();

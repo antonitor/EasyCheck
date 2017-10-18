@@ -13,6 +13,12 @@ import net.marcarni.easycheck.R;
 
 import java.util.ArrayList;
 
+/**
+ * @author Maria  Remedios Ortega Cobos
+ *
+ * Classe adaptador que segueix el patró de disseny viewHolder i defineix classe interna que extend
+ * de RecyclerView.ViewHolder
+ */
 
 public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_Consulta.ViewHolder> {
     private ArrayList<Header_Consulta> mDataset;

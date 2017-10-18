@@ -11,12 +11,22 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+
+/**
+ * @author Maria Remedios Ortega
+ *
+ * Classe per comprobar la funcionalitat amb test de les consultes a la base de dades
+ * de la part de reserva
+ */
 @RunWith(AndroidJUnit4.class)
 public class DetallActivityTest {
 
     private final Context mContext = InstrumentationRegistry.getTargetContext();
     private DBInterface db;
 
+    /**
+     * Inserim un servei i una reserva per comproba el bon funcionament amb les proves
+     */
 
     @Before
     public void setUp() {
@@ -28,6 +38,10 @@ public class DetallActivityTest {
         db.tanca();
     }
 
+    /**
+     * Comprovem que amb l'id 2 no hi ha cap reserva
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaId_Reserva_False_ID() throws Exception {
         db = new DBInterface(mContext);
@@ -36,6 +50,11 @@ public class DetallActivityTest {
         db.tanca();
 
     }
+
+    /**
+     * Comprovem que hi ha una reserva amb l'id 1
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaId_Reserva_True_ID() throws Exception {
         db = new DBInterface(mContext);
@@ -45,6 +64,10 @@ public class DetallActivityTest {
 
     }
 
+    /**
+     * Comprovem que no hi ha cap dni amb la numeració introduida
+     * @throws Exception
+     */
 
     @Test
     public void testRetornaReservaDNI_False() throws Exception{
@@ -55,7 +78,10 @@ public class DetallActivityTest {
 
     }
 
-
+    /**
+     * comprovem que hi ha una reserva associada al dni introduit
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaDNI_True() throws Exception{
         db = new DBInterface(mContext);
@@ -65,6 +91,10 @@ public class DetallActivityTest {
 
     }
 
+    /**
+     * Comprovem que es fals que hi hagi un dni amb la data introduida
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaDNI_DATA_false() throws Exception{
         db = new DBInterface(mContext);
@@ -73,6 +103,10 @@ public class DetallActivityTest {
         db.tanca();
     }
 
+    /**
+     * Comprovem que existeix realment una reserva amb dni i data introduits
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaDNI_DATA_true() throws Exception{
         db = new DBInterface(mContext);
@@ -80,6 +114,11 @@ public class DetallActivityTest {
         Assert.assertTrue(db.RetornaReservaDNI_DATA("38039532Q","30/11/2017").getCount()==1);
         db.tanca();
     }
+
+    /**
+     * Comprovació de la reserva amb data introduida
+     * @throws Exception
+     */
 
     @Test
     public void testRetornaReservaDATA() throws Exception{
@@ -90,6 +129,10 @@ public class DetallActivityTest {
         db.tanca();
     }
 
+    /**
+     * Comprovació de la reserva amb nombre de localització
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaLoc ()throws Exception {
         db = new DBInterface(mContext);
@@ -98,6 +141,10 @@ public class DetallActivityTest {
         db.tanca();
     }
 
+    /**
+     * Comprovació de la reserva amb el codi QR
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaQR() throws Exception{
         db = new DBInterface(mContext);
@@ -105,6 +152,11 @@ public class DetallActivityTest {
         Assert.assertEquals(1,db.RetornaReservaQR("45R545WE45").getCount());
         db.tanca();
     }
+
+    /**
+     * Comprovació que el localizador introduit no estigui repetit
+     * @throws Exception
+     */
     @Test
     public void testRetornaReservaLoc_false ()throws Exception {
         db = new DBInterface(mContext);
@@ -112,6 +164,11 @@ public class DetallActivityTest {
         Assert.assertFalse(db.RetornaReservaLocalitzador("123446").getCount()==2);
         db.tanca();
     }
+
+    /**
+     * Comprovació que el codi Qr no estigui repetit
+     * @throws Exception
+     */
 
     @Test
     public void testRetornaReservaQR_false() throws Exception{

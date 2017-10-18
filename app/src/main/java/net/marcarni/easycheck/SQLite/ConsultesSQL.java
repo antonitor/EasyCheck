@@ -9,6 +9,15 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 
 import java.util.HashMap;
 
+
+/**
+ * @author Maria Remedios Ortega
+ *
+ * Classe que ajudarà  a retornar un seguit de consultes de la base de dades
+ *
+ *
+ */
+
 public class ConsultesSQL {
     String RetornaTotsElsTreballadors ="Select t."+ ContracteBD.Treballador._ID+", t."+ ContracteBD.Treballador.NOM+
             " FROM "+ ContracteBD.Treballador.NOM_TAULA+" t";
@@ -96,6 +105,8 @@ public class ConsultesSQL {
     }
 
     /**
+     *
+     * Created by Maria Remedios Ortega
      * Metode per moure el cursor a la primera posició
      * @param cursor a moure
      * @return cursor a retornar

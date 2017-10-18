@@ -35,8 +35,13 @@ public class DetallActivity extends MenuAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detall);
 
-        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
 
+        /**
+         * created by Maria Remedios Ortega Cobos
+         * instanciació i inicialització del Recycler, adaptador i
+         * ArrayList
+         */
+        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         myDataset=new ArrayList<>();
