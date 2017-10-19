@@ -26,7 +26,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     ArrayList<Header> myDataset;
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode onCreate de DetallActivity
      * @param savedInstanceState Bundle
      */
@@ -54,7 +54,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode que verigica si el dataSet es buit, es a dir sino hi ha reserva
      */
     public void verifica(final Context context){
@@ -80,7 +80,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obtenir les dades de l'intent.
      */
     public void consultes(){
@@ -109,7 +109,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obtenir les reserves filtrades per id
      * @param id_reserva a filtrar
      */
@@ -121,7 +121,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obtenir les reserves filtrades per dni
      * @param dni a filtrar
      */
@@ -133,7 +133,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obtenir les reserves filtrades per dni i data
      * @param dni a filtrar
      * @param data a fitrar
@@ -146,7 +146,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obtenir les reserves filtrades per data
      * @param data a filtrar
      */
@@ -158,7 +158,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obtenir les reserves filtrades per localitzador
      * @param loc localitzador a filtrar
      */
@@ -171,7 +171,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obtenir les reserves filtrades per QR
      * @param qrCode a filtrar
      */
@@ -183,7 +183,7 @@ public class DetallActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per afegir una nova entrada al dataSet
      * @param cursor a afegir entrada
      */

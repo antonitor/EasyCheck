@@ -108,7 +108,7 @@ private ArrayList<Header> mDataset;
         }
 
         /**
-         * Created by Carlos
+         * @author Carlos Alberto Castro Cañabate
          * Mètode per gestionar l'esdeveniment onClick
          * @param view que interacturarà
          */

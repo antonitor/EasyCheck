@@ -91,7 +91,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         /**
-         * Created by Carlos
+         * @author Carlos Alberto Castro Cañabate
          */
         (findViewById(R.id.cancelar_filtros)).setOnClickListener(this);
         (findViewById(R.id.seleccionar_data)).setOnClickListener(this);
@@ -123,7 +123,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per gestionar l'esdeveniment onClick
      * @param view que interacturarà
      */
@@ -149,7 +149,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per gestionar l'esdeveniment onLongClick
      * @param view que interacturarà
      * @return false
@@ -201,7 +201,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per carregar Llistats amb la data y Hora + (treballador opcionalment)
      */
     public void carregarHoraTreballador() {
@@ -222,7 +222,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per carregar Llistats amb la data + (treballador opcionalment)
      */
     public void carregarDataTreballador() {
@@ -242,7 +242,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         db.tanca();
     }
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per carregar Llistats de tots el treballadors (sense cap filtre)
      */
     public void llistatSenseFiltre() {
@@ -257,6 +257,8 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
         /**
+         * @author Carlos Alberto Castro Cañabate
+         *
          * Mètode per fer una acció una vegada seleccionat un treballador a l'spinner de treballadors.
          * @param adapterView adaptador
          * @param view spinner
@@ -265,9 +267,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
          */
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-            /**
-             * Created by Carlos
-             */
             Cursor cursor = null;
             treballador = id;
             if (fecha == null) {
@@ -323,6 +322,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per afegir entrada al dataset
      * @param cursor que conté les dades
      * @return myDataset
@@ -381,7 +381,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Created by Carlos
+     * @author Carlos Alberto Castro Cañabate
      * Mètode per obrir el DataPickerDialog
      */
     public void PickerData(){

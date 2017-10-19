@@ -1,7 +1,7 @@
 package net.marcarni.easycheck.eines;
 
 /**
- * Created by Carlos
+ * @author Carlos Alberto Castro Cañabate
  */
 public class ValidaDNI {
     /**
