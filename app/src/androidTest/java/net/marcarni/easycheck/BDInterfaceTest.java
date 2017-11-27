@@ -209,6 +209,18 @@ public class BDInterfaceTest {
         assertTrue(checkIn.equals("1"));
         db.tanca();
     }
+@Test
+  public void testActalitzaCheckInReserva_tornarACheckar(){
+        db.obre();
+
+    db.ActalitzaCheckInReserva(2);
+        Cursor cursor = db.RetornaTotesLesReserves();
+        cursor.moveToPosition(1);
+        String checkIn = cursor.getString(cursor.getColumnIndex(ContracteBD.Reserves.CHECK_IN));
+        assertTrue(checkIn.equals("0"));
+        db.tanca();
+    }
+
 
 
     /**
@@ -225,6 +237,18 @@ public class BDInterfaceTest {
         assertEquals(1,treb);
         db.tanca();
     }
+
+
+    @Test
+    public void inserirServei()throws Exception{
+
+        db = new DBInterface(mContext);
+        db.obre();
+        db.Esborra();
+        long servei= db.InserirServei("Paris - Roma", "1","29/12/2017","10:00","11:00");
+        assertEquals(1,servei);
+        db.tanca();
+    }
     @Test
     public void inserirReserva()throws Exception{
 
@@ -233,15 +257,19 @@ public class BDInterfaceTest {
         db.Esborra();
         long reserva= db.InserirReserva("123459","16/1/2017",1,"Pepa","Monda","Suiss","12345678","maria@gmail.com","45R545WE45","0","41471860P");
         assertEquals(1,reserva);
+
         db.tanca();
     }
-    @Test
-    public void inserirServei()throws Exception{
-
+   @Test
+    public void insercions() throws Exception{
         db = new DBInterface(mContext);
         db.obre();
         db.Esborra();
-        long servei= db.InserirServei("Paris - Roma", "1","29/12/2017","10:00","11:00");
+        long treb= db.InserirTreballador("Joan Ramon ","Serret","Nadal","sanfumut","1");
+        long servei= db.InserirServei("Sede Central IOC - Mallorca", "1","29/12/2017","10:00","11:00");
+        long reserva= db.InserirReserva("123459","16/1/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","45R545WE45","0","41471860P");
+        assertEquals(1,reserva);
+        assertEquals(1,treb);
         assertEquals(1,servei);
         db.tanca();
     }

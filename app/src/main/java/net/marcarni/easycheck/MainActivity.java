@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     public static String IS_ADMIN;
     boolean c;
 
+
+
+
+
     /**
      * Created by Antoni Torres Marí
      *
@@ -54,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     startActivity(new Intent(MainActivity.this, CheckCameraPermissionsActivity.class));
                     comprobaAdmin();
+
+
+
                 }
             });
         //Si el gestor per defecte és DNI, el botó login llença dniactivity amb dni
@@ -69,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     startActivity(mDniIntent);
                     comprobaAdmin();
+
                 }
             });
         //Si el gestor per defecte és Loc, el botó login llença dniactivity amb Loc
@@ -84,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     startActivity(mDniIntent);
                     comprobaAdmin();
+
                 }
             });
         }
@@ -96,9 +105,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), "S'han esborrat les dades de la base de dades i s'han tornat a crear.", Toast.LENGTH_SHORT).show();
                 CrearExemplesBD();
+
+
             }
         });
     }
+
 
     /**
      * Created by Maria Remedios Ortega
@@ -161,4 +173,6 @@ public class MainActivity extends AppCompatActivity {
             IS_ADMIN="1";
         }else{IS_ADMIN="0";}
     }
+
+
 }

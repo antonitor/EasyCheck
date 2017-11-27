@@ -26,7 +26,8 @@ public class Header_Consulta {
      * @param horaInici del servei a realitzar
      * @param horaFi del servei a realitzar
      */
-    public Header_Consulta(String nomTreballador, String descripcioServei, String idServei, String dataServei, String horaInici, String horaFi) {
+    public Header_Consulta(String nomTreballador, String descripcioServei, String idServei,
+                           String dataServei, String horaInici, String horaFi) {
         this.nomTreballador = nomTreballador;
         this.descripcioServei = descripcioServei;
         this.idServei = idServei;
