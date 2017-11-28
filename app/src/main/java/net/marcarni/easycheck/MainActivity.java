@@ -2,6 +2,7 @@ package net.marcarni.easycheck;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
@@ -11,6 +12,16 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import net.marcarni.easycheck.SQLite.DBInterface;
+import net.marcarni.easycheck.Utils.DescargaReserva;
+import net.marcarni.easycheck.Utils.DescargaServei;
+import net.marcarni.easycheck.Utils.DescargaTreballador;
+import net.marcarni.easycheck.model.Client;
+import net.marcarni.easycheck.model.Reserva;
+import net.marcarni.easycheck.model.Servei;
+import net.marcarni.easycheck.model.Treballador;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe provisional on s'haurá d'implementar la pantalla de Login
@@ -24,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
     public static String IS_ADMIN;
     boolean c;
 
-
-
-
-
     /**
      * Created by Antoni Torres Marí
      *
@@ -38,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mLoginButton = (Button) findViewById(R.id.login_button);
         mExemplesButton = (Button) findViewById(R.id.exemples_button);
         isAdmin=(CheckBox)findViewById(R.id.isAdmin);
         db = new DBInterface(this);
+        new descargarDades().execute();
 
+         // Descarga les dades del servidor.
         //Recull el gestor per defecte de SharedPreferences, que per defecte es QR
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String defaultMethod = sharedPreferences.getString(getString(R.string.pref_manager_default_key), getString(R.string.pref_manager_default_qr_value));
@@ -119,7 +129,10 @@ public class MainActivity extends AppCompatActivity {
     * primer treballador, després servei i per últim reserva, per tal de
     * no crear conflictes amb les claus primaries.
     */
+
+
     public void CrearExemplesBD(){
+
         db.obre();
         db.Esborra();
 
@@ -164,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         db.tanca();
     }
 
+
     /**
      * Created by Maria Remedios Ortega
      *
@@ -180,5 +194,44 @@ public class MainActivity extends AppCompatActivity {
         }else{IS_ADMIN="0";}
     }
 
+    /**
+     * @Author Carlos Alberto Castro Cañabate
+     */
+    private class descargarDades extends AsyncTask<String, String,String> {
+        protected String doInBackground(String... urls) {
 
+            
+            db.obre();
+            // añadirObjetosASQLite descargar = new añadirObjetosASQLite(this);
+            db.Esborra();
+            DescargaTreballador todo = new DescargaTreballador();
+            ArrayList<Treballador> treballadors = (ArrayList<Treballador>) todo.obtenirTreballadorsDelServer();
+            Iterator it = treballadors.iterator();
+            while(it.hasNext()) {
+                Treballador t = (Treballador) it.next();
+                db.InserirTreballador(t.getDni(),t.getNom(),t.getCognom1(),t.getCognom2(),t.getLogin(),Integer.toString(t.getEsAdmin()),t.getPassword());
+            }
+
+            DescargaServei totsServeis= new DescargaServei();
+            ArrayList<Servei> serveis = (ArrayList<Servei>) totsServeis.obtenirServeisDelServer();
+            Iterator itS = serveis.iterator();
+            while (itS.hasNext()){
+                Servei s = (Servei) itS.next();
+                db.InserirServei(s.getDescripcio(),Integer.toString(s.getId_treballador()),s.getData_servei(),s.getHora_inici(),s.getHora_final());
+
+            }
+
+            DescargaReserva totsReserves = new DescargaReserva();
+            ArrayList<Reserva> reserves = (ArrayList<Reserva>) totsReserves.obtenirReservesDelServer();
+            Iterator itR = reserves.iterator();
+            while (itR.hasNext()){
+                Reserva r = (Reserva) itR.next();
+                db.InserirReserva(r.getLocalitzador(),r.getData_reserva(),r.getId_servei(),r.getId(),r.getQr_code(),Integer.toString(r.getCheckin()));
+                Client c = r.getClient();
+                db.InserirClient(c.getNom_titular(),c.getCognom1_titular(),c.getCognom2_titular(),c.getTelefon_titular(),c.getEmail_titular(),c.getDni_titular());
+            }
+            db.tanca();
+            return null;
+        }
+    }
 }
