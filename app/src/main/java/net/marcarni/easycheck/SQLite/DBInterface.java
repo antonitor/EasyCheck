@@ -73,6 +73,7 @@ public class DBInterface {
         bd.execSQL("drop table if exists " + Reserves.NOM_TAULA + " ;");
         bd.execSQL("drop table if exists " + Serveis.NOM_TAULA + " ;");
         bd.execSQL("drop table if exists " + Treballador.NOM_TAULA + " ;");
+        bd.execSQL("drop table if exists " + ContracteBD.Client.NOM_TAULA + " ;");
         ajuda.onCreate(bd);
     }
 
@@ -162,11 +163,11 @@ public class DBInterface {
         initialValues.put(Reserves.LOCALITZADOR, localizador);
         initialValues.put(Reserves.DATA_RESERVA, fechaReserva);
         initialValues.put(Reserves.ID_SERVEI, idServicio);
-        initialValues.put(Reserves.NOM_TITULAR, nombreTitular);
-        initialValues.put(Reserves.COGNOM1_TITULAR, apellido1Titular);
-        initialValues.put(Reserves.COGNOM2_TITULAR, apellido2Titular);
-        initialValues.put(Reserves.TELEFON_TITULAR, telefonoTitular);
-        initialValues.put(Reserves.EMAIL_TITULAR, emailTitular);
+        //initialValues.put(Reserves.NOM_TITULAR, nombreTitular);
+       // initialValues.put(Reserves.COGNOM1_TITULAR, apellido1Titular);
+        //initialValues.put(Reserves.COGNOM2_TITULAR, apellido2Titular);
+       // initialValues.put(Reserves.TELEFON_TITULAR, telefonoTitular);
+       // initialValues.put(Reserves.EMAIL_TITULAR, emailTitular);
         initialValues.put(Reserves.QR_CODE, qrCode);
         initialValues.put(Reserves.CHECK_IN, checkIn);
         initialValues.put(Reserves.DNI_TITULAR, dniTitular);

@@ -49,21 +49,40 @@ public class AjudaBD extends SQLiteOpenHelper {
         db.execSQL(BD_CREATE_TREBALLADOR);
         db.execSQL(BD_CREATE_SERVEIS);
         db.execSQL(BD_CREATE_RESERVES);
+        db.execSQL(BD_CREATE_CLIENT);
     }
+
+    /**
+     * Afegit taula client
+     */
+    public static final String BD_CREATE_CLIENT = "CREATE TABLE " + ContracteBD.Client.NOM_TAULA + "("
+            + ContracteBD.Client._ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + ContracteBD.Client.NOM_TITULAR + " TEXT NOT NULL, "
+            + ContracteBD.Client.COGNOM1_TITULAR + " TEXT NOT NULL, "
+            + ContracteBD.Client.COGNOM2_TITULAR + " TEXT NOT NULL, "
+            + ContracteBD.Client.TELEFON_TITULAR + " TEXT NOT NULL, "
+            + ContracteBD.Client.EMAIL_TITULAR +" TEXT, "
+            + ContracteBD.Client.DNI_TITULAR +" TEXT NOT NULL);";
+
+
 
     public static final String BD_CREATE_RESERVES = "CREATE TABLE " + ContracteBD.Reserves.NOM_TAULA + "("
             + Reserves._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + Reserves.LOCALITZADOR + " TEXT NOT NULL, "
             + Reserves.DATA_RESERVA + " TEXT NOT NULL, "
             + Reserves.ID_SERVEI + " INTEGER NOT NULL, "
-            + Reserves.NOM_TITULAR + " TEXT NOT NULL, "
-            + Reserves.COGNOM1_TITULAR+ " TEXT NOT NULL, "
-            + Reserves.COGNOM2_TITULAR + " TEXT NOT NULL, "
-            + Reserves.TELEFON_TITULAR + " TEXT, "
-            + Reserves.EMAIL_TITULAR + " TEXT, "
+           // + Reserves.NOM_TITULAR + " TEXT NOT NULL, "
+           // + Reserves.COGNOM1_TITULAR+ " TEXT NOT NULL, "
+           // + Reserves.COGNOM2_TITULAR + " TEXT NOT NULL, "
+            //+ Reserves.TELEFON_TITULAR + " TEXT, "
+           // + Reserves.EMAIL_TITULAR + " TEXT, "
             + Reserves.QR_CODE + " TEXT NOT NULL, "
             + Reserves.CHECK_IN+ " TEXT NOT NULL, "
-            + Reserves.DNI_TITULAR+ " TEXT NOT NULL, "
+            //+ Reserves.DNI_TITULAR+ " TEXT NOT NULL, "
+            // afegir foreig key a reserves de client
+
+            +"FOREIGN KEY ("+ ContracteBD.Client._ID
+
             + "FOREIGN KEY("+ Reserves.ID_SERVEI+") REFERENCES " + Serveis.NOM_TAULA +"(" + Serveis._ID +"));";;
 
     public static final String BD_CREATE_SERVEIS = "CREATE TABLE " + Serveis.NOM_TAULA + "("
@@ -78,11 +97,15 @@ public class AjudaBD extends SQLiteOpenHelper {
 
     public static final String BD_CREATE_TREBALLADOR = "CREATE TABLE " + Treballador.NOM_TAULA + "("
             + Treballador._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            //Afegit camp dni
+            + Treballador.DNI + " TEXT NOT NULL, "
             + Treballador.NOM + " TEXT NOT NULL, "
             + Treballador.COGNOM1 + " TEXT NOT NULL, "
             + Treballador.COGNOM2 +" TEXT NOT NULL, "
             + Treballador.ADMIN + " TEXT NOT NULL, "
-            + Treballador.LOGIN + " TEXT NOT NULL);";
+            + Treballador.LOGIN + " TEXT NOT NULL,"
+            // afegit camp password
+            + Treballador.PASSWORD + "TEXT NOT NULL);";
 
     /**
      * Elimina les taules i les torna a crear.
@@ -94,6 +117,7 @@ public class AjudaBD extends SQLiteOpenHelper {
         db.execSQL("Drop table if exists " + Reserves.NOM_TAULA);
         db.execSQL("Drop table if exists " + Serveis.NOM_TAULA);
         db.execSQL("Drop table if exists " + Treballador.NOM_TAULA);
+        db.execSQL("Drop table if exists " + ContracteBD.Client.NOM_TAULA);
         onCreate(db);
     }
 

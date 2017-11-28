@@ -26,11 +26,12 @@ public class ContracteBD {
         public static final String LOCALITZADOR = "localitzador";
         public static final String DATA_RESERVA = "dataReserva";
         public static final String ID_SERVEI = "idServei";
-        public static final String NOM_TITULAR = "nomTitular";
-        public static final String COGNOM1_TITULAR = "cognom1Titular";
-        public static final String COGNOM2_TITULAR = "cognom2Titular";
-        public static final String TELEFON_TITULAR = "telefonTitular";
-        public static final String EMAIL_TITULAR = "emailTitular";
+        public static final String ID_CLIENT="idClient";
+       // public static final String NOM_TITULAR = "nomTitular";
+        //public static final String COGNOM1_TITULAR = "cognom1Titular";
+       // public static final String COGNOM2_TITULAR = "cognom2Titular";
+      //  public static final String TELEFON_TITULAR = "telefonTitular";
+       // public static final String EMAIL_TITULAR = "emailTitular";
         public static final String QR_CODE = "qrCode";
         public static final String CHECK_IN = "checkIn";
         public static final String DNI_TITULAR = "dniTitular";
@@ -44,6 +45,8 @@ public class ContracteBD {
         public static final String COGNOM2 = "cognom2";
         public static final String ADMIN = "esAdmin";
         public static final String LOGIN = "login";
+        public static final String DNI="dni";
+        public static final String PASSWORD="password";
     }
 
     //Inner class que defineix els continguts de la taula Serveis
@@ -54,6 +57,24 @@ public class ContracteBD {
         public static final String DATA_SERVEI = "dataServei";
         public static final String HORA_INICI = "horaInici";
         public static final String HORA_FI = "horaFi";
+    }
+
+
+    public static final class Client implements BaseColumns {
+        public static final String NOM_TAULA = "Client";
+        public static final String NOM_TITULAR= "nom_client";
+        public static final String COGNOM1_TITULAR = "cognom1_client";
+        public static final String COGNOM2_TITULAR = "cognom2_client";
+        public static final String TELEFON_TITULAR = "telefon_client";
+        public static final String EMAIL_TITULAR = "email_client";
+        public static final String DNI_TITULAR = "dni_client";
+
+
+
+
+
+
+
     }
 
 
