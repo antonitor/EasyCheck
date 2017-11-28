@@ -105,7 +105,7 @@ public class AjudaBD extends SQLiteOpenHelper {
             + Treballador.COGNOM2 +" TEXT NOT NULL, "
             + Treballador.ADMIN + " TEXT NOT NULL, "
             + Treballador.LOGIN + " TEXT NOT NULL,"
-            // afegit camp password
+            // afegit camp password //
             + Treballador.PASSWORD + " TEXT NOT NULL);";
 
     /**
