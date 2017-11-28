@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
+import net.marcarni.easycheck.SQLite.ContracteBD.Client;
 
 import java.util.HashMap;
 
@@ -85,13 +86,24 @@ public class ConsultesSQL {
         HashMap<String, String> gProjectionMap= new HashMap<>();
         gProjectionMap.put(Reserves._ID,Reserves.NOM_TAULA+"."+Reserves._ID);
         gProjectionMap.put(Reserves.LOCALITZADOR,Reserves.LOCALITZADOR);
-        gProjectionMap.put(Reserves.NOM_TITULAR,Reserves.NOM_TITULAR);
-        gProjectionMap.put(Reserves.COGNOM2_TITULAR,Reserves.COGNOM2_TITULAR);
-        gProjectionMap.put(Reserves.COGNOM1_TITULAR, Reserves.COGNOM1_TITULAR);
-        gProjectionMap.put(Reserves.EMAIL_TITULAR, Reserves.EMAIL_TITULAR);
+        //gProjectionMap.put(Reserves.NOM_TITULAR,Reserves.NOM_TITULAR);
+       //gProjectionMap.put(Reserves.COGNOM2_TITULAR,Reserves.COGNOM2_TITULAR);
+        //gProjectionMap.put(Reserves.COGNOM1_TITULAR, Reserves.COGNOM1_TITULAR);
+        //gProjectionMap.put(Reserves.EMAIL_TITULAR, Reserves.EMAIL_TITULAR);
+
+        gProjectionMap.put(Client.NOM_TITULAR,Client.NOM_TITULAR);
+        gProjectionMap.put(Client.COGNOM2_TITULAR,Client.COGNOM2_TITULAR);
+        gProjectionMap.put(Client.COGNOM1_TITULAR, Client.COGNOM1_TITULAR);
+        gProjectionMap.put(Client.EMAIL_TITULAR, Client.EMAIL_TITULAR);
+        gProjectionMap.put(Client.DNI_TITULAR, Client.DNI_TITULAR);
+
+
+
+
+
         gProjectionMap.put(Reserves.CHECK_IN, Reserves.CHECK_IN);
         gProjectionMap.put(Reserves.QR_CODE,Reserves.QR_CODE);
-        gProjectionMap.put(Reserves.DNI_TITULAR, Reserves.DNI_TITULAR);
+       // gProjectionMap.put(Reserves.DNI_TITULAR, Reserves.DNI_TITULAR);
         gProjectionMap.put(Serveis.DATA_SERVEI,Serveis.DATA_SERVEI);
         gProjectionMap.put(Serveis.DESCRIPCIO,Serveis.DESCRIPCIO);
         gProjectionMap.put(Serveis.HORA_INICI,Serveis.HORA_INICI);
@@ -99,7 +111,7 @@ public class ConsultesSQL {
 
         SQLiteQueryBuilder QBuilder = new SQLiteQueryBuilder();
         QBuilder.setProjectionMap(gProjectionMap);
-        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = " + Serveis.NOM_TAULA + "." + Serveis._ID);
+        QBuilder.setTables(Reserves.NOM_TAULA + " LEFT JOIN " + Serveis.NOM_TAULA + " ON " + Reserves.ID_SERVEI + " = " + Serveis.NOM_TAULA + "." + Serveis._ID+  " LEFT JOIN "+ Client.NOM_TAULA + " ON "+Reserves.ID_CLIENT+ " = "+ Client.NOM_TAULA+"."+Client._ID);
 
         return QBuilder;
     }
