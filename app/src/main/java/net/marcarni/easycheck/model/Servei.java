@@ -8,25 +8,36 @@ package net.marcarni.easycheck.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * @author Toni
+ *
+ * @author Carlos Alberto Castro Cañabate
  */
+public class Servei implements Serializable{
 
-public class Servei implements Serializable {
-    
     private int _id;
-    private String descripcio;    
+    private String descripcio;
     private int id_treballador;
     private String data_servei;
     private String hora_inici;
     private String hora_final;
     private List<Reserva> llistaReserves = new ArrayList();
-    
+    static ArrayList<Servei> llistaServeis = new ArrayList();
+    /**
+     * Constructor de servei buit.
+     */
     public Servei(){
-        
+
     }
-   
+    /**
+     * Constructor de servei
+     * @param id
+     * @param descripcio
+     * @param idTreb
+     * @param data_servei
+     * @param hora_inici
+     * @param hora_final
+     * @param llista
+     */
     public Servei (int id, String descripcio, int idTreb, String data_servei, String hora_inici, String hora_final, List<Reserva> llista){
         this._id = id;
         this.descripcio = descripcio;
@@ -136,6 +147,18 @@ public class Servei implements Serializable {
     public void setId_treballador(int id_treballador) {
         this.id_treballador = id_treballador;
     }
-  
-    
+    /**
+     * Mètode per obtenir un llistat de Serveis
+     * @return llistat de serveis
+     */
+    public static ArrayList<Servei> getLlistaServeis() {
+        return llistaServeis;
+    }
+    /**
+     * Mètode per afegir un servei al llistat
+     * @param servei a afegir
+     */
+    public static void setLlistaServeis(Servei servei) {
+        llistaServeis.add(servei);
+    }
 }

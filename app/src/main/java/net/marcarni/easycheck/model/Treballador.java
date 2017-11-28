@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Toni
+ *
+ * @author Maria
  */
 
 public class Treballador implements Serializable {
-    
+
+    static ArrayList<Treballador> treballadors = new ArrayList();
     private int _id;
     private String nom;
     private String cognom1;
@@ -24,11 +26,27 @@ public class Treballador implements Serializable {
     private String password;
     private int esAdmin;
     private List<Servei> llistaServeis = new ArrayList();
-    
-    public Treballador(){
-        
+
+
+    /**
+     * @author Maria Remedios Ortega
+     */
+    public Treballador() {
+
     }
 
+    /**
+     * @author Maria Remedios Ortega
+     * @param _id
+     * @param nom
+     * @param cognom1
+     * @param cognom2
+     * @param dni
+     * @param login
+     * @param password
+     * @param esAdmin
+     * @param llista
+     */
     public Treballador(int _id, String nom, String cognom1, String cognom2, String dni, String login, String password, int esAdmin, List<Servei> llista) {
         this._id = _id;
         this.nom = nom;
@@ -140,6 +158,21 @@ public class Treballador implements Serializable {
     }
 
     /**
+     * @return the dni
+     */
+    public String getDni() {
+        return dni;
+    }
+
+    /**
+     * @param dni the dni to set
+     */
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    /**
+     * @author Maria Remedios Ortega
      * @return the llistaServeis
      */
     public List<Servei> getLlistaServeis() {
@@ -154,17 +187,28 @@ public class Treballador implements Serializable {
     }
 
     /**
-     * @return the dni
+     * @author Maria Remedios Ortega
+     * @return
      */
-    public String getDni() {
-        return dni;
+    public static ArrayList<Treballador> getTreballadors() {
+        return treballadors;
     }
 
     /**
-     * @param dni the dni to set
+     * @author Maria Remedios Ortega
+     * @param treballador
      */
-    public void setDni(String dni) {
-        this.dni = dni;
+    public static void setTreballadors(Treballador treballador) {
+        Treballador.treballadors.add(treballador);
     }
-    
+
+
+    /**
+     * @author Maria Remedios Ortega
+     * @return
+     */
+    public static int getSize() {
+        return treballadors.size();
+    }
+
 }

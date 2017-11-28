@@ -1,21 +1,19 @@
 package net.marcarni.easycheck.model;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor
 
+import java.util.ArrayList;
 
 /**
  *
- * @author Toni
+ * @author Carlos Alberto Castro Cañabate
  */
 public class Client {
     private String nom_titular;
     private String cognom1_titular;
     private String cognom2_titular;
     private String telefon_titular;
-    private String email_titular;    
+    private String email_titular;
     private String dni_titular;
+    static ArrayList<Client> clients  = new ArrayList();
 
     public Client(String nom, String cognom1, String cognom2, String telf, String email, String dni){
         this.nom_titular = nom;
@@ -25,7 +23,7 @@ public class Client {
         this.email_titular = email;
         this.dni_titular = dni;
     }
-    
+
     /**
      * @return the nom_titular
      */
@@ -110,5 +108,14 @@ public class Client {
         this.dni_titular = dni_titular;
     }
 
+    public static ArrayList<Client> getClients() {
+        return clients;
+    }
+
+    public static void setClients(Client client) {
+        Client.clients.add(client);
+    }
+
 
 }
+

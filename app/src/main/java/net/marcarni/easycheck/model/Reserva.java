@@ -6,21 +6,35 @@
 package net.marcarni.easycheck.model;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+/**
+ *
+ * @author Carlos Alberto Castro Cañabate
+ */
 public class Reserva implements Serializable {
 
     private int _id;
     private int id_servei;
     private Client client;
     private String localitzador;
-    private String data_reserva;    
+    private String data_reserva;
     private String qr_code;
     private int checkin;
+    static ArrayList<Reserva> reservas  = new ArrayList();
 
     private Reserva() {
 
     }
-
+    /**
+     * Constructor de Reserva
+     * @param id
+     * @param idSer
+     * @param client
+     * @param loc
+     * @param data
+     * @param qrcode
+     * @param checkin
+     */
     public Reserva(int id, int idSer, Client client, String loc, String data, String qrcode, int checkin) {
         this._id = id;
         this.id_servei = idSer;
@@ -128,6 +142,21 @@ public class Reserva implements Serializable {
     public void setClient(Client client) {
         this.client = client;
     }
+    /**
+     *
+     * @return ArrayList<Reserva>
+     */
+    public static ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+    /**
+     * Afegir una reserva al ArrayList
+     * @param reserva a afegir
+     */
+    public static void setReservas(Reserva reserva) {
+        Reserva.reservas.add(reserva);
+    }
 
-   
+
+
 }
