@@ -20,6 +20,7 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Treballador;
 public class DBInterface {
     public static final String TAG = "DBInterface";
     ConsultesSQL consulta=new ConsultesSQL();
+    /*
     public String[] arrayReserva() {
         String[] Reserva = {
                 Reserves._ID,
@@ -35,7 +36,7 @@ public class DBInterface {
                 Reserves.CHECK_IN,
                 Reserves.DNI_TITULAR};
         return Reserva;
-    }
+    } */
 
     private final Context context;
     private AjudaBD ajuda;
@@ -83,7 +84,8 @@ public class DBInterface {
      */
     public Cursor RetornaTotesLesReserves() {
 
-        String orderBy = Reserves.NOM_TITULAR + " ASC";
+        //String orderBy = Reserves.NOM_TITULAR + " ASC";
+        String orderBy = ContracteBD.Client.NOM_TITULAR + " ASC";
         Cursor cursor = consulta.RetornaQuery().query(bd, null, null, null, null, null, orderBy);
         consulta.mouCursor(cursor);
         return cursor;
@@ -98,7 +100,8 @@ public class DBInterface {
     public Cursor RetornaReservaDNI_DATA(String dni, String data) {
 
         String orderBy = Serveis.HORA_INICI + " ASC";
-        Cursor  cursor = consulta.RetornaQuery().query(bd, null, Reserves.DNI_TITULAR + " = ? AND " + Serveis.DATA_SERVEI + " = ? ", new String[]{dni, data},null,null,orderBy);
+      //  Cursor  cursor = consulta.RetornaQuery().query(bd, null, Reserves.DNI_TITULAR + " = ? AND " + Serveis.DATA_SERVEI + " = ? ", new String[]{dni, data},null,null,orderBy);
+        Cursor  cursor = consulta.RetornaQuery().query(bd, null, ContracteBD.Client.DNI_TITULAR + " = ? AND " + Serveis.DATA_SERVEI + " = ? ", new String[]{dni, data},null,null,orderBy);
         consulta.mouCursor(cursor);
         return cursor;
     }
@@ -136,7 +139,8 @@ public class DBInterface {
      */
     public Cursor RetornaReservaDNI(String dni) {
         String orderBy = Serveis.HORA_INICI + " ASC";
-        Cursor cursor = consulta.RetornaQuery().query(bd, null, Reserves.DNI_TITULAR + " = ? ", new String[]{dni},null,null,orderBy);
+       // Cursor cursor = consulta.RetornaQuery().query(bd, null, Reserves.DNI_TITULAR + " = ? ", new String[]{dni},null,null,orderBy);
+        Cursor cursor = consulta.RetornaQuery().query(bd, null, ContracteBD.Client.DNI_TITULAR + " = ? ", new String[]{dni},null,null,orderBy);
         consulta.mouCursor(cursor);
         return cursor;
     }
@@ -170,7 +174,7 @@ public class DBInterface {
        // initialValues.put(Reserves.EMAIL_TITULAR, emailTitular);
         initialValues.put(Reserves.QR_CODE, qrCode);
         initialValues.put(Reserves.CHECK_IN, checkIn);
-        initialValues.put(Reserves.DNI_TITULAR, dniTitular);
+       // initialValues.put(Reserves.DNI_TITULAR, dniTitular);
 
         return bd.insert(Reserves.NOM_TAULA, null, initialValues);
     }
@@ -279,6 +283,8 @@ public class DBInterface {
         return bd.insert(Serveis.NOM_TAULA, null, initialValues);
     }
 
+
+
     /**
      * Mètode per retornar tots els serveis sense filtrat.
      * @return cursor amb els serveis a retornar
@@ -339,6 +345,28 @@ public class DBInterface {
     public Cursor RetornaServei_data(String data) {
         String[] args = new String[]{data};
         return bd.rawQuery(consulta.RetornaServeiData, args);
+    }
+
+    /**
+     *
+     * @param nomTitular del client
+     * @param cognom1Titular del client
+     * @param cognom2Titular del client
+     * @param telefonTitular del client
+     * @param emailTitular del client
+     * @param dniTiular del client
+     * @return posició de la inserció.
+     */
+    public long InserirClient(String nomTitular, String cognom1Titular, String cognom2Titular, String telefonTitular, String emailTitular, String dniTiular) {
+
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(ContracteBD.Client.NOM_TITULAR, nomTitular);
+        initialValues.put(ContracteBD.Client.COGNOM1_TITULAR, cognom1Titular);
+        initialValues.put(ContracteBD.Client.COGNOM2_TITULAR, cognom2Titular);
+        initialValues.put(ContracteBD.Client.TELEFON_TITULAR, telefonTitular);
+        initialValues.put(ContracteBD.Client.EMAIL_TITULAR, emailTitular);
+        initialValues.put(ContracteBD.Client.DNI_TITULAR, dniTiular);
+        return bd.insert(ContracteBD.Client.NOM_TAULA, null, initialValues);
     }
 
 }
