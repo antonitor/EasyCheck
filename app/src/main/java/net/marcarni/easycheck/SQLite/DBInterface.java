@@ -150,23 +150,21 @@ public class DBInterface {
      * @param localizador de la reserva
      * @param fechaReserva data de la reserva
      * @param idServicio id del servei
-     * @param nombreTitular nom del client
-     * @param apellido1Titular 1 cognom del client
-     * @param apellido2Titular 2 cognom del client
-     * @param telefonoTitular telèfon del client
-     * @param emailTitular email del client
      * @param qrCode codi qr de la reserva
      * @param checkIn estat de la reserva
-     * @param dniTitular dni de el client
+
      * @return
      */
+    /*
     public long InserirReserva(String localizador, String fechaReserva, int idServicio, String nombreTitular,
                                String apellido1Titular, String apellido2Titular, String telefonoTitular,
-                               String emailTitular, String qrCode, String checkIn, String dniTitular) {
+                               String emailTitular, String qrCode, String checkIn, String dniTitular) { */
+    public long InserirReserva (String localizador, String fechaReserva, int idServicio, int idClient, String qrCode, String checkIn) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(Reserves.LOCALITZADOR, localizador);
         initialValues.put(Reserves.DATA_RESERVA, fechaReserva);
         initialValues.put(Reserves.ID_SERVEI, idServicio);
+        initialValues.put(Reserves.ID_CLIENT, idClient);
         //initialValues.put(Reserves.NOM_TITULAR, nombreTitular);
        // initialValues.put(Reserves.COGNOM1_TITULAR, apellido1Titular);
         //initialValues.put(Reserves.COGNOM2_TITULAR, apellido2Titular);
@@ -231,9 +229,10 @@ public class DBInterface {
      * @param admin camp per verificar si el treballador es admin o no
      * @return posicio a taula treballadors
      */
-    public long InserirTreballador(String nom, String cognom1, String cognom2, String login, String admin) {
+    public long InserirTreballador(String dni, String nom, String cognom1, String cognom2, String login, String admin) {
 
         ContentValues initialValues = new ContentValues();
+        initialValues.put(Treballador.DNI, dni);
         initialValues.put(Treballador.NOM, nom);
         initialValues.put(Treballador.COGNOM1, cognom1);
         initialValues.put(Treballador.COGNOM2, cognom2);

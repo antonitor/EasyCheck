@@ -34,7 +34,7 @@ public class DetallActivityTest {
         db.obre();
         db.Esborra();
         db.InserirServei("Barcelona - París", "1","30/11/2017","10:00","21:30");
-        db.InserirReserva("123446", "16/3/2017", 1, "Joana", "Fidel", "Sanchis", "12345998", "jaoan@gmail.com", "45R545WE45", "0", "38039532Q");
+    //    db.InserirReserva("123446", "16/3/2017", 1, "Joana", "Fidel", "Sanchis", "12345998", "jaoan@gmail.com", "45R545WE45", "0", "38039532Q");
         db.tanca();
     }
 

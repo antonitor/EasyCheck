@@ -56,7 +56,7 @@ public class AjudaBD extends SQLiteOpenHelper {
      * Afegit taula client
      */
     public static final String BD_CREATE_CLIENT = "CREATE TABLE " + ContracteBD.Client.NOM_TAULA + "("
-            + ContracteBD.Client._ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + ContracteBD.Client._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ContracteBD.Client.NOM_TITULAR + " TEXT NOT NULL, "
             + ContracteBD.Client.COGNOM1_TITULAR + " TEXT NOT NULL, "
             + ContracteBD.Client.COGNOM2_TITULAR + " TEXT NOT NULL, "

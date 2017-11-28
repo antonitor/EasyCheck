@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.Header;
 import net.marcarni.easycheck.RecyclerView.HeaderAdapter;
+import net.marcarni.easycheck.SQLite.ContracteBD;
 import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.DBInterface;
@@ -190,10 +191,10 @@ public class DetallActivity extends MenuAppCompatActivity {
     public void CursorBD(Cursor cursor){
         if(cursor.moveToFirst()){
             do {
-                myDataset.add(new Header(cursor.getInt(cursor.getColumnIndex(Reserves._ID)), cursor.getString(cursor.getColumnIndex(Reserves.NOM_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(Reserves.COGNOM1_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(Reserves.COGNOM2_TITULAR)),
-                        "DNI: "+cursor.getString(cursor.getColumnIndex(Reserves.DNI_TITULAR)),"Data Servei: " +cursor.getString(cursor.getColumnIndex(Serveis.DATA_SERVEI)),
+                myDataset.add(new Header(cursor.getInt(cursor.getColumnIndex(Reserves._ID)), cursor.getString(cursor.getColumnIndex(ContracteBD.Client.NOM_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Client.COGNOM1_TITULAR))+" "+cursor.getString(cursor.getColumnIndex(ContracteBD.Client.COGNOM2_TITULAR)),
+                        "DNI: "+cursor.getString(cursor.getColumnIndex(ContracteBD.Client.DNI_TITULAR)),"Data Servei: " +cursor.getString(cursor.getColumnIndex(Serveis.DATA_SERVEI)),
                         "QR: "+cursor.getString(cursor.getColumnIndex(Reserves.QR_CODE)),"Localització: "+cursor.getString(cursor.getColumnIndex(Reserves.LOCALITZADOR))
-                        , cursor.getString(cursor.getColumnIndex(Reserves.EMAIL_TITULAR)),cursor.getString(cursor.getColumnIndex(Reserves.CHECK_IN)),cursor.getString(cursor.getColumnIndex(Serveis.DESCRIPCIO))));
+                        , cursor.getString(cursor.getColumnIndex(ContracteBD.Client.EMAIL_TITULAR)),cursor.getString(cursor.getColumnIndex(Reserves.CHECK_IN)),cursor.getString(cursor.getColumnIndex(Serveis.DESCRIPCIO))));
 
             }while(cursor.moveToNext());
         }

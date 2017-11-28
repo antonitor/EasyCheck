@@ -124,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
         db.Esborra();
 
         // nom - cognom1 - cognom2 - login - esAdmin
-        db.InserirTreballador("Toni","Torres","Mari","jacdemanec","1");
-        db.InserirTreballador("Maria","Ortega","Cobo","mari","1");
-        db.InserirTreballador("Carlos Alberto","Castro","Cañabate","carlos","1");
+        db.InserirTreballador("98177788B","Toni","Torres","Mari","jacdemanec","1");
+        db.InserirTreballador("42507389P","Maria","Ortega","Cobo","mari","1");
+        db.InserirTreballador("39501151P","Carlos Alberto","Castro","Cañabate","carlos","1");
 
         // descripcio  - idTreballador - dataServei - horaInici - horaFi
         db.InserirServei("Tarragona - Reus", "3","29/10/2017","10:00","11:00");
@@ -142,18 +142,24 @@ public class MainActivity extends AppCompatActivity {
 
 
                        // localitzador, dataReserva, idServei, nomTitular, cognom1Titular, cognom2Titular, telefonTitular, emailTitular, qrCode, checkIn, dniTitular
-        db.InserirReserva("123456","16/1/2017",1,"Maria","Ortega","Cobos","12345678","maria@gmail.com","45R545WE45","0","41471860P");
-        db.InserirReserva("123446","16/3/2017",1,"Joana","Fidel","Sanchis","12345998","jaoan@gmail.com","45R545WE44","0","38039532Q");
-        db.InserirReserva("555469","3/3/2017",2,"Pere","Fernandez","Pujol","22342998","perean@gmail.com","854HFHH945","0","99392359K");
-        db.InserirReserva("544460","10/3/2017",2,"Pamela","Sanchez","Grau","14445998","raimn@gmail.com","66FHHF45","0","72339884P");
-        db.InserirReserva("574697","9/3/2017",3,"Antoni","Puig","Puigdemont","12356998"," olmean@gmail.com","867FHH9945","0","20841817E");
-        db.InserirReserva("556664","10/3/2017",3,"Enma","Smith","Delon","16789998","iuoean@gmail.com","ABCDEFG","0","97620922K");
-        db.InserirReserva("556691","10/3/2017",3,"Nuria","Smith","Delon","16789998","iuoean@gmail.com","ABCDE","0","47169530A");
-        db.InserirReserva("556665","10/3/2017",7,"Nuria","Smith","Delon","16789998","iuoean@gmail.com","ABSDKSD","0","47169530A");
-        db.InserirReserva("169256","16/2/2017",5,"Ruben","Perez","Garcia","12345678","ruben@gmail.com","45R545WTR","0","57519693M");
-        db.InserirReserva("122334","30/4/2017",4,"Ruben","Perez","Garcia","12345678","ruben@gmail.com","45R54TRWD","0","57519693M");
-        db.InserirReserva("232323","19/2/2017",6,"Sergi","Samper","Garcia","646340938","sergi@gmail.com","45R5FDFS","0","79926534Q");
-        db.InserirReserva("232324","19/3/2017",8,"Sergi","Samper","Garcia","646340938","sergi@gmail.com","45R5FDFP","0","79926534Q");
+        db.InserirReserva("123456","16/1/2017",1,1,"45R545WE45","0");
+        db.InserirReserva("123446","16/3/2017",1,2,"45R545WE44","0");
+        db.InserirReserva("555469","3/3/2017",2,1,"854HFHH945","0");
+        db.InserirReserva("544460","10/3/2017",2,2,"66FHHF45","0");
+        db.InserirReserva("574697","9/3/2017",3,3,"867FHH9945","0");
+        db.InserirReserva("556664","10/3/2017",3,3,"ABCDEFG","0");
+        db.InserirReserva("556691","10/3/2017",3,2,"ABCDE","0");
+        db.InserirReserva("556665","10/3/2017",7,1,"ABSDKSD","0");
+        db.InserirReserva("169256","16/2/2017",5,2,"45R545WTR","0");
+        db.InserirReserva("122334","30/4/2017",4,3,"45R54TRWD","0");
+        db.InserirReserva("232323","19/2/2017",6,4,"45R5FDFS","0");
+        db.InserirReserva("232324","19/3/2017",8,4,"45R5FDFP","0");
+
+        db.InserirClient("Ruben","Perez","Rodriguez","636779718","ruben@gmail.com","47169530A");
+        db.InserirClient("Mario","Neta","Garcia","636779734","mario@gmail.com","87058471K");
+        db.InserirClient("Laura","Gimenez","Velasco","634279718","laura@gmail.com","67618391R");
+        db.InserirClient("Sara","Goza","Galindo","634779318","sara@gmail.com","80940266T");
+
 
         db.tanca();
     }
