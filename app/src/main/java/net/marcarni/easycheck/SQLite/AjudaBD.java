@@ -106,7 +106,7 @@ public class AjudaBD extends SQLiteOpenHelper {
             + Treballador.ADMIN + " TEXT NOT NULL, "
             + Treballador.LOGIN + " TEXT NOT NULL,"
             // afegit camp password
-            + Treballador.PASSWORD + "TEXT NOT NULL);";
+            + Treballador.PASSWORD + " TEXT NOT NULL);";
 
     /**
      * Elimina les taules i les torna a crear.
