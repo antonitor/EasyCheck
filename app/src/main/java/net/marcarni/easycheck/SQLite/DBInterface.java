@@ -229,7 +229,7 @@ public class DBInterface {
      * @param admin camp per verificar si el treballador es admin o no
      * @return posicio a taula treballadors
      */
-    public long InserirTreballador(String dni, String nom, String cognom1, String cognom2, String login, String admin) {
+    public long InserirTreballador(String dni, String nom, String cognom1, String cognom2, String login, String admin,String password) {
 
         ContentValues initialValues = new ContentValues();
         initialValues.put(Treballador.DNI, dni);
@@ -238,6 +238,7 @@ public class DBInterface {
         initialValues.put(Treballador.COGNOM2, cognom2);
         initialValues.put(Treballador.LOGIN, login);
         initialValues.put(Treballador.ADMIN, admin);
+        initialValues.put(Treballador.PASSWORD,password);
 
         return bd.insert(Treballador.NOM_TAULA, null, initialValues);
     }

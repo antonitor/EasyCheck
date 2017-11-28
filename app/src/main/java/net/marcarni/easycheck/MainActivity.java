@@ -123,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
         db.obre();
         db.Esborra();
 
-        // nom - cognom1 - cognom2 - login - esAdmin
-        db.InserirTreballador("98177788B","Toni","Torres","Mari","jacdemanec","1");
-        db.InserirTreballador("42507389P","Maria","Ortega","Cobo","mari","1");
-        db.InserirTreballador("39501151P","Carlos Alberto","Castro","Cañabate","carlos","1");
+        //dni  nom - cognom1 - cognom2 - login - esAdmin -pass
+        db.InserirTreballador("98177788B","Toni","Torres","Mari","jacdemanec","1", "xxx");
+        db.InserirTreballador("42507389P","Maria","Ortega","Cobo","mari","1","xxx");
+        db.InserirTreballador("39501151P","Carlos Alberto","Castro","Cañabate","carlos","1","xxx");
 
         // descripcio  - idTreballador - dataServei - horaInici - horaFi
         db.InserirServei("Tarragona - Reus", "3","29/10/2017","10:00","11:00");
