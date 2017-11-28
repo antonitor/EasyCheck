@@ -34,7 +34,7 @@ public class ContracteBD {
        // public static final String EMAIL_TITULAR = "emailTitular";
         public static final String QR_CODE = "qrCode";
         public static final String CHECK_IN = "checkIn";
-        public static final String DNI_TITULAR = "dniTitular";
+        //public static final String DNI_TITULAR = "dniTitular";
     }
 
     //Inner class que defineix els continguts de la taula Treballador
@@ -62,12 +62,12 @@ public class ContracteBD {
 
     public static final class Client implements BaseColumns {
         public static final String NOM_TAULA = "Client";
-        public static final String NOM_TITULAR= "nom_client";
-        public static final String COGNOM1_TITULAR = "cognom1_client";
-        public static final String COGNOM2_TITULAR = "cognom2_client";
-        public static final String TELEFON_TITULAR = "telefon_client";
-        public static final String EMAIL_TITULAR = "email_client";
-        public static final String DNI_TITULAR = "dni_client";
+        public static final String NOM_TITULAR= "nom_titular";
+        public static final String COGNOM1_TITULAR = "cognom1_titular";
+        public static final String COGNOM2_TITULAR = "cognom2_titular";
+        public static final String TELEFON_TITULAR = "telefon_titular";
+        public static final String EMAIL_TITULAR = "email_titular";
+        public static final String DNI_TITULAR = "dni_titular";
 
 
 

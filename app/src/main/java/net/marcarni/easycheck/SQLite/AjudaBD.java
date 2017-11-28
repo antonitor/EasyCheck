@@ -71,6 +71,7 @@ public class AjudaBD extends SQLiteOpenHelper {
             + Reserves.LOCALITZADOR + " TEXT NOT NULL, "
             + Reserves.DATA_RESERVA + " TEXT NOT NULL, "
             + Reserves.ID_SERVEI + " INTEGER NOT NULL, "
+            + Reserves.ID_CLIENT + " INTEGER NOT NULL, "
            // + Reserves.NOM_TITULAR + " TEXT NOT NULL, "
            // + Reserves.COGNOM1_TITULAR+ " TEXT NOT NULL, "
            // + Reserves.COGNOM2_TITULAR + " TEXT NOT NULL, "
@@ -81,7 +82,7 @@ public class AjudaBD extends SQLiteOpenHelper {
             //+ Reserves.DNI_TITULAR+ " TEXT NOT NULL, "
             // afegir foreig key a reserves de client
 
-            +"FOREIGN KEY ("+ ContracteBD.Client._ID
+            +"FOREIGN KEY ("+ Reserves.ID_CLIENT+") REFERENCES "+ ContracteBD.Client.NOM_TAULA+"( "+ ContracteBD.Client._ID+"),"
 
             + "FOREIGN KEY("+ Reserves.ID_SERVEI+") REFERENCES " + Serveis.NOM_TAULA +"(" + Serveis._ID +"));";;
 
