@@ -84,7 +84,7 @@ public class AjudaBD extends SQLiteOpenHelper {
 
             +"FOREIGN KEY ("+ Reserves.ID_CLIENT+") REFERENCES "+ ContracteBD.Client.NOM_TAULA+"( "+ ContracteBD.Client._ID+"),"
 
-            + "FOREIGN KEY("+ Reserves.ID_SERVEI+") REFERENCES " + Serveis.NOM_TAULA +"(" + Serveis._ID +"));";;
+            + "FOREIGN KEY("+ Reserves.ID_SERVEI+") REFERENCES " + Serveis.NOM_TAULA +"(" + Serveis._ID +"));";
 
     public static final String BD_CREATE_SERVEIS = "CREATE TABLE " + Serveis.NOM_TAULA + "("
             + Serveis._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
