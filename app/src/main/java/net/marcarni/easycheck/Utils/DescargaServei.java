@@ -11,7 +11,6 @@ package net.marcarni.easycheck.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.marcarni.easycheck.Utils.NetUtils;
 import net.marcarni.easycheck.model.Servei;
 
 import java.lang.reflect.Type;
@@ -55,5 +54,15 @@ public class DescargaServei {
         }.getType();
         ArrayList<Servei> llista = gson.fromJson(json, tipusLlista);
         return llista;
+    }
+    public static List<Servei> obtenirServeisDelServer(String localhost) {
+        String json = "";
+        URL url = NetUtils.buildUrl(localhost, PORT, "/easycheckapi/servei", null);
+        json = NetUtils.doGetRequest(url);
+
+        java.lang.reflect.Type tipusLlistaDeServeis = new TypeToken<List<Servei>>() {
+        }.getType();
+        ArrayList<Servei> llistaDeServeis = gson.fromJson(json, tipusLlistaDeServeis);
+        return llistaDeServeis;
     }
 }

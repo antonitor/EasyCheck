@@ -54,4 +54,13 @@ public class DescargaReserva {
         ArrayList<Reserva> llista = gson.fromJson(json, tipusLlista);
         return llista;
     }
+    public static List<Reserva> obtenirReservesDelServer(String localhost) {
+        String json = "";
+        URL url = NetUtils.buildUrl(localhost, PORT, "/easycheckapi/reserva", null);
+        json = NetUtils.doGetRequest(url);
+        java.lang.reflect.Type tipusLlistaDeReserves = new TypeToken<List<Reserva>>() {
+        }.getType();
+        ArrayList<Reserva> llistaDeReserves = gson.fromJson(json, tipusLlistaDeReserves);
+        return llistaDeReserves;
+    }
 }

@@ -30,19 +30,30 @@ public class DescargaTreballador {
      * Mètode principal
      * @param args
      */
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         DescargaTreballador test = new DescargaTreballador();
     }
     /**
      * Constructor
      */
-    public DescargaTreballador() {
+  /*  public DescargaTreballador() {
         treballadors = (ArrayList<Treballador>) obtenirTreballadorsDelServer();
-    }
+    }*/
     /**
      * Mètode per obtenir els treballadors del server.
      * @return  llista de traballadors.
      */
+    public static  List<Treballador> obtenirTreballadorsDelServer(String URL) {
+        String json = "";
+        URL url = NetUtils.buildUrl(URL, PORT, "/easycheckapi/treballador", null);
+        json = NetUtils.doGetRequest(url);
+        Gson gson = new Gson();
+        java.lang.reflect.Type tipusLlistaDeTreballadors = new TypeToken<List<Treballador>>() {
+        }.getType();
+        ArrayList<Treballador> llistaDeTreballadors = gson.fromJson(json, tipusLlistaDeTreballadors);
+
+        return llistaDeTreballadors;
+    }
     public List<Treballador> obtenirTreballadorsDelServer() {
         String json = "";
         URL url = NetUtils.buildUrl(BASE_URL, PORT, "/easycheckapi/treballador", null);

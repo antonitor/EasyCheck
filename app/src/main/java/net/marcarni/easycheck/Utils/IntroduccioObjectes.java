@@ -6,6 +6,7 @@ import net.marcarni.easycheck.model.Treballador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Carlos Alberto Castro Cañabate
@@ -35,7 +36,7 @@ public class IntroduccioObjectes {
         Iterator it = treballadors.iterator();
         while(it.hasNext()){
             Treballador t = (Treballador) it.next();
-            Treballador.setTreballadors(t);
+            Treballador.setTreballadors((List<Treballador>) t);
 
             ArrayList<Servei> serveis = (ArrayList<Servei>) totsServeis.obtenirServeisDelServer();
             Iterator itS = serveis.iterator();
