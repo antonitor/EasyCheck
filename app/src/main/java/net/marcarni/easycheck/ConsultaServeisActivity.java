@@ -29,7 +29,7 @@ import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static net.marcarni.easycheck.MainActivity.IS_ADMIN;
+import static net.marcarni.easycheck.LoginActivity.IS_ADMIN;
 import static net.marcarni.easycheck.R.id.cancelar_filtros;
 import static net.marcarni.easycheck.R.id.seleccionar_hora;
 

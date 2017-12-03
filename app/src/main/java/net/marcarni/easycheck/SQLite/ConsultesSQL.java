@@ -130,6 +130,18 @@ public class ConsultesSQL {
 
         return cursor;
     }
+
+    /**
+     * @author Carlos Alberto Castro Cañabate
+     * @param userName del treballador
+     * @param password del treballador
+     * @return
+     */
+    public String verificarLogin (String userName, String password){
+        return  " Select t."+ Treballador._ID+",t."+ Treballador.NOM+",t."+ Treballador.COGNOM1+",t."+ Treballador.COGNOM2+",t."+ Treballador.ADMIN+
+                " FROM "+ Treballador.NOM_TAULA+" t"+
+                " WHERE t."+ Treballador.LOGIN+" LIKE '"+userName+"' AND t."+ Treballador.PASSWORD+" LIKE '"+password+"'";
+    }
 }
 
 

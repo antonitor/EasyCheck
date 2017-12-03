@@ -10,7 +10,7 @@ import android.view.View;
 import net.marcarni.easycheck.CheckCameraPermissionsActivity;
 import net.marcarni.easycheck.ConsultaServeisActivity;
 import net.marcarni.easycheck.DniActivity;
-import net.marcarni.easycheck.MainActivity;
+import net.marcarni.easycheck.LoginActivity;
 import net.marcarni.easycheck.R;
 
 /**
@@ -51,7 +51,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                 startActivity(startSettingsActivity);
                 return true;
             case R.id.action_logout:
-                Intent logout = new Intent(this, MainActivity.class);
+                Intent logout = new Intent(this, LoginActivity.class);
                 startActivity(logout);
                 finish();
                 return true;

@@ -369,4 +369,15 @@ public class DBInterface {
         return bd.insert(ContracteBD.Client.NOM_TAULA, null, initialValues);
     }
 
+    /**
+     * @author Carlos Alberto Castro Cañabate
+     * Metode per verificar que l'usuari i el password son correctes.
+     * @param userName de el treballador
+     * @param password de el treballador
+     * @return
+     */
+    public Cursor verificarLogin(String userName, String password){
+        return bd.rawQuery(consulta.verificarLogin(userName,password),null);
+    }
+
 }
