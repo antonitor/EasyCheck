@@ -29,10 +29,6 @@ import net.marcarni.easycheck.model.Treballador;
 
 import java.util.ArrayList;
 
-
-
-
-
 /**
  * @author  Carlos Alberto Castro Cañabate
  */
@@ -55,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         db = new DBInterface(this);
         new LoginActivity.descargarDades().execute(IP);
 
@@ -111,8 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }
                         );
-
-
                 AlertDialog alert = builder.create();
                 alert.show();
             } else {
@@ -185,9 +178,6 @@ public class LoginActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
-
 
     @Override
     protected void onResume() {
