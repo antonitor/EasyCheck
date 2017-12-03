@@ -348,7 +348,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
      *  Mètode per comprobar si el treballador es admin
      */
     public void comprobaAdmin() {
-        if (IS_ADMIN == "0") {
+        if (IS_ADMIN.equalsIgnoreCase("0")){
             spinnerTreballadors.setVisibility(View.GONE);
         } else {
             spinnerTreballadors.setVisibility(View.VISIBLE);
