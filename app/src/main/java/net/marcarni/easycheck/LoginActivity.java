@@ -202,9 +202,6 @@ public class LoginActivity extends AppCompatActivity {
                     db.InserirClient(c.getNom_titular(),c.getCognom1_titular(),c.getCognom2_titular(),c.getTelefon_titular(),c.getEmail_titular(),c.getDni_titular());
                 }
             }
-
-
-
             return null;
         }
 
