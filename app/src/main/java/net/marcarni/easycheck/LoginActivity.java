@@ -45,7 +45,9 @@ public class LoginActivity extends AppCompatActivity {
     FingerPrint fingerPrint;
     boolean loginCorrecte = false;
     public static String IS_ADMIN;
-    public static final String IP="192.168.43.184";
+    //public static final String IP="192.168.1.140";
+    public static final String IP="10.0.2.2";
+
     public static String ID_TREBALLADOR=null, NOM_USUARI="";
 
 

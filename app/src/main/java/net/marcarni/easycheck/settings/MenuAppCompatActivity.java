@@ -9,9 +9,11 @@ import android.view.View;
 
 import net.marcarni.easycheck.CheckCameraPermissionsActivity;
 import net.marcarni.easycheck.ConsultaServeisActivity;
+import net.marcarni.easycheck.ConsultaServeisOnlineActivity;
 import net.marcarni.easycheck.DniActivity;
 import net.marcarni.easycheck.LoginActivity;
 import net.marcarni.easycheck.R;
+import net.marcarni.easycheck.eines.isConnect;
 
 /**
  * Aquesta clase hereta d'AppCompatActivty a l'hora que implementa PopupMenu.OnItemClickListener.
@@ -129,10 +131,20 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                 startActivity(startLocActivity);
                 return true;
             case R.id.action_services:
+                if(isConnect.isDisponible(this))
+                {
+                 Intent startServicesOnline = new Intent (this, ConsultaServeisOnlineActivity.class);
+                 finish();
+                 startActivity(startServicesOnline);
+                 return true;
+                }
+                else{
+                    isConnect.MissatgeAlert(this,"WIFI NO DISPONIBLE","Es mostraràn les dades offline",true);
                 Intent startServicesActivity = new Intent(this, ConsultaServeisActivity.class);
                 finish();
                 startActivity(startServicesActivity);
                 return true;
+                }
             default:
                 return false;
         }

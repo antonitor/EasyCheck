@@ -67,6 +67,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
         myDataset = new ArrayList<>();
         headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
+
         db = new DBInterface(this);
         db.obre();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);

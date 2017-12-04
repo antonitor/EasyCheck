@@ -26,6 +26,7 @@ public class DescargaTreballador {
     //    private static final String BASE_URL = "easycheck.hopto.org";
     private static final int PORT = 8080;
     public static ArrayList<Treballador> treballadors;
+    public static final String IP="10.0.2.2";
     /**
      * Mètode principal
      * @param args
