@@ -27,6 +27,9 @@ import net.marcarni.easycheck.model.Reserva;
 import net.marcarni.easycheck.model.Servei;
 import net.marcarni.easycheck.model.Treballador;
 
+import java.net.ConnectException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -42,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     FingerPrint fingerPrint;
     boolean loginCorrecte = false;
     public static String IS_ADMIN;
-    public static final String IP="192.168.1.4";
+    public static final String IP="192.168.43.184";
     public static String ID_TREBALLADOR=null, NOM_USUARI="";
 
 
@@ -53,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         db = new DBInterface(this);
         new LoginActivity.descargarDades().execute(IP);
-
     }
     public void buttonEntrarListener(){
 
@@ -151,32 +153,61 @@ public class LoginActivity extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
     }
+    public static boolean isPortOpen(final String ip, final int port, final int timeout) {
 
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(ip, port), timeout);
+            socket.close();
+            return true;
+        }
+
+        catch(ConnectException ce){
+            ce.printStackTrace();
+            return false;
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     private class descargarDades extends AsyncTask<String, ArrayList,String> {
-        protected String doInBackground(String... urls) {
-            db.obre();
-            db.Esborra();
-
-            ArrayList<Treballador> llistaDeTreballadors = (ArrayList<Treballador>) DescargaTreballador.obtenirTreballadorsDelServer(urls[0]);
-            for(int i=0;i<llistaDeTreballadors.size();i++){
-                Treballador t= llistaDeTreballadors.get(i);
-                db.InserirTreballador(t.getDni(),t.getNom(),t.getCognom1(),t.getCognom2(),t.getLogin(),Integer.toString(t.getEsAdmin()),t.getPassword());
-            }
-            ArrayList<Servei> llistaDeServeis= (ArrayList<Servei>) DescargaServei.obtenirServeisDelServer(urls[0]);
-            for(int i=0;i<llistaDeServeis.size();i++) {
-                Servei s = llistaDeServeis.get(i);
-                db.InserirServei(s.getDescripcio(), Integer.toString(s.getId_treballador()), s.getData_servei(), s.getHora_inici(), s.getHora_final());
-            }
-            ArrayList<Reserva> llistaDeReserves= (ArrayList<Reserva>) DescargaReserva.obtenirReservesDelServer(urls[0]);
-            for(int i=0;i<llistaDeReserves.size();i++){
-                Reserva r=llistaDeReserves.get(i);
-                db.InserirReserva(r.getLocalitzador(),r.getData_reserva(),r.getId_servei(),r.getId(),r.getQr_code(),Integer.toString(r.getCheckin()));
-                Client c = r.getClient();
-                db.InserirClient(c.getNom_titular(),c.getCognom1_titular(),c.getCognom2_titular(),c.getTelefon_titular(),c.getEmail_titular(),c.getDni_titular());
-            }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             db.tanca();
+        }
+
+        protected String doInBackground(String... urls) {
+            if (isPortOpen(IP,8080,1)){
+                db.obre();
+                db.Esborra();
+
+                ArrayList<Treballador> llistaDeTreballadors = (ArrayList<Treballador>) DescargaTreballador.obtenirTreballadorsDelServer(urls[0]);
+                for(int i=0;i<llistaDeTreballadors.size();i++){
+                    Treballador t= llistaDeTreballadors.get(i);
+                    db.InserirTreballador(t.getDni(),t.getNom(),t.getCognom1(),t.getCognom2(),t.getLogin(),Integer.toString(t.getEsAdmin()),t.getPassword());
+                }
+                ArrayList<Servei> llistaDeServeis= (ArrayList<Servei>) DescargaServei.obtenirServeisDelServer(urls[0]);
+                for(int i=0;i<llistaDeServeis.size();i++) {
+                    Servei s = llistaDeServeis.get(i);
+                    db.InserirServei(s.getDescripcio(), Integer.toString(s.getId_treballador()), s.getData_servei(), s.getHora_inici(), s.getHora_final());
+                }
+                ArrayList<Reserva> llistaDeReserves= (ArrayList<Reserva>) DescargaReserva.obtenirReservesDelServer(urls[0]);
+                for(int i=0;i<llistaDeReserves.size();i++){
+                    Reserva r=llistaDeReserves.get(i);
+                    db.InserirReserva(r.getLocalitzador(),r.getData_reserva(),r.getId_servei(),r.getId(),r.getQr_code(),Integer.toString(r.getCheckin()));
+                    Client c = r.getClient();
+                    db.InserirClient(c.getNom_titular(),c.getCognom1_titular(),c.getCognom2_titular(),c.getTelefon_titular(),c.getEmail_titular(),c.getDni_titular());
+                }
+            }
+
+
+
             return null;
         }
+
     }
 
     @Override
