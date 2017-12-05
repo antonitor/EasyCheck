@@ -182,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected String doInBackground(String... urls) {
-            if (isPortOpen(IP,8080,1)){
+            if (isPortOpen(IP,8080,100)){
                 db.obre();
                 db.Esborra();
 
