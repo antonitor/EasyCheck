@@ -55,9 +55,9 @@ public class DescargaTreballador {
 
         return llistaDeTreballadors;
     }
-    public List<Treballador> obtenirTreballadorsDelServer() {
+    public static List<Treballador> obtenirTreballadorsDelServer() {
         String json = "";
-        URL url = NetUtils.buildUrl(BASE_URL, PORT, "/easycheckapi/treballador", null);
+        URL url = NetUtils.buildUrl(IP, PORT, "/easycheckapi/treballador", null);
         json = NetUtils.doGetRequest(url);
         Gson gson = new Gson();
         java.lang.reflect.Type tipusLlistaDeTreballadors = new TypeToken<List<Treballador>>() {

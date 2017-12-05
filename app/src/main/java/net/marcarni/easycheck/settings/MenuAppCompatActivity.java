@@ -1,5 +1,7 @@
 package net.marcarni.easycheck.settings;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -139,12 +141,35 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                  return true;
                 }
                 else{
-                    isConnect.MissatgeAlert(this,"WIFI NO DISPONIBLE","Es mostraràn les dades offline",true);
-                Intent startServicesActivity = new Intent(this, ConsultaServeisActivity.class);
-                finish();
-                startActivity(startServicesActivity);
-                return true;
-                }
+/**
+ * Mètode per comprovar connectivitat
+ */
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+                        alertDialog.setTitle("WIFI NO DISPONIBLE");
+                        alertDialog.setMessage("Es mostraran les dades OFFLINE");
+                        alertDialog.setIcon( R.drawable.fail);
+                        alertDialog.setCancelable(false);
+                        alertDialog.setPositiveButton("Acceptar",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent startServicesActivity = new Intent(MenuAppCompatActivity.this, ConsultaServeisActivity.class);
+                                finish();
+                                startActivity(startServicesActivity);
+
+                            }
+                        }
+                        );
+
+                    alertDialog.show();
+
+                    return true;
+
+
+                    }
+
+
+
             default:
                 return false;
         }

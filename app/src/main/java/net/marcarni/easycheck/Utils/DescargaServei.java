@@ -65,4 +65,5 @@ public class DescargaServei {
         ArrayList<Servei> llistaDeServeis = gson.fromJson(json, tipusLlistaDeServeis);
         return llistaDeServeis;
     }
+
 }

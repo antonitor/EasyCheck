@@ -1,12 +1,9 @@
 package net.marcarni.easycheck.eines;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import net.marcarni.easycheck.R;
+import android.net.wifi.WifiManager;
 
 /**
  * Created by Maria on 03/12/2017.
@@ -16,6 +13,7 @@ public   class isConnect
 {
     static ConnectivityManager connectivityManager;
     static NetworkInfo actNetInfo;
+   static  WifiManager admin_wifi;
 
 
 
@@ -27,21 +25,7 @@ public   class isConnect
     }
 
 
-
-    public static void MissatgeAlert(Context context, String title, String message, Boolean status) {
-        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-
-        alertDialog.setTitle(title);
-        alertDialog.setMessage(message);
-        alertDialog.setIcon( R.drawable.fail);
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-
-        alertDialog.show();
-    }
-
-
 }
+
+
 

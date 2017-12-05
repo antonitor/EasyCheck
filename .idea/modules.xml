@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EasyCheck.iml" filepath="$PROJECT_DIR$/EasyCheck.iml" />
-      <module fileurl="file://C:\Users\Maria\AndroidStudioProjects\Git\TEA3_V3\EasyCheck\EasyCheck.iml" filepath="C:\Users\Maria\AndroidStudioProjects\Git\TEA3_V3\EasyCheck\EasyCheck.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Maria\AndroidStudioProjects\Git\TEA3_V3\EasyCheck\app\app.iml" filepath="C:\Users\Maria\AndroidStudioProjects\Git\TEA3_V3\EasyCheck\app\app.iml" />
     </modules>
   </component>
 </project>
