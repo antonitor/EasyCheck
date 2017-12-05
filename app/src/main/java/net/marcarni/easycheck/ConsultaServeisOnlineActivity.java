@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import net.marcarni.easycheck.RecyclerView.HeaderAdapter_Consulta;
 import net.marcarni.easycheck.RecyclerView.Header_Consulta;
@@ -35,6 +36,7 @@ public class ConsultaServeisOnlineActivity  extends MenuAppCompatActivity {
 
     List<Treballador> listaTreballadors = new ArrayList<>();
     List<Servei> llistaServeis = new ArrayList<>();
+    List<Servei> serveisTreballador=new ArrayList<>();
     Cursor cursor;
 
     @Override
@@ -60,8 +62,12 @@ public class ConsultaServeisOnlineActivity  extends MenuAppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Treballador> s) {
             super.onPostExecute(s);
+            headerAdapter_consulta .notifyDataSetChanged();
+            linearLayoutManager = new LinearLayoutManager(ConsultaServeisOnlineActivity.this);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(headerAdapter_consulta);
             implementarSpinner();
-            implementaRecycler();
+
 
         }
 
@@ -88,10 +94,16 @@ public class ConsultaServeisOnlineActivity  extends MenuAppCompatActivity {
             spinnerTreballadors.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+                    int id_treballador= Integer.parseInt(cursor.getString(0));
+                    if(id_treballador==0){
+                       headerAdapter_consulta.actualitzaRecycler(retornaHeader((ArrayList<Servei>) llistaServeis));
+                    }else{
 
-                   // Toast.makeText(parent.getContext(), cursor.getString(1) + cursor.getString(0), Toast.LENGTH_SHORT).show();
+                    headerAdapter_consulta.actualitzaRecycler((ArrayList<Header_Consulta>) RetornaServeisPerId(id_treballador));
 
 
+                    Toast.makeText(parent.getContext(), cursor.getString(1) + cursor.getString(0), Toast.LENGTH_SHORT).show();
+                }
                 }
 
                 @Override
@@ -116,6 +128,7 @@ public class ConsultaServeisOnlineActivity  extends MenuAppCompatActivity {
 
 
 
+
     private Cursor getCursorSpinner() {
         MatrixCursor cursor = new MatrixCursor(new String[]{"_id", "nom"});
         cursor.addRow(new String[]{"0", "Tots"});
@@ -127,6 +140,7 @@ public class ConsultaServeisOnlineActivity  extends MenuAppCompatActivity {
     }
 
     public ArrayList retornaHeader(ArrayList<Servei> s) {
+        myDataset = new ArrayList<>();
         for (int i = 0; i < s.size(); i++) {
             int idTreb = (s.get(i).getId_treballador());
             String nom = treballadors.get(idTreb).getNom();
@@ -152,11 +166,19 @@ public class ConsultaServeisOnlineActivity  extends MenuAppCompatActivity {
         return nom;
     }
 
-    private void implementaRecycler() {
-        linearLayoutManager = new LinearLayoutManager(ConsultaServeisOnlineActivity.this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(headerAdapter_consulta);
-        myDataset = retornaHeader((ArrayList<Servei>) llistaServeis);
+    public List RetornaServeisPerId(int id){
+        myDataset = new ArrayList<>();
+        for(int i=0;i<llistaServeis.size();i++){
+        if(llistaServeis.get(i).getId_treballador()==id){
+               myDataset.add(new Header_Consulta(RetornaNomTreballador(id)
+                       , llistaServeis.get(i).getDescripcio()
+                       ,  String.valueOf(llistaServeis.get(i).getId()), llistaServeis.get(i).getData_servei(),
+                       llistaServeis.get(i).getHora_inici(),  llistaServeis.get(i).getHora_final()));
+           }
+        }
+        return myDataset;
     }
+
+
 
 }
