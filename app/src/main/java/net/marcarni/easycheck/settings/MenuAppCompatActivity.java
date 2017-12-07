@@ -24,12 +24,13 @@ import net.marcarni.easycheck.eines.isConnect;
  *
  * @author Antoni Torres Marí
  */
-public class MenuAppCompatActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
+public class MenuAppCompatActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     /**
      * Created by Antoni Torres Marí
-     *
+     * <p>
      * Infla el menú principal main.xml
+     *
      * @param menu menú de la toolbar
      * @return true
      */
@@ -41,15 +42,16 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
 
     /**
      * Created by Antoni Torres Marí
-     *
+     * <p>
      * Gestiona l'esdeveniment quan es selecciona un MenuItem del menú principal
+     *
      * @param item MenuItem seleccionat
      * @return true si s'ha capturat un dels items del menú
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch(id) {
+        switch (id) {
             case R.id.action_settings:
                 Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
                 startActivity(startSettingsActivity);
@@ -61,11 +63,11 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                 return true;
             case R.id.menu_consultes:
                 //En premer aquest botó es desplega un PopupMenu
-                showConsultesSubmenuPopup((View)findViewById(R.id.menu_consultes));
+                showConsultesSubmenuPopup((View) findViewById(R.id.menu_consultes));
                 return true;
             case R.id.menu_gestor:
                 //En premer aquest botó es desplega un PopupMenu
-                showGestorSubmenuPopup((View)findViewById(R.id.menu_gestor));
+                showGestorSubmenuPopup((View) findViewById(R.id.menu_gestor));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -73,10 +75,11 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
 
     /**
      * Created by Antoni Torres Marí
-     *
+     * <p>
      * De aquet View que pasem per paràmetre s'hi desplega un PopupMenú inflat amb el recurs
      * gestor_submenu.xml i s'hi afegeix el listener PopupMenu.OnMenuItemClickListener que implementa
      * aquesta clase
+     *
      * @param v View a partir del qual es desplegará el popupMenu
      */
     public void showGestorSubmenuPopup(View v) {
@@ -88,10 +91,11 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
 
     /**
      * Created by Antoni Torres Marí
-     *
+     * <p>
      * De aquet View que pasem per paràmetre s'hi desplega un PopupMenú inflat amb el recurs
      * consultes_submenu.xml i s'hi afegeix el listener PopupMenu.OnMenuItemClickListener que implementa
      * aquesta clase
+     *
      * @param v View a partir del qual es desplegará el popupMenu
      */
     public void showConsultesSubmenuPopup(View v) {
@@ -104,7 +108,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
 
     /**
      * Created by Antoni Torres Marí
-     *
+     * <p>
      * Metode implementat de l'interfície PopupMenu.OnMenuItemClickListener que gestiona els
      * esdeveniments que es llençen al premer un dels items d'un dels PopupMenu
      *
@@ -133,45 +137,44 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                 startActivity(startLocActivity);
                 return true;
             case R.id.action_services:
-                if(isConnect.isDisponible(this))
-                {
-                 Intent startServicesOnline = new Intent (this, ConsultaServeisOnlineActivity.class);
-                 finish();
-                 startActivity(startServicesOnline);
-                 return true;
-                }
-                else{
-/**
- * Mètode per comprovar connectivitat
- */
+                if (isConnect.isDisponible(this)) {
+                    Intent startServicesOnline = new Intent(this, ConsultaServeisOnlineActivity.class);
+                    finish();
+                    startActivity(startServicesOnline);
+                    return true;
 
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
-                        alertDialog.setTitle("WIFI NO DISPONIBLE");
-                        alertDialog.setMessage("Es mostraran les dades OFFLINE");
-                        alertDialog.setIcon( R.drawable.fail);
-                        alertDialog.setCancelable(false);
-                        alertDialog.setPositiveButton("Acceptar",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent startServicesActivity = new Intent(MenuAppCompatActivity.this, ConsultaServeisActivity.class);
-                                finish();
-                                startActivity(startServicesActivity);
+                } else {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
+                    alertDialog.setTitle("WIFI NO DISPONIBLE");
+                    alertDialog.setMessage("Es mostraran les dades OFFLINE");
+                    alertDialog.setIcon(R.drawable.fail);
+                    alertDialog.setCancelable(false);
+                    alertDialog.setPositiveButton("Acceptar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent startServicesActivity = new Intent(MenuAppCompatActivity.this, ConsultaServeisActivity.class);
+                                    finish();
+                                    startActivity(startServicesActivity);
+
+                                }
                             }
-                        }
-                        );
+                    );
 
                     alertDialog.show();
 
                     return true;
 
 
-                    }
 
-
+                }
 
             default:
+
                 return false;
         }
+
+
+
     }
 }

@@ -22,14 +22,12 @@ import net.marcarni.easycheck.Utils.DescargaReserva;
 import net.marcarni.easycheck.Utils.DescargaServei;
 import net.marcarni.easycheck.Utils.DescargaTreballador;
 import net.marcarni.easycheck.Utils.FingerPrint;
+import net.marcarni.easycheck.eines.isConnect;
 import net.marcarni.easycheck.model.Client;
 import net.marcarni.easycheck.model.Reserva;
 import net.marcarni.easycheck.model.Servei;
 import net.marcarni.easycheck.model.Treballador;
 
-import java.net.ConnectException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -155,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
     }
-    public static boolean isPortOpen(final String ip, final int port, final int timeout) {
+    /*public static boolean isPortOpen(final String ip, final int port, final int timeout) {
 
         try {
             Socket socket = new Socket();
@@ -173,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
             ex.printStackTrace();
             return false;
         }
-    }
+    }*/
     private class descargarDades extends AsyncTask<String, ArrayList,String> {
         @Override
         protected void onPostExecute(String s) {
@@ -182,14 +180,16 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected String doInBackground(String... urls) {
-            if (isPortOpen(IP,8080,100)){
+            if (isConnect.isPortOpen(IP, 8080, 100)){
                 db.obre();
                 db.Esborra();
 
                 ArrayList<Treballador> llistaDeTreballadors = (ArrayList<Treballador>) DescargaTreballador.obtenirTreballadorsDelServer(urls[0]);
+                Treballador.setTreballadors(llistaDeTreballadors);
                 for(int i=0;i<llistaDeTreballadors.size();i++){
                     Treballador t= llistaDeTreballadors.get(i);
                     db.InserirTreballador(t.getDni(),t.getNom(),t.getCognom1(),t.getCognom2(),t.getLogin(),Integer.toString(t.getEsAdmin()),t.getPassword());
+
                 }
                 ArrayList<Servei> llistaDeServeis= (ArrayList<Servei>) DescargaServei.obtenirServeisDelServer(urls[0]);
                 for(int i=0;i<llistaDeServeis.size();i++) {
