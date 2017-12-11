@@ -38,7 +38,7 @@
             android:key="@string/pref_port_key"
             android:title="@string/pref_port_title"
             android:numeric="integer"
-            android:defaultValue="@integer/pref_port_default"
+            android:defaultValue="@string/pref_port_default"
             android:summary="%s"/>
 
     </PreferenceCategory>
