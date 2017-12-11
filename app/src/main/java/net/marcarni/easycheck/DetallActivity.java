@@ -14,7 +14,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -44,7 +43,6 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     private String mHost;
     private int mPort;
     private static final String PATH = "/easycheckapi/servei";
-    private static final String GET_REQUEST_URL = "urlbundlekey";
     private static final int EASY_LOADER = 22;
 
     /**
@@ -61,7 +59,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
         //Agafa el host i el port de les preferencies d'usuari
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mHost = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
-        mPort = 8080;//sharedPreferences.getInt(getString(R.string.pref_port_key), 8080);
+        mPort = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
 
         /**
          * created by Maria Remedios Ortega Cobos
