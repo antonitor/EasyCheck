@@ -43,7 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     FingerPrint fingerPrint;
     boolean loginCorrecte = false;
     public static String IS_ADMIN;
+    String host;
     public static String IP="";
+    public static Integer PORT;
 
    // public static final String IP="10.0.2.2";
 
@@ -56,6 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         db = new DBInterface(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        IP = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
+        PORT = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
+
         new LoginActivity.descargarDades().execute(IP);
     }
     public void buttonEntrarListener(){
@@ -154,25 +160,7 @@ public class LoginActivity extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
     }
-    /*public static boolean isPortOpen(final String ip, final int port, final int timeout) {
 
-        try {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(ip, port), timeout);
-            socket.close();
-            return true;
-        }
-
-        catch(ConnectException ce){
-            ce.printStackTrace();
-            return false;
-        }
-
-        catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }*/
     private class descargarDades extends AsyncTask<String, ArrayList,String> {
         @Override
         protected void onPostExecute(String s) {
@@ -181,8 +169,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected String doInBackground(String... urls) {
-            IP = getString(R.string.pref_host_default);
-            if (isConnect.isPortOpen(IP, 8080, 100)){
+
+            if (isConnect.isPortOpen(IP, PORT, 100)){
                 db.obre();
                 db.Esborra();
 

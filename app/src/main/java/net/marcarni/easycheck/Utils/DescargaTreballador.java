@@ -24,7 +24,7 @@ import java.util.List;
 public class DescargaTreballador {
 
     //    private static final String BASE_URL = "easycheck.hopto.org";
-    private static final int PORT = 8080;
+
     public static ArrayList<Treballador> treballadors;
 
     /**
@@ -46,7 +46,7 @@ public class DescargaTreballador {
      */
     public static  List<Treballador> obtenirTreballadorsDelServer(String URL) {
         String json = "";
-        URL url = NetUtils.buildUrl(URL, PORT, "/easycheckapi/treballador", null);
+        URL url = NetUtils.buildUrl(URL, LoginActivity.PORT, "/easycheckapi/treballador", null);
         json = NetUtils.doGetRequest(url);
         Gson gson = new Gson();
         java.lang.reflect.Type tipusLlistaDeTreballadors = new TypeToken<List<Treballador>>() {
@@ -57,7 +57,7 @@ public class DescargaTreballador {
     }
     public static List<Treballador> obtenirTreballadorsDelServer() {
         String json = "";
-        URL url = NetUtils.buildUrl(LoginActivity.IP, PORT, "/easycheckapi/treballador", null);
+        URL url = NetUtils.buildUrl(LoginActivity.IP, LoginActivity.PORT, "/easycheckapi/treballador", null);
         json = NetUtils.doGetRequest(url);
         Gson gson = new Gson();
         java.lang.reflect.Type tipusLlistaDeTreballadors = new TypeToken<List<Treballador>>() {

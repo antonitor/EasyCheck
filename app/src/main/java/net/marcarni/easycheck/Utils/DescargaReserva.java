@@ -25,7 +25,6 @@ public class DescargaReserva {
 
 
     //    private static final String BASE_URL = "easycheck.hopto.org";
-    private static final int PORT = 8080;
     private static Gson gson = new Gson();
 
     /**
@@ -34,7 +33,7 @@ public class DescargaReserva {
      */
     public static List<Reserva> obtenirReservesDelServer() {
         String json = "";
-        URL url = NetUtils.buildUrl(LoginActivity.IP, PORT, "/easycheckapi/reserva", null);
+        URL url = NetUtils.buildUrl(LoginActivity.IP, LoginActivity.PORT, "/easycheckapi/reserva", null);
         json = NetUtils.doGetRequest(url);
         java.lang.reflect.Type tipusLlistaDeReserves = new TypeToken<List<Reserva>>() {
         }.getType();
@@ -48,7 +47,7 @@ public class DescargaReserva {
      * @return llista de reserves d'un servei
      */
     public static ArrayList<Reserva> getReservesServei(int servei) {
-        URL url = NetUtils.buildUrl(LoginActivity.IP, PORT, "/easycheckapi/reserva", "servei=" + servei);
+        URL url = NetUtils.buildUrl(LoginActivity.IP, LoginActivity.PORT, "/easycheckapi/reserva", "servei=" + servei);
         String json = NetUtils.doGetRequest(url);
         final Type tipusLlista = new TypeToken<List<Reserva>>() {
         }.getType();
@@ -57,7 +56,7 @@ public class DescargaReserva {
     }
     public static List<Reserva> obtenirReservesDelServer(String localhost) {
         String json = "";
-        URL url = NetUtils.buildUrl(LoginActivity.IP, PORT, "/easycheckapi/reserva", null);
+        URL url = NetUtils.buildUrl(LoginActivity.IP, LoginActivity.PORT, "/easycheckapi/reserva", null);
         json = NetUtils.doGetRequest(url);
         java.lang.reflect.Type tipusLlistaDeReserves = new TypeToken<List<Reserva>>() {
         }.getType();
