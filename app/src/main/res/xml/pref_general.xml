@@ -29,6 +29,16 @@
             android:entries="@array/pref_manager_defaults_labels"
             android:defaultValue="@string/pref_manager_default_qr_value"
             android:summary="%s"/>
+        <EditTextPreference
+            android:key="@string/pref_host_key"
+            android:title="@string/pref_host_label"
+            android:defaultValue="@string/pref_host_default"
+            android:summary="%s"/>
+        <EditTextPreference
+            android:key="@string/pref_port_key"
+            android:title="@string/pref_port_title"
+            android:defaultValue="@string/pref_port_default"
+            android:summary="%s"/>
 
     </PreferenceCategory>
 

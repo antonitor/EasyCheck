@@ -149,4 +149,13 @@ private ArrayList<Header> mDataset;
             }
         }
     }
+
+    /**
+     * Mètode per actualitzar el recycler un cop canviat el filtratge.
+     * @param llistaConsultes arrayList
+     */
+    public void actualitzaRecycler(ArrayList<Header> llistaConsultes) {
+        mDataset = llistaConsultes;
+        this.notifyDataSetChanged();
+    }
 }

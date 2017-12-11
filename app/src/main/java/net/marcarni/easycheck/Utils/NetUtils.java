@@ -5,6 +5,10 @@ package net.marcarni.easycheck.Utils;/*
  */
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -106,6 +110,16 @@ public class NetUtils {
             System.out.println(result.toString());
         }
         return result;
+    }
+
+    public static boolean comprovaXarxa(Context context) {
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
