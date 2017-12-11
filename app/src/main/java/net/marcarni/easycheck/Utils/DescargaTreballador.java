@@ -12,6 +12,7 @@ package net.marcarni.easycheck.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import net.marcarni.easycheck.LoginActivity;
 import net.marcarni.easycheck.model.Treballador;
 
 import java.net.URL;
@@ -22,11 +23,10 @@ import java.util.List;
 
 public class DescargaTreballador {
 
-    private static final String BASE_URL = "localhost";
     //    private static final String BASE_URL = "easycheck.hopto.org";
     private static final int PORT = 8080;
     public static ArrayList<Treballador> treballadors;
-    public static final String IP="10.0.2.2";
+
     /**
      * Mètode principal
      * @param args
@@ -57,7 +57,7 @@ public class DescargaTreballador {
     }
     public static List<Treballador> obtenirTreballadorsDelServer() {
         String json = "";
-        URL url = NetUtils.buildUrl(IP, PORT, "/easycheckapi/treballador", null);
+        URL url = NetUtils.buildUrl(LoginActivity.IP, PORT, "/easycheckapi/treballador", null);
         json = NetUtils.doGetRequest(url);
         Gson gson = new Gson();
         java.lang.reflect.Type tipusLlistaDeTreballadors = new TypeToken<List<Treballador>>() {

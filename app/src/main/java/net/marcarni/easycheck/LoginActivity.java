@@ -43,8 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     FingerPrint fingerPrint;
     boolean loginCorrecte = false;
     public static String IS_ADMIN;
-    //public static final String IP="192.168.1.140";
-    public static final String IP="10.0.2.2";
+    public static String IP="";
+
+   // public static final String IP="10.0.2.2";
 
     public static String ID_TREBALLADOR=null, NOM_USUARI="";
 
@@ -180,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected String doInBackground(String... urls) {
+            IP = getString(R.string.pref_host_default);
             if (isConnect.isPortOpen(IP, 8080, 100)){
                 db.obre();
                 db.Esborra();
