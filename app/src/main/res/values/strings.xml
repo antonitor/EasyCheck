@@ -55,7 +55,7 @@
     <string name="pref_host_key">kHost</string>
     <string name="pref_host_label">Host</string>
     <!--<string name="pref_host_default">10.0.2.2</string>-->
-    <string name="pref_host_default">192.168.1.4</string>
+    <string name="pref_host_default">10.0.2.2</string>
     <string name="pref_port_key">kPort</string>
     <string name="pref_port_title">Port</string>
     <string name="pref_port_default">8080</string>

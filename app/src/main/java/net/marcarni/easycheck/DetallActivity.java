@@ -14,6 +14,8 @@ import android.support.v4.content.Loader;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -26,6 +28,7 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.DBInterface;
 import net.marcarni.easycheck.Utils.NetUtils;
+import net.marcarni.easycheck.eines.isConnect;
 import net.marcarni.easycheck.model.Reserva;
 import net.marcarni.easycheck.model.Servei;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
@@ -35,11 +38,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetallActivity extends MenuAppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Header>> {
+public class DetallActivity extends MenuAppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Header>>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DBInterface db;
     private HeaderAdapter headerAdapter;
     private ArrayList<Header> myDataset;
+    private ProgressBar mLoadingIndicator;
     private String mHost;
     private int mPort;
     private static final String PATH = "/easycheckapi/servei";
@@ -55,11 +59,9 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detall);
 
-        //@Author Toni Torres
-        //Agafa el host i el port de les preferencies d'usuari
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mHost = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
-        mPort = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
+        //@author Antoni Torres Marí
+        configuraSharedPreferences();
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         /**
          * created by Maria Remedios Ortega Cobos
@@ -78,35 +80,58 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
         } else {
             db = new DBInterface(this);
             consultes();
-            verifica(this);
+            if (myDataset.isEmpty()) {
+                errorDialog(this, "Reserva no trobada!");
+            }
         }
+    }
 
+    //@author Toni Torres
+    //Agafa el host i el port de les preferencies d'usuari
+    private void configuraSharedPreferences(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mHost = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
+        mPort = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    /**
+     * @author Antoni Torres Marí
+     * @param sharedPreferences
+     * @param key
+     */
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_host_key))){
+            mHost = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
+        } else if (key.equals(getString(R.string.pref_port_key))){
+            mPort = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
+        }
     }
 
     /**
      * @author Carlos Alberto Castro Cañabate
+     *          Modificat per Antoni Torres Mari TEA4
      * Mètode que verigica si el dataSet es buit, es a dir sino hi ha reserva
      */
-    public void verifica(final Context context) {
-        if (myDataset.isEmpty()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Reserva no trobada!")
-                    .setTitle("Atenció!!")
-                    .setCancelable(false)
-                    .setPositiveButton("Acceptar",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    if (getIntent().hasExtra(getString(R.string.scanner_result))) {
-                                        Intent intent = new Intent(context, CheckCameraPermissionsActivity.class);
-                                        startActivity(intent);
-                                    }
-                                    finish();
+    public void errorDialog(final Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setTitle("Atenció!!")
+                .setCancelable(false)
+                .setPositiveButton("Acceptar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                if (getIntent().hasExtra(getString(R.string.scanner_result))) {
+                                    Intent intent = new Intent(context, CheckCameraPermissionsActivity.class);
+                                    startActivity(intent);
                                 }
-                            });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
+                                finish();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     /**
@@ -230,7 +255,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     }
 
     /**
-     * @Author Antoni Torres Marí
+     * @author Antoni Torres Marí
      * Mètode que obtè les dades del intent i les passa al Loader encarregat de
      * obtindre les dades del servidor
      */
@@ -269,8 +294,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     }
 
     /**
-     * @Author Antoni Torres Marí
-     *
+     * @author Antoni Torres Marí
      */
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -287,7 +311,10 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
                 }
 
                 gson = new Gson();
+
                 //Mostra Loading Indicator
+                mLoadingIndicator.setVisibility(View.VISIBLE);
+
                 if (dataSet != null) {
                     deliverResult(dataSet);
                 } else {
@@ -299,6 +326,9 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
             @Override
             public ArrayList<Header> loadInBackground() {
+                if (!isConnect.isPortOpen(mHost, mPort, 3000)) {
+                    return null;
+                }
                 URL url = NetUtils.buildUrl(mHost, mPort, PATH, null);
                 String json = NetUtils.doGetRequest(url);
                 Type tipusLlistaDeServeis = new TypeToken<List<Servei>>() {
@@ -362,7 +392,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
                     }
                 } else if (args.containsKey("idservei")) {
                     for (Servei servei : llistaServeis) {
-                        if (args.get("idservei").equals(""+servei.getId())) {
+                        if (args.get("idservei").equals("" + servei.getId())) {
                             for (Reserva reserva : servei.getLlistaReserves()) {
                                 data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
                                         " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
@@ -384,13 +414,15 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     }
 
     /**
-     * @Author Antoni Torres Marí
-     *
+     * @author Antoni Torres Marí
      */
     @Override
     public void onLoadFinished(Loader<ArrayList<Header>> loader, ArrayList<Header> data) {
-        if (data.isEmpty()) {
-            verifica(DetallActivity.this);
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
+        if (data == null) {
+            errorDialog(DetallActivity.this, "Impossible conectar amb el servidor!");
+        } else if (data.isEmpty()) {
+            errorDialog(DetallActivity.this, "Reserva no trobada!");
         } else {
             myDataset = data;
             headerAdapter.actualitzaRecycler(data);
@@ -402,11 +434,13 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     }
 
-    /*@Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    /**
+     * @author Antoni Torres Marí
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
 
-        String queryUrl = mUrlDisplayTextView.getText().toString();
-        outState.putString(SEARCH_QUERY_URL_EXTRA, queryUrl);
-    }*/
 }
