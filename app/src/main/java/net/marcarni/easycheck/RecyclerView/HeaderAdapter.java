@@ -27,12 +27,19 @@ import java.util.ArrayList;
 public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> {
 private ArrayList<Header> mDataset;
 
+    final private ListItemClickListener mOnClickListener;
+
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemId, View v, TextView check, TextView checkText, TextView dni);
+    }
+
     /**
      * Constructor de la clase Headeradapter
      * @param myDataset dataSet
      */
-    public HeaderAdapter(ArrayList<Header> myDataset) {
+    public HeaderAdapter(ArrayList<Header> myDataset, ListItemClickListener listener) {
         mDataset = myDataset;
+        mOnClickListener = listener;
     }
 
     /**
@@ -82,7 +89,7 @@ private ArrayList<Header> mDataset;
     public int getItemCount() {
         return mDataset.size();
     }
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // nom,dni,data,qr,localitzacio,email,check;
         TextView nom,dni,data,qr,localitzacio,email,check,checkText,servei;
         View v;
@@ -116,6 +123,11 @@ private ArrayList<Header> mDataset;
         public void onClick(View view) {
             v = view;
             if  (check.getText().toString().equalsIgnoreCase("0")) {   // Si NO TE el check-in FET
+
+                //@author Antoni Torres Marí
+                //S'ha passat aquesta funcionalitat a DetallActivity
+                mOnClickListener.onListItemClick(_id, view, check, checkText, dni);
+                /*
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setMessage("Vols Confirmar el Check-IN?")
                         .setTitle("Atenció!!")
@@ -143,15 +155,19 @@ private ArrayList<Header> mDataset;
                         );
                 AlertDialog alert = builder.create();
                 alert.show();
+                */
+
+
+
             } else {
                 Toast.makeText(v.getContext(), "Aquesta reserva ja te check-in!", Toast.LENGTH_LONG).show();
-                v.setBackgroundColor(Color.rgb(255, 51, 30));
+                v.setBackgroundColor(Color.rgb(255, 204, 204));
             }
         }
     }
 
     /**
-     * Mètode per actualitzar el recycler un cop canviat el filtratge.
+     * Mètode per actualitzar el recycler
      * @param llistaConsultes arrayList
      */
     public void actualitzaRecycler(ArrayList<Header> llistaConsultes) {

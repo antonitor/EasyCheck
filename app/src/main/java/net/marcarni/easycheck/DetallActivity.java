@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -14,8 +15,10 @@ import android.support.v4.content.Loader;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -28,6 +31,7 @@ import net.marcarni.easycheck.SQLite.ContracteBD.Reserves;
 import net.marcarni.easycheck.SQLite.ContracteBD.Serveis;
 import net.marcarni.easycheck.SQLite.DBInterface;
 import net.marcarni.easycheck.Utils.NetUtils;
+import net.marcarni.easycheck.Utils.PostResponse;
 import net.marcarni.easycheck.eines.isConnect;
 import net.marcarni.easycheck.model.Reserva;
 import net.marcarni.easycheck.model.Servei;
@@ -38,7 +42,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetallActivity extends MenuAppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Header>>, SharedPreferences.OnSharedPreferenceChangeListener {
+public class DetallActivity extends MenuAppCompatActivity implements LoaderManager.LoaderCallbacks,
+        SharedPreferences.OnSharedPreferenceChangeListener, HeaderAdapter.ListItemClickListener {
 
     private DBInterface db;
     private HeaderAdapter headerAdapter;
@@ -46,8 +51,17 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     private ProgressBar mLoadingIndicator;
     private String mHost;
     private int mPort;
-    private static final String PATH = "/easycheckapi/servei";
-    private static final int EASY_LOADER = 22;
+    private static final String SERVEIS_PATH = "/easycheckapi/servei";
+    private static final String CHECKIN_PATH = "/easycheckapi/reserva";
+    private static final int GET_REQUEST_LOADER = 1;
+    private static final int CHECK_IN_LOADER = 2;
+
+    //Recycler Item TextViews
+    private int mClickedItemId;
+    private TextView mClickedItemCheck;
+    private TextView mClickedItemCheckText;
+    private TextView mClickedItemDni;
+    private View mClickedItemView;
 
     /**
      * @param savedInstanceState Bundle
@@ -72,7 +86,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         myDataset = new ArrayList<>();
-        headerAdapter = new HeaderAdapter(myDataset);
+        headerAdapter = new HeaderAdapter(myDataset, this);
         recyclerView.setAdapter(headerAdapter);
 
         if (NetUtils.comprovaXarxa(this)) {
@@ -88,7 +102,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     //@author Toni Torres
     //Agafa el host i el port de les preferencies d'usuari
-    private void configuraSharedPreferences(){
+    private void configuraSharedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mHost = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
         mPort = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
@@ -96,22 +110,22 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     }
 
     /**
-     * @author Antoni Torres Marí
      * @param sharedPreferences
      * @param key
+     * @author Antoni Torres Marí
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_host_key))){
+        if (key.equals(getString(R.string.pref_host_key))) {
             mHost = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
-        } else if (key.equals(getString(R.string.pref_port_key))){
+        } else if (key.equals(getString(R.string.pref_port_key))) {
             mPort = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
         }
     }
 
     /**
      * @author Carlos Alberto Castro Cañabate
-     *          Modificat per Antoni Torres Mari TEA4
+     * Modificat per Antoni Torres Mari TEA4
      * Mètode que verigica si el dataSet es buit, es a dir sino hi ha reserva
      */
     public void errorDialog(final Context context, String message) {
@@ -285,11 +299,11 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
             Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
         }
         LoaderManager loaderManager = getSupportLoaderManager();
-        Loader<String> easySearchLoader = loaderManager.getLoader(EASY_LOADER);
+        Loader easySearchLoader = loaderManager.getLoader(GET_REQUEST_LOADER);
         if (easySearchLoader == null) {
-            loaderManager.initLoader(EASY_LOADER, queryBundle, this);
+            loaderManager.initLoader(GET_REQUEST_LOADER, queryBundle, this);
         } else {
-            loaderManager.restartLoader(EASY_LOADER, queryBundle, this);
+            loaderManager.restartLoader(GET_REQUEST_LOADER, queryBundle, this);
         }
     }
 
@@ -298,139 +312,177 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
      */
     @SuppressLint("StaticFieldLeak")
     @Override
-    public Loader<ArrayList<Header>> onCreateLoader(int id, final Bundle args) {
-        return new AsyncTaskLoader<ArrayList<Header>>(this) {
+    public Loader onCreateLoader(int id, final Bundle args) {
+        if (id == GET_REQUEST_LOADER) {
+            return new AsyncTaskLoader<ArrayList<Header>>(this) {
+                ArrayList<Header> dataSet;
+                Gson gson;
 
-            ArrayList<Header> dataSet;
-            Gson gson;
-
-            @Override
-            protected void onStartLoading() {
-                if (args == null) {
-                    return;
-                }
-
-                gson = new Gson();
-
-                //Mostra Loading Indicator
-                mLoadingIndicator.setVisibility(View.VISIBLE);
-
-                if (dataSet != null) {
-                    deliverResult(dataSet);
-                } else {
+                @Override
+                protected void onStartLoading() {
+                    if (args == null) {
+                        return;
+                    }
+                    gson = new Gson();
+                    //Mostra Loading Indicator
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
 
-            }
+                @Override
+                public ArrayList<Header> loadInBackground() {
+                    if (!isConnect.isPortOpen(mHost, mPort, 3000)) {
+                        return null;
+                    }
+                    URL url = NetUtils.buildUrl(mHost, mPort, SERVEIS_PATH, null);
+                    String json = NetUtils.doGetRequest(url);
+                    Type tipusLlistaDeServeis = new TypeToken<List<Servei>>() {
+                    }.getType();
+                    List<Servei> llistaServeis = gson.fromJson(json, tipusLlistaDeServeis);
+                    ArrayList<Header> data = new ArrayList<>();
+                    if (args.containsKey("loc")) {
+                        for (Servei servei : llistaServeis) {
+                            for (Reserva reserva : servei.getLlistaReserves()) {
+                                if (reserva.getLocalitzador().equals(args.get("loc"))) {
+                                    data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
+                                            " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
+                                            reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
+                                            reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
+                                }
+                            }
+                        }
+                    } else if (args.containsKey("dni") && args.containsKey("data")) {
+                        for (Servei servei : llistaServeis) {
+                            for (Reserva reserva : servei.getLlistaReserves()) {
+                                if (reserva.getClient().getDni_titular().equals(args.get("dni")) && servei.getData_servei().equals(args.get("data"))) {
+                                    data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
+                                            " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
+                                            reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
+                                            reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
+                                }
+                            }
+                        }
+                    } else if (args.containsKey("dni")) {
+                        for (Servei servei : llistaServeis) {
+                            for (Reserva reserva : servei.getLlistaReserves()) {
+                                if (reserva.getClient().getDni_titular().equals(args.get("dni"))) {
+                                    data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
+                                            " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
+                                            reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
+                                            reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
+                                }
+                            }
+                        }
+                    } else if (args.containsKey("data")) {
+                        for (Servei servei : llistaServeis) {
+                            if (servei.getData_servei().equals(args.get("data"))) {
+                                for (Reserva reserva : servei.getLlistaReserves()) {
+                                    data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
+                                            " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
+                                            reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
+                                            reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
+                                }
+                            }
+                        }
+                    } else if (args.containsKey("qrcode")) {
+                        for (Servei servei : llistaServeis) {
+                            for (Reserva reserva : servei.getLlistaReserves()) {
+                                if (reserva.getQr_code().equals(args.get("qrcode"))) {
+                                    data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
+                                            " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
+                                            reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
+                                            reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
+                                }
+                            }
+                        }
+                    } else if (args.containsKey("idservei")) {
+                        for (Servei servei : llistaServeis) {
+                            if (args.get("idservei").equals("" + servei.getId())) {
+                                for (Reserva reserva : servei.getLlistaReserves()) {
+                                    data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
+                                            " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
+                                            reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
+                                            reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
+                                }
+                            }
+                        }
+                    }
+                    return data;
+                }
+            };
+        } else {
+            return new AsyncTaskLoader<PostResponse>(this) {
+                PostResponse postResponse;
+                Gson gson;
 
+                @Override
+                protected void onStartLoading() {
+                    if (args == null) {
+                        return;
+                    }
+                    gson = new Gson();
 
-            @Override
-            public ArrayList<Header> loadInBackground() {
-                if (!isConnect.isPortOpen(mHost, mPort, 3000)) {
+                    //Mostra Loading Indicator
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
+                    forceLoad();
+                }
+
+                @Override
+                public PostResponse loadInBackground() {
+                    if (args.containsKey("check_id")) {
+                        int id = args.getInt("check_id");
+                        if (!isConnect.isPortOpen(mHost, mPort, 3000)) {
+                            return null;
+                        }
+                        String query = "checkin=" + id;
+                        URL url = NetUtils.buildUrl(mHost, mPort, CHECKIN_PATH, null);
+                        String json = NetUtils.doPostRequest(url, query);
+                        return gson.fromJson(json, PostResponse.class);
+                    }
                     return null;
                 }
-                URL url = NetUtils.buildUrl(mHost, mPort, PATH, null);
-                String json = NetUtils.doGetRequest(url);
-                Type tipusLlistaDeServeis = new TypeToken<List<Servei>>() {
-                }.getType();
-                List<Servei> llistaServeis = gson.fromJson(json, tipusLlistaDeServeis);
-                ArrayList<Header> data = new ArrayList<>();
-                if (args.containsKey("loc")) {
-                    for (Servei servei : llistaServeis) {
-                        for (Reserva reserva : servei.getLlistaReserves()) {
-                            if (reserva.getLocalitzador().equals(args.get("loc"))) {
-                                data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
-                                        " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
-                                        reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
-                                        reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
-                            }
-                        }
-                    }
-                } else if (args.containsKey("dni") && args.containsKey("data")) {
-                    for (Servei servei : llistaServeis) {
-                        for (Reserva reserva : servei.getLlistaReserves()) {
-                            if (reserva.getClient().getDni_titular().equals(args.get("dni")) && servei.getData_servei().equals(args.get("data"))) {
-                                data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
-                                        " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
-                                        reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
-                                        reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
-                            }
-                        }
-                    }
-                } else if (args.containsKey("dni")) {
-                    for (Servei servei : llistaServeis) {
-                        for (Reserva reserva : servei.getLlistaReserves()) {
-                            if (reserva.getClient().getDni_titular().equals(args.get("dni"))) {
-                                data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
-                                        " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
-                                        reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
-                                        reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
-                            }
-                        }
-                    }
-                } else if (args.containsKey("data")) {
-                    for (Servei servei : llistaServeis) {
-                        if (servei.getData_servei().equals(args.get("data"))) {
-                            for (Reserva reserva : servei.getLlistaReserves()) {
-                                data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
-                                        " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
-                                        reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
-                                        reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
-                            }
-                        }
-                    }
-                } else if (args.containsKey("qrcode")) {
-                    for (Servei servei : llistaServeis) {
-                        for (Reserva reserva : servei.getLlistaReserves()) {
-                            if (reserva.getQr_code().equals(args.get("qrcode"))) {
-                                data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
-                                        " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
-                                        reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
-                                        reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
-                            }
-                        }
-                    }
-                } else if (args.containsKey("idservei")) {
-                    for (Servei servei : llistaServeis) {
-                        if (args.get("idservei").equals("" + servei.getId())) {
-                            for (Reserva reserva : servei.getLlistaReserves()) {
-                                data.add(new Header(reserva.getId(), reserva.getClient().getNom_titular() +
-                                        " " + reserva.getClient().getCognom1_titular() + " " + reserva.getClient().getCognom2_titular(),
-                                        reserva.getClient().getDni_titular(), servei.getData_servei(), reserva.getQr_code(), reserva.getLocalitzador(),
-                                        reserva.getClient().getEmail_titular(), "" + reserva.getCheckin(), servei.getDescripcio()));
-                            }
-                        }
-                    }
-                }
-                return data;
-            }
-
-            @Override
-            public void deliverResult(ArrayList<Header> dataset) {
-                dataSet = dataset;
-                super.deliverResult(dataset);
-            }
-        };
+            };
+        }
     }
 
     /**
      * @author Antoni Torres Marí
      */
     @Override
-    public void onLoadFinished(Loader<ArrayList<Header>> loader, ArrayList<Header> data) {
+    public void onLoadFinished(Loader loader, Object data) {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
-        if (data == null) {
-            errorDialog(DetallActivity.this, "Impossible conectar amb el servidor!");
-        } else if (data.isEmpty()) {
-            errorDialog(DetallActivity.this, "Reserva no trobada!");
-        } else {
-            myDataset = data;
-            headerAdapter.actualitzaRecycler(data);
+        if (loader.getId() == GET_REQUEST_LOADER) {
+            if (data == null) {
+                errorDialog(DetallActivity.this, "No s'ha pogut conectar amb el servidor.");
+            } else if (((ArrayList<Header>) data).isEmpty()) {
+                errorDialog(DetallActivity.this, "Reserva no trobada!");
+            } else {
+                myDataset = (ArrayList<Header>) data;
+                headerAdapter.actualitzaRecycler((ArrayList<Header>) data);
+            }
+        } else if (loader.getId() == CHECK_IN_LOADER) {
+            if (data == null) {
+                Toast.makeText(this, "No s'ha pogut conectar amb el servidor.", Toast.LENGTH_LONG).show();
+            } else {
+                PostResponse response = (PostResponse) data;
+                if (response.getRequestCode() == 1) {
+                    Toast.makeText(this, response.getMessage(), Toast.LENGTH_LONG).show();
+                    mClickedItemView.setBackgroundColor(Color.rgb(204, 255, 204));
+                    mClickedItemCheck.setText("1");
+                    mClickedItemCheckText.setText("Check-In:  Realitzat");
+                    db = new DBInterface(this);
+                    db.obre();
+                    db.ActalitzaCheckInReserva(mClickedItemId);
+                    db.tanca();
+                } else {
+                    Toast.makeText(this, response.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Header>> loader) {
+    public void onLoaderReset(Loader loader) {
 
     }
 
@@ -443,4 +495,37 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    /**
+     * @param clickedItemId
+     * @author Antoni Torres Marí
+     */
+    @Override
+    public void onListItemClick(final int clickedItemId, final View v, final TextView check, final TextView checkText, final TextView dni) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage("Vols Confirmar el Check-IN?")
+                .setTitle("Atenció!!")
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Acceptar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                mClickedItemView = v;
+                                mClickedItemId = clickedItemId;
+                                mClickedItemCheck = check;
+                                mClickedItemCheckText = checkText;
+                                mClickedItemDni = dni;
+                                Bundle queryBundle = new Bundle();
+                                queryBundle.putInt("check_id", clickedItemId);
+                                DetallActivity.this.getSupportLoaderManager().initLoader(CHECK_IN_LOADER, queryBundle, DetallActivity.this);
+                            }
+                        }
+                );
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }
