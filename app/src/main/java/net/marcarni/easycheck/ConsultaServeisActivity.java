@@ -24,6 +24,7 @@ import net.marcarni.easycheck.RecyclerView.HeaderAdapter_Consulta;
 import net.marcarni.easycheck.RecyclerView.Header_Consulta;
 import net.marcarni.easycheck.SQLite.ContracteBD;
 import net.marcarni.easycheck.SQLite.DBInterface;
+import net.marcarni.easycheck.eines.Utilitats;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 
 import java.util.ArrayList;
@@ -402,10 +403,18 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
                 selectedmonth = selectedmonth + 1;
                 fecha="" + selectedday + "/" + selectedmonth + "/" + selectedyear;
+                if (Utilitats.isOK(selectedmonth)) {
+                    fecha = "" + selectedday + "/0" + selectedmonth + "/" + selectedyear;
+                    {
+                        if (Utilitats.isOK(selectedday)) {
+                            fecha = "0" + selectedday + "/0" + selectedmonth + "/" + selectedyear;
+                        }
+
+                    }
+                }
                 (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
                 (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
                 carregarDataTreballador();
-
             }
         }, mYear, mMonth, mDay);
         mDatePicker.setTitle("Selecciona Data");
