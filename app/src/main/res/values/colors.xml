@@ -3,4 +3,6 @@
     <color name="colorPrimary">#009bba</color>
     <color name="colorPrimaryDark">#22B19F</color>
     <color name="colorAccent">#FF0FA7</color>
+    <color name="substitucio">#7edde8</color>
+    <color name ="spinner_color_canvi">#fffb0f</color>
 </resources>

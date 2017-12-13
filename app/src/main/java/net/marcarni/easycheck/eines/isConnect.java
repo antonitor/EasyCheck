@@ -3,7 +3,6 @@ package net.marcarni.easycheck.eines;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
@@ -16,7 +15,6 @@ import java.net.Socket;
 public   class isConnect {
     static ConnectivityManager connectivityManager;
     static NetworkInfo actNetInfo;
-    static WifiManager admin_wifi;
 
 
     public static boolean isDisponible(Context context) {
@@ -42,6 +40,7 @@ public   class isConnect {
             return false;
         }
     }
+
 
 
 }

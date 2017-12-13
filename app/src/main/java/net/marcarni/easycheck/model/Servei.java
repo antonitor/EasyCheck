@@ -21,7 +21,7 @@ public class Servei implements Serializable{
     private String hora_inici;
     private String hora_final;
     private List<Reserva> llistaReserves = new ArrayList();
-    static ArrayList<Servei> llistaServeis = new ArrayList();
+    static List<Servei> llistaServeis = new ArrayList();
     /**
      * Constructor de servei buit.
      */
@@ -151,7 +151,7 @@ public class Servei implements Serializable{
      * Mètode per obtenir un llistat de Serveis
      * @return llistat de serveis
      */
-    public static ArrayList<Servei> getLlistaServeis() {
+    public static List<Servei> getLlistaServeis() {
         return llistaServeis;
     }
     /**

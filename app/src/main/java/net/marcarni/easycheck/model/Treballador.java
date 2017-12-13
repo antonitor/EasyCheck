@@ -158,7 +158,8 @@ public class Treballador implements Serializable {
     /**
      * @param llistaServeis the llistaServeis to set
      */
-    public void setLlistaServeis(List<Servei> llistaServeis) {
+    public void setLlistaServeis(List<Servei> llistaServeis)
+    {
         this.llistaServeis = llistaServeis;
     }
 

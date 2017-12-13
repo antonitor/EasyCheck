@@ -218,6 +218,16 @@ public class DBInterface {
         Log.d("proba", "Actualitzat");
     }
 
+    public boolean ActualitzaServei(String idServei, int  idTreballador){
+        ContentValues values= new ContentValues();
+
+        values.put(Serveis.ID_TREBALLADOR,idTreballador);
+      bd.update(Serveis.NOM_TAULA,values,Serveis._ID+ " = ? ",new String[]{idServei});
+      return true;
+
+
+    }
+
                                              /** TREBALLADORS */
 
     /**

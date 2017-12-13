@@ -61,4 +61,16 @@
     <string name="pref_port_default">8080</string>
 
 
+<!-- string per a substitucioActionActivity-->
+    <string name="textview">TextView</string>
+    <string name="textViewdata">textViewdata</string>
+    <string name="textViewHora_inici">textViewHora_inici</string>
+    <string name="textViewHora_fi">textViewHora_fi</string>
+    <string name="acceptar">ACCEPTAR</string>
+    <string name="cancelar">CANCEL.LAR</string>
+    <string name="CANCELAR">CANCELAR</string>
+    <string name="sustitucio_titol">Substitució</string>
+    <string name="imatge">imatge</string>
+
+
 </resources>
