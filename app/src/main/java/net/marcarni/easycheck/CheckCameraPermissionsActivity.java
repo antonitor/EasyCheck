@@ -30,7 +30,7 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
 
     /**
      *
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      *
      * Mètode onCreate de CheckCameraPermissionsActivity
      * @param savedInstanceState Bundle
@@ -48,7 +48,7 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      *
      * Aquest mètode comprova si s'han otorgat els permissos corresponents per tal d'utilitzar
      * la camera del dispositiu. Si és afirmatiu, llença l'Activity QRScanner.class trucant al mètode
@@ -67,7 +67,7 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      *
      * Controla si s'han concedit els permissos corresponents per utilitzar la càmera del dispositiu
      * En cas negatiu, es mostra un missatge informat a l'usuari i un botó per tal de solicitar
@@ -94,7 +94,7 @@ public class CheckCameraPermissionsActivity extends MenuAppCompatActivity {
     }
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      *
      * Mètode que llença l'Activty QRScanner.class pasant-li com Extra la preferencia AutoFocus
      * definida al PreferenceFragment i emmagatzemada a SharedPreferences

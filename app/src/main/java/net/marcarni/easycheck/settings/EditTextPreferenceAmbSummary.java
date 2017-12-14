@@ -6,7 +6,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 /**
- * Created by Toni on 11/12/2017.
+ * @author Antoni Torres Marí
+ *
+ * Aquesta classe afegeix la poossibilitat d'utilitzar el comodí %s al layout prefereces per tal
+ * de mostrar el summary al preference fragment.
  */
 
 public class EditTextPreferenceAmbSummary extends EditTextPreference{

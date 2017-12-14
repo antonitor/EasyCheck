@@ -30,7 +30,7 @@ private ArrayList<Header> mDataset;
     final private ListItemClickListener mOnClickListener;
 
     public interface ListItemClickListener {
-        void onListItemClick(int clickedItemId, View v, TextView check, TextView checkText, TextView dni);
+        void onListItemClick(int clickedItemId, View v, TextView checkText);
     }
 
     /**
@@ -89,6 +89,8 @@ private ArrayList<Header> mDataset;
     public int getItemCount() {
         return mDataset.size();
     }
+
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // nom,dni,data,qr,localitzacio,email,check;
         TextView nom,dni,data,qr,localitzacio,email,check,checkText,servei;
@@ -96,7 +98,7 @@ private ArrayList<Header> mDataset;
         int _id;
 
         /**
-         * Constructor de classe statica View Holder
+         * Constructor de classe View Holder
          * @param v view
          */
         ViewHolder(View v) {
@@ -115,58 +117,21 @@ private ArrayList<Header> mDataset;
         }
 
         /**
-         * @author Carlos Alberto Castro Cañabate
+         * @author Antoni Torres Marí
+         *
          * Mètode per gestionar l'esdeveniment onClick
          * @param view que interacturarà
          */
         @Override
         public void onClick(View view) {
-            v = view;
-            if  (check.getText().toString().equalsIgnoreCase("0")) {   // Si NO TE el check-in FET
-
-                //@author Antoni Torres Marí
-                //S'ha passat aquesta funcionalitat a DetallActivity
-                mOnClickListener.onListItemClick(_id, view, check, checkText, dni);
-                /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setMessage("Vols Confirmar el Check-IN?")
-                        .setTitle("Atenció!!")
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setPositiveButton("Acceptar",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                        v.setBackgroundColor(Color.rgb(165, 246, 149));
-                                        Toast.makeText(v.getContext(), "Check-in Realitzat", Toast.LENGTH_LONG).show();
-                                        check.setText("1");
-                                        Log.d("proba", "onClick: "+dni.getText().toString().substring(5,14));
-                                        checkText.setText("Check-In:  Realitzat");
-                                        DBInterface db=new DBInterface(v.getContext());
-                                        db.obre();
-                                        db.ActalitzaCheckInReserva(_id);
-                                        db.tanca();
-                                    }
-                                }
-                        );
-                AlertDialog alert = builder.create();
-                alert.show();
-                */
-
-
-
-            } else {
-                Toast.makeText(v.getContext(), "Aquesta reserva ja te check-in!", Toast.LENGTH_LONG).show();
-                v.setBackgroundColor(Color.rgb(255, 204, 204));
-            }
+                //S'ha passat tota la funcionalitat a DetallActivity
+                mOnClickListener.onListItemClick(_id, view, checkText);
         }
     }
 
     /**
+     * @author Antoni Torres Marí
+     *
      * Mètode per actualitzar el recycler
      * @param llistaConsultes arrayList
      */

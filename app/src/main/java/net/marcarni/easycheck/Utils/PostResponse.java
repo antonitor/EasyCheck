@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Toni
+ * @author Antoni Torres Marí
  */
 public class PostResponse implements Serializable{
     private int requestCode; //0 -> Error, 1 -> Correcto

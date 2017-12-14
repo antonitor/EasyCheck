@@ -27,7 +27,7 @@ import net.marcarni.easycheck.eines.isConnect;
 public class MenuAppCompatActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      * <p>
      * Infla el menú principal main.xml
      *
@@ -41,7 +41,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
     }
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      * <p>
      * Gestiona l'esdeveniment quan es selecciona un MenuItem del menú principal
      *
@@ -74,7 +74,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
     }
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      * <p>
      * De aquet View que pasem per paràmetre s'hi desplega un PopupMenú inflat amb el recurs
      * gestor_submenu.xml i s'hi afegeix el listener PopupMenu.OnMenuItemClickListener que implementa
@@ -90,7 +90,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
     }
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      * <p>
      * De aquet View que pasem per paràmetre s'hi desplega un PopupMenú inflat amb el recurs
      * consultes_submenu.xml i s'hi afegeix el listener PopupMenu.OnMenuItemClickListener que implementa
@@ -107,7 +107,7 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
 
 
     /**
-     * Created by Antoni Torres Marí
+     * @author Antoni Torres Marí
      * <p>
      * Metode implementat de l'interfície PopupMenu.OnMenuItemClickListener que gestiona els
      * esdeveniments que es llençen al premer un dels items d'un dels PopupMenu

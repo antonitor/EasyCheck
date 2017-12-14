@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Toni
+ * @author Carlos Alberto Castro Cañabate
  */
 
 public class Treballador implements Serializable {
