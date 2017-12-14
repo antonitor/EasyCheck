@@ -97,13 +97,6 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
         if (NetUtils.comprovaXarxa(this)) {
             consultesOnline();
         } else {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("WIFI NO DISPONIBLE");
-            alertDialog.setMessage("Es mostraran les dades OFFLINE");
-            alertDialog.setIcon(R.drawable.fail);
-            alertDialog.setPositiveButton("Acceptar", null);
-            alertDialog.show();
-
             db = new DBInterface(this);
             consultes();
 
@@ -115,7 +108,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     /**
      * @author Antoni Torres Marí
-     *
+     * <p>
      * Agafa el host i el port de les preferencies d'usuari i enregistra aquesta Activity
      * com a listener.
      */
@@ -127,12 +120,12 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     }
 
     /**
-     * @author Antoni Torres Marí
-     *
-     * Aquesta activity implementa el listener per tal de actualitzar el port i el host enseguida
-     * que aquestes dades canvien a les preferencies
      * @param sharedPreferences
      * @param key
+     * @author Antoni Torres Marí
+     * <p>
+     * Aquesta activity implementa el listener per tal de actualitzar el port i el host enseguida
+     * que aquestes dades canvien a les preferencies
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -174,27 +167,33 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
      * Mètode per obtenir les dades de l'intent.
      */
     public void consultes() {
-        if (getIntent().hasExtra("LOCALITZADOR")) {
-            String loc = getIntent().getExtras().getString("LOCALITZADOR");
-            RetornaReservaLoc(loc);
-        } else if (getIntent().hasExtra(getString(R.string.scanner_result))) {
-            String qrCode = getIntent().getStringExtra(getString(R.string.scanner_result));
-            RetornaReservaQR(qrCode);
-        } else if (getIntent().hasExtra("DNI") && getIntent().hasExtra("DATA")) {
-            String dni = getIntent().getExtras().getString("DNI");
-            String data = getIntent().getExtras().getString("DATA");
-            RetornaReservaDNI_DATA(dni, data);
-        } else if (getIntent().hasExtra("DATA")) {
-            String data = getIntent().getExtras().getString("DATA");
-            RetornaReservaDATA(data);
-        } else if (getIntent().hasExtra("DNI")) {
-            String dni = getIntent().getExtras().getString("DNI");
-            RetornaReservaDNI(dni);
-        } else if (getIntent().hasExtra("ID_SERVEI")) {
+        if (getIntent().hasExtra("ID_SERVEI")) {
             String id_reserva = getIntent().getExtras().getString("ID_SERVEI");
             RetornaReservaId_Reserva(id_reserva);
         } else {
-            Toast.makeText(this, "No s'ah rebut cap criteri de cerca", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("WIFI NO DISPONIBLE");
+            alertDialog.setMessage("Es mostraran les dades OFFLINE");
+            alertDialog.setIcon(R.drawable.fail);
+            alertDialog.setPositiveButton("Acceptar", null);
+            alertDialog.show();
+            if (getIntent().hasExtra("LOCALITZADOR")) {
+                String loc = getIntent().getExtras().getString("LOCALITZADOR");
+                RetornaReservaLoc(loc);
+            } else if (getIntent().hasExtra(getString(R.string.scanner_result))) {
+                String qrCode = getIntent().getStringExtra(getString(R.string.scanner_result));
+                RetornaReservaQR(qrCode);
+            } else if (getIntent().hasExtra("DNI") && getIntent().hasExtra("DATA")) {
+                String dni = getIntent().getExtras().getString("DNI");
+                String data = getIntent().getExtras().getString("DATA");
+                RetornaReservaDNI_DATA(dni, data);
+            } else if (getIntent().hasExtra("DATA")) {
+                String data = getIntent().getExtras().getString("DATA");
+                RetornaReservaDATA(data);
+            } else if (getIntent().hasExtra("DNI")) {
+                String dni = getIntent().getExtras().getString("DNI");
+                RetornaReservaDNI(dni);
+            }
         }
     }
 
@@ -291,7 +290,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     /**
      * @author Antoni Torres Marí
-     *
+     * <p>
      * Mètode que obtè les dades del intent i les passa al Loader encarregat de
      * obtindre les dades del servidor
      */
@@ -326,7 +325,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     /**
      * @author Antoni Torres Marí
-     *
+     * <p>
      * Aquest mètode crea un AsyncTaskLoader que realitzarà la consulta al servidor segons el criteri
      * de cerca i mostrarà les dades al recyclerview
      */
@@ -442,7 +441,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     /**
      * @author Antoni Torres Marí
-     *
+     * <p>
      * Un cop s'han carregat les reserves en la llista d'objectes Header actúa en consequencia:
      */
     @Override
@@ -452,10 +451,10 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
         //Si el loader torna null es que ha succeit algún problema amb la connexió
         if (data == null) {
             errorDialog(DetallActivity.this, "No s'ha pogut conectar amb el servidor.", R.drawable.connection_fail);
-        //Si el loader ha tornat una llista buida vol dir que no ha trobat cap reserva amb els criteris de cerca donats
+            //Si el loader ha tornat una llista buida vol dir que no ha trobat cap reserva amb els criteris de cerca donats
         } else if (((ArrayList<Header>) data).isEmpty()) {
             errorDialog(DetallActivity.this, "Reserva no trobada!", R.drawable.not_found);
-        //Si la llista no es null ni buida, afegeix la llista al adapter per tal que ens mostri els resultats per pantalla
+            //Si la llista no es null ni buida, afegeix la llista al adapter per tal que ens mostri els resultats per pantalla
         } else {
             myDataset = (ArrayList<Header>) data;
             headerAdapter.actualitzaRecycler((ArrayList<Header>) data);
@@ -469,7 +468,7 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     /**
      * @author Antoni Torres Marí
-     *
+     * <p>
      * En destruir aquesta activity es des-registra el listener de preferences
      */
     @Override
@@ -480,8 +479,8 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
 
     /**
      * @author Antoni Torres Marí
-     *
-     * Aquesta classe AsyncTask ens crearà un fil d'execució que provarà de realitzar el check-in de una reserva
+     *         <p>
+     *         Aquesta classe AsyncTask ens crearà un fil d'execució que provarà de realitzar el check-in de una reserva
      */
     public class CheckInAsyncTask extends AsyncTask<String, Void, String> {
 
@@ -553,11 +552,11 @@ public class DetallActivity extends MenuAppCompatActivity implements LoaderManag
     }
 
     /**
+     * @param clickedItemId id de la reserva corresponent
      * @author Antoni Torres Marí
-     *
+     * <p>
      * En realitzar un clic sobre un item del recyclerview iniciarem un fil d'execució que provarà
      * de realitzar el check-in sobre la reserva corresponent.
-     * @param clickedItemId id de la reserva corresponent
      */
     @Override
     public void onListItemClick(final int clickedItemId, final View v, final TextView checkText) {
