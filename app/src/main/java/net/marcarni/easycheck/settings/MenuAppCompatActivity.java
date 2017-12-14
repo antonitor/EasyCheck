@@ -141,66 +141,99 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                 finish();
                 startActivity(startLocActivity);
                 return true;
+
             case R.id.action_services:
-                if (isConnect.isDisponible(this)) {
-                    Intent startServicesOnline = new Intent(this, ConsultaServeisOnlineActivity.class);
-                    finish();
-                    startActivity(startServicesOnline);
-                    return true;
+                IniciaActivitatFiltratge();
+                return true;
 
 
-                } else {
-
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                    alertDialog.setTitle("WIFI NO DISPONIBLE");
-                    alertDialog.setMessage("Es mostraran les dades en mode OFFLINE");
-                    alertDialog.setIcon(R.drawable.fail);
-                    alertDialog.setCancelable(false);
-                    alertDialog.setPositiveButton("Acceptar", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent startServicesActivity = new Intent(MenuAppCompatActivity.this, ConsultaServeisActivity.class);
-                                    finish();
-                                    startActivity(startServicesActivity);
-
-                                }
-                            }
-                    );
-
-                    alertDialog.show();
-                    return true;
-
-
-                }
             case R.id.action_replacement:
-                if (LoginActivity.IS_ADMIN.equals("1")) {
-                    if (isConnect.isDisponible(this)) {
-                        Intent subsActivity = new Intent(this, SubstitucionsActivity.class);
-                        finish();
-                        startActivity(subsActivity);
-                    } else {
-                        titol = "WIFI NO DISPONIBLE";
-                        missatge = "Aquesta operació no es pot dur a terme en aquests moments";
-                        icon = R.drawable.fail;
-                        Missatges.AlertMissatge(titol, missatge, icon,this);
-
-                    }
-
-
-                } else {
-                    titol = "ACCÉS DENEGAT";
-                    missatge = "\n\t\t No té privilegis per fer substitucions";
-                    icon = (R.drawable.ic_prohibit);
-                   Missatges.AlertMissatge(titol, missatge, icon,this);
-
-                }
+                IniciarActivitatSubstitucio();
                 return true;
             default:
 
                 return false;
         }
-    }
-
-
 
     }
 
+
+    /**
+     *@author Maria
+     *
+     * Mètode per iniciar Activitat de substitucio d'un empleat a un servei.
+     *
+     * Es comprovarà si es administrador o no.
+     * Si es administrador entrarà a l'activitat. Pels no admnistradors aquesta activitat està restringida i
+     * saltarà a vis de accés denegat.
+     *
+     */
+    public void IniciarActivitatSubstitucio() {
+        if (LoginActivity.IS_ADMIN.equals("1")) {
+            if (isConnect.isDisponible(this)) {
+                Intent subsActivity = new Intent(this, SubstitucionsActivity.class);
+                finish();
+                startActivity(subsActivity);
+            } else {
+                titol = "WIFI NO DISPONIBLE";
+                missatge = "Aquesta operació no es pot dur a terme en aquests moments";
+                icon = R.drawable.fail;
+                Missatges.AlertMissatge(titol, missatge, icon, this);
+
+            }
+
+
+        } else {
+            titol = "ACCÉS DENEGAT";
+            missatge = "\n\t\t No té privilegis per fer substitucions";
+            icon = (R.drawable.ic_prohibit);
+            Missatges.AlertMissatge(titol, missatge, icon, this);
+
+        }
+    }
+
+    /**
+     * @author Maria
+     *
+     * Mètode per iniciar l'activitat de consultes per filtratge
+     *
+     * 1. Comprova si l'usuari es administrador:
+     *     1.1. Usuari administrador
+     *           - Amb connexió: connectarà amb el servidor i descarregarà tots els serveis, treballadors i reserves
+     *           - Sense connexió:  avisarà de falta de connexió i mostrarà tots els serveis, treballadors i reserves de la base
+     *           de dades interna de l'app
+     *     1.2. Usuari no administrador
+     *           - Amb connexió:  mostrarà els serveis i reserves propis
+     *           - Sense connexió:  avisarà de falta de connexió i mostrarà serveis i reserves propies des de la base
+     *           de dades interna de l'app.
+     */
+    public void IniciaActivitatFiltratge() {
+        if (isConnect.isDisponible(this)) {
+            Intent startServicesOnline = new Intent(this, ConsultaServeisOnlineActivity.class);
+            finish();
+            startActivity(startServicesOnline);
+
+
+        } else {
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("WIFI NO DISPONIBLE");
+            alertDialog.setMessage("Es mostraran les dades en mode OFFLINE");
+            alertDialog.setIcon(R.drawable.fail);
+            alertDialog.setCancelable(false);
+            alertDialog.setPositiveButton("Acceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent startServicesActivity = new Intent(MenuAppCompatActivity.this, ConsultaServeisActivity.class);
+                            finish();
+                            startActivity(startServicesActivity);
+
+                        }
+                    }
+            );
+
+            alertDialog.show();
+
+        }
+
+    }
+}

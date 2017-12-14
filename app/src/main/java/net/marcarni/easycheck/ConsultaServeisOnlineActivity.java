@@ -37,6 +37,28 @@ import java.util.List;
 import static net.marcarni.easycheck.R.id.cancelar_filtros;
 import static net.marcarni.easycheck.R.id.seleccionar_hora;
 
+
+/**
+ * @author Maria
+ *         <p>
+ *         Activitat creada per mostrar  els serveis descarregats del servidor
+ *         Es mostraran en un RecyclerView amb un adaptador personalitzat.
+ *
+ *         Funcionalitats:
+ *
+ *         1. Administrador:
+ *         - Podrà llistar tots els serveis, de tots els treballadors
+ *         - Podrà llistar serveis per treballador
+ *         - Podrà llistar serveis per data
+ *         - Podrà llistar serveis per data i hora
+ *         - Podrà llistar serveis per treballador i data
+ *         - Podra llistar serveis per treballador data i hora
+ *         2. Usuari no administrador
+ *         - Podrà consultar els seus serveis
+ *         - Podrà consultar els seus serveis per data
+ *         - Podrà consultar els seus serveis per data i hora
+ *
+ */
 public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity implements View.OnLongClickListener {
 
     private String fecha = null, time = null;
@@ -47,11 +69,11 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     private Spinner spinnerTreballadors;
     private ArrayList<Treballador> treballadors;
     private int treballador;
-    List<Treballador> listaTreballadors = new ArrayList<>();
-    List<Servei> llistaServeis = new ArrayList<>();
-    Cursor cursor;
-    public String isAdmin;
-    String ID_treballador = null;
+    private List<Treballador> listaTreballadors = new ArrayList<>();
+    private List<Servei> llistaServeis = new ArrayList<>();
+    private Cursor cursor;
+    private String isAdmin;
+    private String ID_treballador = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +81,9 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
         setContentView(R.layout.activity_consulta_serveis_online);
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         editToolbar.inflateMenu(R.menu.toolbar_menu);
+
+
+        // inicialització de les variables.
         spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
         myDataset = new ArrayList<>();
         headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
@@ -67,6 +92,8 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
         if (fecha == null) {
             setInvisible();
         }
+
+
         isAdmin = LoginActivity.IS_ADMIN;
         ID_treballador = LoginActivity.ID_TREBALLADOR;
 
@@ -77,6 +104,11 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
 
     }
 
+    /**
+     * Mètode que mostrarà un AlertDialog fent LongClick amb la data i l'hora respectivament
+     * @param view
+     * @return
+     */
     @Override
     public boolean onLongClick(View view) {
         String variable = null, titol = null, vacio = null;
@@ -95,11 +127,9 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
                 icon = R.drawable.icon_hora;
                 break;
         }
-        if (variable != null)
-        {
-            Missatges.AlertMissatge(titol,variable, icon,this);
-        } else
-        {
+        if (variable != null) {
+            Missatges.AlertMissatge(titol, variable, icon, this);
+        } else {
             missatge(vacio);
         }
         return false;
@@ -110,8 +140,11 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     //////////////////////////////              AsynTask              //////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    public  class DescarregaServer extends AsyncTask<String, ArrayList, ArrayList<Treballador>> {
+    /**
+     * Classe que extends d'asyntask encarregada de descarregar i mostrar els serveis, treballadors i reserves
+     * del servidor.
+     */
+    private class DescarregaServer extends AsyncTask<String, ArrayList, ArrayList<Treballador>> {
 
 
         @Override
@@ -176,8 +209,11 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
         //////////////////////////////             SPINNER TREBALLADORS            /////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+        /**
+         * Mètode encarregat d'omplir un cursor amb el treballador amb una id específica.
+         * Es farà servir en cas que el treballador no sigui administrador.
+         * @return Cursor amb id i nom del treballador.
+         */
         private Cursor getCursorTreballador() {
             MatrixCursor cursor = new MatrixCursor(new String[]{"_id", "nom"});
             cursor.addRow(new String[]{String.valueOf(ID_treballador), RetornaNoAdmin(Integer.parseInt(ID_treballador))});
@@ -186,9 +222,15 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
             return cursor;
         }
 
+        /**
+         * Mètode per omplir i implementar l'spinner de Treballador
+         * Comprova si l'usuari connectat  és administrador. -
+         * 1. Administrdor: L'spinner mostraran tots els treballadors en aquell moment al server
+         * 2. No administrador: L'spinner només mostrarà l'usuari connectat en aquell moment.
+         */
         private void implementarSpinner() {
             if (isAdmin.equals("1"))
-                cursor =  Utilitats.getCursorSpinner(treballadors);
+                cursor = Utilitats.getCursorSpinner(treballadors);
             else
                 cursor = getCursorTreballador();
 
@@ -201,6 +243,10 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTreballadors.setAdapter(adapter);
 
+
+            /**
+             * Filtratge de les consultes per data,hora i treballador.
+             */
             spinnerTreballadors.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
@@ -220,7 +266,7 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
                             headerAdapter_consulta.actualitzaRecycler(myDataset);
                         } else {
                             myDataset = new ArrayList<Header_Consulta>();
-                            myDataset = Utilitats.RetornaTotsElsServeisPerTreballadorDataIHora(cursor.getInt(0), fecha, time,(ArrayList)llistaServeis);
+                            myDataset = Utilitats.RetornaTotsElsServeisPerTreballadorDataIHora(cursor.getInt(0), fecha, time, (ArrayList) llistaServeis);
                             headerAdapter_consulta.actualitzaRecycler(myDataset);
                         }
 
@@ -229,7 +275,7 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
                             carregarDataTreballador();
                         } else {
                             myDataset = new ArrayList<Header_Consulta>();
-                            myDataset = Utilitats.RetornaTotElsServeisPerData_Treballador(fecha, cursor.getInt(0),(ArrayList)llistaServeis);
+                            myDataset = Utilitats.RetornaTotElsServeisPerData_Treballador(fecha, cursor.getInt(0), (ArrayList) llistaServeis);
                             headerAdapter_consulta.actualitzaRecycler(myDataset);
                         }
                     }
@@ -251,12 +297,19 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     //////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////          LListats          /////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void llistaSenseFiltrats() {
-        headerAdapter_consulta.actualitzaRecycler(Utilitats.retornaTotsElsServeis((ArrayList)llistaServeis));
+
+    /**
+     * Mètode per actualitzar un Recycler cada cop que es realitza una consulta.
+     */
+    private void llistaSenseFiltrats() {
+        headerAdapter_consulta.actualitzaRecycler(Utilitats.retornaTotsElsServeis((ArrayList) llistaServeis));
     }
 
-    public void llistaPerTreballador() {
-        headerAdapter_consulta.actualitzaRecycler((ArrayList<Header_Consulta>) Utilitats.RetornaServeisPerId(treballador,(ArrayList)llistaServeis));
+    /**
+     * Mètode per actualitzar un Recycler cada cop que es realitza una consulta.
+     */
+    private void llistaPerTreballador() {
+        headerAdapter_consulta.actualitzaRecycler((ArrayList<Header_Consulta>) Utilitats.RetornaServeisPerId(treballador, (ArrayList) llistaServeis));
 
     }
 
@@ -266,7 +319,12 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public List<Treballador> RetornaTreballadors() {
+    /**
+     * Mètode que realitza una crida al servidor per descargar llista de treballadors.
+     * Comprovarà connexió prèviament.
+     * @return List amb els treballadors al servidor en aquell moment.
+     */
+    private List<Treballador> RetornaTreballadors() {
         if (isConnect.isDisponible(this)) {
             return listaTreballadors = DescargaTreballador.obtenirTreballadorsDelServer();
         } else {
@@ -276,6 +334,12 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
         return null;
     }
 
+    /**
+     * Mètode que realitza una crida al servidor per descargar llista de serveis
+     * Comprovarà connexió prèviament.
+     * @return List amb els serveis  al servidor en aquell moment.
+     *
+     */
     public List<Servei> RetornaServeis() {
         if (isConnect.isDisponible(this)) {
             return llistaServeis = DescargaServei.obtenirServeisDelServer(LoginActivity.IP);
@@ -286,10 +350,12 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
 
     }
 
-
-
-
-    public String RetornaNoAdmin(int id) {
+    /**
+     * Mètode que comprova id d'un treballador al servidor i retorna el nom
+     * @param id Integer amb l'id del treballador
+     * @return String amb el nom del treballador.
+     */
+    private String RetornaNoAdmin(int id) {
         String nom = null;
         for (int i = 0; i < Treballador.getTreballadors().size(); i++) {
             if (Treballador.getTreballadors().get(i).getId() == id) {
@@ -300,44 +366,51 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     }
 
 
-    public void carregarDataTreballador() {
+    /**
+     * Mètode auxiliar per carregar data per la cerca dels serveis per data
+     */
+    private void carregarDataTreballador() {
 
         if (treballador == 0) {
             myDataset = new ArrayList<Header_Consulta>();
-            myDataset = Utilitats.RetornaTotElsServeisPerData(fecha,(ArrayList)llistaServeis);
+            myDataset = Utilitats.RetornaTotElsServeisPerData(fecha, (ArrayList) llistaServeis);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
         } else {
             myDataset = new ArrayList<Header_Consulta>();
-            myDataset = Utilitats.RetornaTotElsServeisPerData_Treballador(fecha, treballador,(ArrayList)llistaServeis);
+            myDataset = Utilitats.RetornaTotElsServeisPerData_Treballador(fecha, treballador, (ArrayList) llistaServeis);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
         }
 
     }
 
-    public void carregarHoraTreballador() {
+    /**
+     * Mètode auxiliar per carregar hora per la cerca dels serveis per hora
+     */
+    private void carregarHoraTreballador() {
 
         if (treballador == 0) {
             myDataset = new ArrayList<Header_Consulta>();
-            myDataset = Utilitats.RetornaTotElsServeisPerDataiHora(fecha, time,(ArrayList)llistaServeis);
+            myDataset = Utilitats.RetornaTotElsServeisPerDataiHora(fecha, time, (ArrayList) llistaServeis);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
         } else {
             treballador = cursor.getInt(0);
             myDataset = new ArrayList<Header_Consulta>();
-            myDataset = Utilitats.RetornaTotsElsServeisPerTreballadorDataIHora(treballador, fecha, time,(ArrayList)llistaServeis);
+            myDataset = Utilitats.RetornaTotsElsServeisPerTreballadorDataIHora(treballador, fecha, time, (ArrayList) llistaServeis);
             headerAdapter_consulta.actualitzaRecycler(myDataset);
 
         }
 
     }
 
-
-
-    public void setVisible() {
+    /**
+     * Metode per setear les vistes a Visibles o invisibles segons la circunstàncies.
+     */
+    private void setVisible() {
         (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
         (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
     }
 
-    public void setInvisible() {
+    private void setInvisible() {
         (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
         (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
 
@@ -347,8 +420,10 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     ////////////////////////////////             Missatges           //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    public void missatgeNoConnexio() {
+    /**
+     * Mètode per enviar missatge de No connexió a internet.
+     */
+    private void missatgeNoConnexio() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         alertDialog.setTitle("WIFI NO DISPONIBLE");
@@ -379,6 +454,9 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     ///////////////////////////////////////         PICKERS             //////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Utilitat TimePickerDialog per seleccionar data i hora a l'aplicació
+     */
     private void PickerHora() {
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -400,7 +478,7 @@ public class ConsultaServeisOnlineActivity extends MenuAppCompatActivity impleme
     }
 
 
-    public void PickerData() {
+    private  void PickerData() {
         Calendar mcurrentDate = Calendar.getInstance();
         int mYear = mcurrentDate.get(Calendar.YEAR);
         int mMonth = mcurrentDate.get(Calendar.MONTH);

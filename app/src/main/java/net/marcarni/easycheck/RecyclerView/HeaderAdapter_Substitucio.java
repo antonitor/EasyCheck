@@ -14,7 +14,11 @@ import net.marcarni.easycheck.SubstitucioActionActivity;
 import java.util.ArrayList;
 
 /**
- * Created by Maria on 10/12/2017.
+ * @author Maria  on 10/12/2017.
+ *
+ *
+ * Classe pel adaptador creada per l'activitat de substitució.
+ * Fa servir la classe Header_consulta com a model per seguir.
  */
 
 public class HeaderAdapter_Substitucio  extends RecyclerView.Adapter<HeaderAdapter_Substitucio.ViewHolder> {

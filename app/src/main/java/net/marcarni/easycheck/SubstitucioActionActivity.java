@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -37,8 +35,6 @@ public class SubstitucioActionActivity extends AppCompatActivity implements View
     int idTreballador;
     int treballador;
     Spinner spinnerTreballadors;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
     Cursor cursor;
     private Gson gson = new Gson();
     Button btnAcceptar, btnCancelar;
@@ -64,6 +60,7 @@ public class SubstitucioActionActivity extends AppCompatActivity implements View
         db=new DBInterface(this);
 
         cursor = Utilitats.getCursorSpinner((ArrayList<Treballador>) Treballador.getTreballadors());
+
         android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(
                 SubstitucioActionActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -116,26 +113,31 @@ public class SubstitucioActionActivity extends AppCompatActivity implements View
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.Acceptar:
-                        if (idTreballador == cursor.getInt(0)) {
-                            Missatges.AlertMissatge("SELECCIONAR TREBALLADOR",
-                                    "Ha seleccionat el mateix treballador pel servei. Seleccioni un treballador diferent!!", R.drawable.ic_prohibit, SubstitucioActionActivity.this);
-                        } else {
-                            if (isConnect.isDisponible(SubstitucioActionActivity.this)) {
-                                new DescarregaServer().execute(new Integer[]{Integer.valueOf(idServei), cursor.getInt(0)});
-
+                        if (cursor.getInt(0) != 0) {
+                            if (idTreballador == cursor.getInt(0)) {
+                                Missatges.AlertMissatge("SELECCIONAR TREBALLADOR",
+                                        "Ha seleccionat el mateix treballador pel servei. Seleccioni un treballador diferent!!", R.drawable.ic_prohibit, SubstitucioActionActivity.this);
                             } else {
-                                Missatges.AlertMissatge("WIFI NO DISPONIBLE", "Aquesta operació no es podrà realitzar sense connexió", R.drawable.fail, SubstitucioActionActivity.this);
+                                if (isConnect.isDisponible(SubstitucioActionActivity.this)) {
+                                    new DescarregaServer().execute(new Integer[]{Integer.valueOf(idServei), cursor.getInt(0)});
+
+                                } else {
+                                    Missatges.AlertMissatge("WIFI NO DISPONIBLE", "Aquesta operació no es podrà realitzar sense connexió", R.drawable.fail, SubstitucioActionActivity.this);
+                                }
                             }
                         }
+                        else
+                        {
+                            Missatges.AlertMissatge("TREBALLADOR NO VALID!!", "Aquesta opció no es pot triar. Seleccioni un altre treballador.",R.drawable.ic_prohibit,SubstitucioActionActivity.this);
+                        }
+                            break;
+                            case R.id.btnCancelar:
+                                finish();
+                                break;
 
-                        break;
-                    case R.id.btnCancelar:
-                        finish();
-                        break;
 
                 }
             }
-
 
             public class DescarregaServer extends AsyncTask<Integer, ArrayList, PostResponse> {
 

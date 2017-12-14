@@ -27,6 +27,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author Maria
+ *
+ * Classe prèvia a l'activitat de substitució.
+ * Solament tindrà accés usuari administrador.
+ * L'objectiu es mostrar tots els serveis detallats o filtrats per treballador i data.
+ * En clicar un servei s'obrirà l'activitat encarregada de la substitució.
+ */
+
 public class SubstitucionsActivity extends MenuAppCompatActivity {
 
 
@@ -47,23 +56,23 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_substitucions);
-        Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
+        Toolbar editToolbar = findViewById(R.id.filter_toolbar);
         editToolbar.inflateMenu(R.menu.toolbar_menu);
-        spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
+        spinnerTreballadors = findViewById(R.id.spinner_de_treballadors);
         myDataset = new ArrayList<>();
         headerAdapter_substitucio = new HeaderAdapter_Substitucio(myDataset);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
+        recyclerView = findViewById(R.id.recyclerView_consulta);
 
 
         findViewById(R.id.cancelar_filtros).setVisibility(View.INVISIBLE);
         findViewById(R.id.seleccionar_hora).setVisibility(View.GONE);
-        spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
-
         headerAdapter_substitucio.notifyDataSetChanged();
         linearLayoutManager = new LinearLayoutManager(SubstitucionsActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(headerAdapter_substitucio);
+
         new DescarregaServer().execute(LoginActivity.IP);
+
 
 
     }
@@ -74,14 +83,18 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    /**
+     * Classe encarregada de la descarrega dels serveis i treballadors i mostrar-les en un recycler amb
+     * opció de filtrat(treballador i data)
+     *
+     * La funcionalitat comprovarà connectivitat cada cop que es vulgui accedir a una substitució
+     */
     public class DescarregaServer extends AsyncTask<String, ArrayList, ArrayList<Treballador>> {
 
 
         @Override
         protected void onPostExecute(ArrayList<Treballador> s) {
             super.onPostExecute(s);
-
-
 
 
             implementarSpinner();
@@ -115,9 +128,17 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
             llistaServeis = RetornaServeis();
             Treballador.setTreballadors(RetornaTreballadors());
             omplirServei((ArrayList<Servei>) llistaServeis);
+
             return null;
 
         }
+
+        /**
+         * Mètode que carrega un Arraylist de serveis, previament descarregat del servidor
+         * a la llista stàtica de la classe Servei
+         *
+         * @param llistaServeis ArrayList amb el llistat de tots els serveis que es troben al servidor.
+         */
 
         public void omplirServei(ArrayList<Servei> llistaServeis) {
             for (int i = 0; i < llistaServeis.size(); i++) {
@@ -130,10 +151,14 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
         //////////////////////////////             SPINNER TREBALLADORS            /////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        /**
+         * Mètode encarregat de repoblar i implementar l'spinner amb els treballadors
+         *
+         */
         private void implementarSpinner() {
 
             cursor = Utilitats.getCursorSpinner(treballadors);
+
             android.widget.SimpleCursorAdapter adapter = new android.widget.SimpleCursorAdapter(
                     SubstitucionsActivity.this,
                     android.R.layout.simple_spinner_dropdown_item,
@@ -178,6 +203,10 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
         //////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////          LListats          /////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Mètode cridat per actualitzar i mostrar
+         */
         public void llistaSenseFiltrats() {
 
             headerAdapter_substitucio.actualitzaRecycler(Utilitats.retornaTotsElsServeis((ArrayList) llistaServeis));
