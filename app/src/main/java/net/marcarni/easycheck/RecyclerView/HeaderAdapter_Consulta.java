@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 
 public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_Consulta.ViewHolder> {
-    private ArrayList<Header_Consulta> mDataset;
+        private ArrayList<Header_Consulta> mDataset;
 
     /**
      * Constructor de la clase Headeradapter_Consulta
@@ -100,12 +100,12 @@ public class HeaderAdapter_Consulta extends RecyclerView.Adapter<HeaderAdapter_C
          * Mètode per gestionar l'esdeveniment onClick
          * @param view que interacturarà
          */
-        @Override
-        public void onClick(View view) {
-          //  Toast.makeText(view.getContext(), idServei.getText().toString(), Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(context,DetallActivity.class);
-            intent.putExtra("ID_SERVEI",idServei.getText().toString());
-            context.startActivity(intent);
+       // @Override
+       public void onClick(View view) {
+
+           Intent intent = new Intent(context,DetallActivity.class);
+           intent.putExtra("ID_SERVEI",idServei.getText().toString());
+          context.startActivity(intent);
         }
     }
 

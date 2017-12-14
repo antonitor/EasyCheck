@@ -15,6 +15,8 @@ import net.marcarni.easycheck.ConsultaServeisOnlineActivity;
 import net.marcarni.easycheck.DniActivity;
 import net.marcarni.easycheck.LoginActivity;
 import net.marcarni.easycheck.R;
+import net.marcarni.easycheck.SubstitucionsActivity;
+import net.marcarni.easycheck.eines.Missatges;
 import net.marcarni.easycheck.eines.isConnect;
 
 /**
@@ -25,6 +27,9 @@ import net.marcarni.easycheck.eines.isConnect;
  * @author Antoni Torres Marí
  */
 public class MenuAppCompatActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+
+    private String titol, missatge;
+    private int icon;
 
     /**
      * @author Antoni Torres Marí
@@ -145,10 +150,10 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
 
 
                 } else {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                     alertDialog.setTitle("WIFI NO DISPONIBLE");
-                    alertDialog.setMessage("Es mostraran les dades OFFLINE");
+                    alertDialog.setMessage("Es mostraran les dades en mode OFFLINE");
                     alertDialog.setIcon(R.drawable.fail);
                     alertDialog.setCancelable(false);
                     alertDialog.setPositiveButton("Acceptar", new DialogInterface.OnClickListener() {
@@ -162,19 +167,40 @@ public class MenuAppCompatActivity extends AppCompatActivity implements PopupMen
                     );
 
                     alertDialog.show();
-
                     return true;
 
 
+                }
+            case R.id.action_replacement:
+                if (LoginActivity.IS_ADMIN.equals("1")) {
+                    if (isConnect.isDisponible(this)) {
+                        Intent subsActivity = new Intent(this, SubstitucionsActivity.class);
+                        finish();
+                        startActivity(subsActivity);
+                    } else {
+                        titol = "WIFI NO DISPONIBLE";
+                        missatge = "Aquesta operació no es pot dur a terme en aquests moments";
+                        icon = R.drawable.fail;
+                        Missatges.AlertMissatge(titol, missatge, icon,this);
+
+                    }
+
+
+                } else {
+                    titol = "ACCÉS DENEGAT";
+                    missatge = "\n\t\t No té privilegis per fer substitucions";
+                    icon = (R.drawable.ic_prohibit);
+                   Missatges.AlertMissatge(titol, missatge, icon,this);
 
                 }
-
+                return true;
             default:
 
                 return false;
         }
+    }
 
 
 
     }
-}
+

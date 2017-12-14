@@ -54,7 +54,9 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".ConsultaServeisActivity" />
         <activity android:name=".HourActivity" />
-        <activity android:name=".ConsultaServeisOnlineActivity"></activity>
+        <activity android:name=".ConsultaServeisOnlineActivity" />
+        <activity android:name=".SubstitucionsActivity" />
+        <activity android:name=".SubstitucioActionActivity"></activity>
     </application>
 
 </manifest>

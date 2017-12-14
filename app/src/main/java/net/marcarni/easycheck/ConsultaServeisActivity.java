@@ -24,12 +24,12 @@ import net.marcarni.easycheck.RecyclerView.HeaderAdapter_Consulta;
 import net.marcarni.easycheck.RecyclerView.Header_Consulta;
 import net.marcarni.easycheck.SQLite.ContracteBD;
 import net.marcarni.easycheck.SQLite.DBInterface;
+import net.marcarni.easycheck.eines.Utilitats;
 import net.marcarni.easycheck.settings.MenuAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static net.marcarni.easycheck.LoginActivity.IS_ADMIN;
 import static net.marcarni.easycheck.R.id.cancelar_filtros;
 import static net.marcarni.easycheck.R.id.seleccionar_hora;
 
@@ -47,12 +47,17 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     private String time = null;
     private android.widget.SimpleCursorAdapter adapter;
     private Spinner spinnerTreballadors;
+    public String isAdmin;
+    String ID_treballador = null;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_serveis);
+
+        isAdmin = LoginActivity.IS_ADMIN;
+        ID_treballador = LoginActivity.ID_TREBALLADOR;
 
         //Configuració del toolbar amb els filtres
         Toolbar editToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
@@ -72,13 +77,16 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         db.obre();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
-
-        /*
-         * Created by Antoni Torres Marí
+        /**
+         @author Carlos Alberto Castro
          */
-        //Recull el cursor amb els treballadors de la base de dades i el passa per el mètode
-        //getCursorSpinner per tal d'afegirli la columna amb id=0 i nom=Tots
-        Cursor cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
+        Cursor cursor;
+        if (isAdmin.equals("1")){
+            cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
+        } else {
+            cursor = getCursorTreballador();
+        }
+
         //Instància un SimpleCursorAdapter amb el cursor creat anteriorment que mostrarà
         //les dades de la columna "nom"
         adapter = new android.widget.SimpleCursorAdapter(this,
@@ -110,7 +118,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
          *  Implementat by Maria
          *  Afegim Recycler, adaptador i comprovem si es administrador
          */
-        comprobaAdmin();
+
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(headerAdapter_consulta);
@@ -121,6 +129,14 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             (findViewById(seleccionar_hora)).setVisibility(View.INVISIBLE);
             (findViewById(cancelar_filtros)).setVisibility(View.INVISIBLE);
         }
+    }
+    /**
+       @author Carlos Alberto Castro
+     */
+    private Cursor getCursorTreballador() {
+        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", "nom"});
+        cursor.addRow(new String[]{String.valueOf(ID_treballador), LoginActivity.NOM_USUARI});
+        return cursor;
     }
 
     /**
@@ -344,17 +360,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         return myDataset;
     }
 
-    /**
-     *  @author Maria Remedios Ortega
-     *  Mètode per comprobar si el treballador es admin
-     */
-    public void comprobaAdmin() {
-        if (IS_ADMIN.equalsIgnoreCase("0")){
-            spinnerTreballadors.setVisibility(View.GONE);
-        } else {
-            spinnerTreballadors.setVisibility(View.VISIBLE);
-        }
-    }
+
 
     /**
      * @author Maria Remedios Ortega
@@ -397,10 +403,18 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
                 selectedmonth = selectedmonth + 1;
                 fecha="" + selectedday + "/" + selectedmonth + "/" + selectedyear;
+                if (Utilitats.isOK(selectedmonth)) {
+                    fecha = "" + selectedday + "/0" + selectedmonth + "/" + selectedyear;
+                    {
+                        if (Utilitats.isOK(selectedday)) {
+                            fecha = "0" + selectedday + "/0" + selectedmonth + "/" + selectedyear;
+                        }
+
+                    }
+                }
                 (findViewById(seleccionar_hora)).setVisibility(View.VISIBLE);
                 (findViewById(cancelar_filtros)).setVisibility(View.VISIBLE);
                 carregarDataTreballador();
-
             }
         }, mYear, mMonth, mDay);
         mDatePicker.setTitle("Selecciona Data");

@@ -182,8 +182,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
                 ArrayList<Servei> llistaDeServeis= (ArrayList<Servei>) DescargaServei.obtenirServeisDelServer(urls[0]);
+
                 for(int i=0;i<llistaDeServeis.size();i++) {
                     Servei s = llistaDeServeis.get(i);
+                    Servei.setLlistaServeis(s);
                     db.InserirServei(s.getDescripcio(), Integer.toString(s.getId_treballador()), s.getData_servei(), s.getHora_inici(), s.getHora_final());
                 }
                 ArrayList<Reserva> llistaDeReserves= (ArrayList<Reserva>) DescargaReserva.obtenirReservesDelServer(urls[0]);
@@ -196,6 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             return null;
         }
+
 
     }
 

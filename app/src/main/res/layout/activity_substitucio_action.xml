@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/substitucio"
+    tools:context="net.marcarni.easycheck.SubstitucioActionActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_toStartOf="@+id/btnCancelar"
+        android:contentDescription="@string/imatge"
+        app:srcCompat="@drawable/sustitucion" />
+
+    <TextView
+        android:id="@+id/titol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/descripcio_servei"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="33dp"
+        android:gravity="center"
+        android:text="@string/sustitucio_titol"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/descripcio_servei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/spinner_de_treballadors"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/textview"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="7dp" />
+
+    <Spinner
+        android:id="@+id/spinner_de_treballadors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewdata"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="48dp"
+        android:background="@drawable/color_selector" />
+
+    <TextView
+        android:id="@+id/textViewdata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewHora_inici"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="26dp"
+        android:text="@string/textViewdata"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewHora_inici"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnCancelar"
+        android:layout_alignStart="@+id/textViewdata"
+        android:layout_marginBottom="18dp"
+        android:text="@string/textViewHora_inici"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/Acceptar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginBottom="140dp"
+        android:text="@string/acceptar" />
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Acceptar"
+        android:layout_alignBottom="@+id/Acceptar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="55dp"
+
+        android:text="@string/cancelar" />
+
+</RelativeLayout>
