@@ -51,15 +51,14 @@
     <string name="menu_time_picker">Seleccionar hora</string>
     <string name="filter_cancell">cancelar filtros</string>
 
-
+    <string name="pref_server_category">Configuració del servidor</string>
     <string name="pref_host_key">kHost</string>
-    <string name="pref_host_label">Host</string>
+    <string name="pref_host_label">Adreça del servidor:</string>
     <!--<string name="pref_host_default">10.0.2.2</string>-->
     <string name="pref_host_default">192.168.1.4</string>
     <string name="pref_port_key">kPort</string>
-    <string name="pref_port_title">Port</string>
+    <string name="pref_port_title">Port del servidor:</string>
     <string name="pref_port_default">8080</string>
-
 
 <!-- string per a substitucioActionActivity-->
     <string name="textview">TextView</string>
@@ -71,6 +70,7 @@
     <string name="CANCELAR">CANCELAR</string>
     <string name="sustitucio_titol">Substitució</string>
     <string name="imatge">imatge</string>
+
 
 
 </resources>
