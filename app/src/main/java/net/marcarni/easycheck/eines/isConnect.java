@@ -33,7 +33,14 @@ public   class isConnect {
     }
 
 
-
+    /**
+     * @author Carlos Alberto Castro Cañabate
+     * Metode per comprobar que el port està obert
+     * @param ip direcció ip
+     * @param port  a connectar
+     * @param timeout temps d'espera
+     * @return
+     */
     public static boolean isPortOpen(final String ip, final int port, final int timeout) {
 
         try {
