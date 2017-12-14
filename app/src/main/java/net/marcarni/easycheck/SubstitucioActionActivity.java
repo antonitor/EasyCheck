@@ -28,6 +28,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * @author Maria
+ *
+ * Classe encarregada de fer les sustitucions
+ *
+ * Fucionalitat:
+ * - La principal funcionalitat és la comprovació de la correcta substitució d'un treballador a un servei.
+ * Solarment un administrador tindrà accés a aquesta funcionalitat.
+ * Solament amb connexió internet es podrà realitzar la substitució
+ * Trobem un seguit de restriccions per la correcta substitució creades per mètodes o mostrades per
+ *      Alertdialogs recollides del servidor.
+ */
+
 public class SubstitucioActionActivity extends AppCompatActivity implements View.OnClickListener{
     TextView Tdescripcio, Tdata, Thora_inici, Titol;
 
@@ -109,6 +122,12 @@ public class SubstitucioActionActivity extends AppCompatActivity implements View
 
     }
 
+    /**
+     * Mètode implementat per controlar la correcta selecció del treballador per la substitució, així com de
+     * correcta connexió a internet.
+     *
+     * @param view
+     */
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
@@ -139,9 +158,17 @@ public class SubstitucioActionActivity extends AppCompatActivity implements View
                 }
             }
 
-            public class DescarregaServer extends AsyncTask<Integer, ArrayList, PostResponse> {
+    /**
+     * Classe que hereta de Asyntask, encarregada de connectar i enviar petició HTTP al servidor per substitució
+     */
+    public class DescarregaServer extends AsyncTask<Integer, ArrayList, PostResponse> {
 
-
+        /**
+         *  Mostrarà missatge en cas de problema en l'operació de substitució, falta de connexió, etc.
+         * @param r PostResponse amb:
+         *          - Integer amb el codi (0,1) d'operació
+         *          - String amb missatge resposta en cas problema
+         */
                 @Override
                 protected void onPostExecute(PostResponse r) {
                     super.onPostExecute(r);
@@ -180,7 +207,11 @@ public class SubstitucioActionActivity extends AppCompatActivity implements View
 
                 }
 
-
+        /**
+         * Mètode d'asyntask que connecta amb el servidor, i envia petició al servidor de substitucio amb protocol HTTP
+         * @param ints Integers amb l'id del servei que es vol fer la substitucio i id del treballador substitut
+         * @return PostResponse amb el resultat de l'operació
+         */
                 protected PostResponse doInBackground(Integer... ints) {
                     PostResponse response = null;
                     try {

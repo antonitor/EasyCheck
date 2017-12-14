@@ -205,13 +205,15 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Mètode cridat per actualitzar i mostrar
+         * Mètode cridat per actualitzar i mostrar tots els serveis del servidor.
          */
         public void llistaSenseFiltrats() {
 
             headerAdapter_substitucio.actualitzaRecycler(Utilitats.retornaTotsElsServeis((ArrayList) llistaServeis));
         }
-
+        /**
+         * Mètode cridat per actualitzar i mostrar tots els serveis del servidor filtrat per id's.
+         */
         public void llistaPerTreballador() {
 
             headerAdapter_substitucio.actualitzaRecycler((ArrayList<Header_Consulta>) Utilitats.RetornaServeisPerId(treballador, (ArrayList) llistaServeis));
@@ -223,13 +225,20 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
         ////////////////////////////////////      Descarrega del server              /////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        /**
+         * Mètode per connectar amb el servidor i descarregar llistat de treballadors del servidor.
+         * @return
+         */
         public List<Treballador> RetornaTreballadors() {
 
             return listaTreballadors = DescargaTreballador.obtenirTreballadorsDelServer(LoginActivity.IP);
 
         }
 
+        /**
+         * Mètode per connectar amb el servidor i descarregar llistat serveis del servidor.
+         * @return
+         */
         public List<Servei> RetornaServeis() {
 
             return llistaServeis = DescargaServei.obtenirServeisDelServer(LoginActivity.IP);
@@ -241,6 +250,10 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////    UTILS            ///////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Mètode per carregar Llistats amb la data + (treballador opcionalment)
+         */
 
         public void carregarDataTreballador() {
 
@@ -256,6 +269,9 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
 
         }
 
+        /**
+         * DatePickerDialog per seleccionar la data i passar-li al mètode corresponent
+         */
         public void PickerData() {
             Calendar mcurrentDate = Calendar.getInstance();
             int mYear = mcurrentDate.get(Calendar.YEAR);
@@ -289,6 +305,9 @@ public class SubstitucionsActivity extends MenuAppCompatActivity {
         }
     }
 
+    /**
+     * Mètode per reiniciar el filtratge al valor original
+     */
     private void esborraFiltres() {
         fecha = null;
         time = null;
