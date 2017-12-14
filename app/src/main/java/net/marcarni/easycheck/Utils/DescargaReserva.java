@@ -23,8 +23,6 @@ import java.util.List;
 
 public class DescargaReserva {
 
-
-    //    private static final String BASE_URL = "easycheck.hopto.org";
     private static Gson gson = new Gson();
 
     /**
@@ -54,6 +52,11 @@ public class DescargaReserva {
         ArrayList<Reserva> llista = gson.fromJson(json, tipusLlista);
         return llista;
     }
+    /**
+     * Mètode per obtenir la llista de reserves
+     * @param localhost
+     * @return llista de reserves
+     */
     public static List<Reserva> obtenirReservesDelServer(String localhost) {
         String json = "";
         URL url = NetUtils.buildUrl(LoginActivity.IP, LoginActivity.PORT, "/easycheckapi/reserva", null);

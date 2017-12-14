@@ -43,16 +43,14 @@ public class LoginActivity extends AppCompatActivity {
     FingerPrint fingerPrint;
     boolean loginCorrecte = false;
     public static String IS_ADMIN;
-    String host;
     public static String IP="";
     public static Integer PORT;
-
-   // public static final String IP="10.0.2.2";
-
     public static String ID_TREBALLADOR=null, NOM_USUARI="";
 
-
-
+    /**
+     *  Mètode onCreate de Login
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         IP = sharedPreferences.getString(getString(R.string.pref_host_key), getString(R.string.pref_host_default));
         PORT = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_port_key), getString(R.string.pref_port_default)));
-
         new LoginActivity.descargarDades().execute(IP);
     }
-    public void buttonEntrarListener(){
 
+    public void buttonEntrarListener(){
         buttonEntrar.setOnClickListener(new View.OnClickListener() {
             /**
              * Mètode per gestionar l'esdevenimnet onClick del view mLoginButton
@@ -81,6 +78,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Mètode per gestionar el login
+     * @return true si es login a resultat satisfactori, o false en cas contrari.
+     */
     public Boolean ferLogin(){
         loginCorrecte = false;
         String userName = textUserName.getText().toString();
@@ -128,6 +130,9 @@ public class LoginActivity extends AppCompatActivity {
         return loginCorrecte;
     }
 
+    /**
+     * Mètode per guardar les preferencies que voldrem carregar a l'inici de l'app
+     */
     public void guardarPreferencias(){
         SharedPreferences.Editor editor = getSharedPreferences("HUELLA_CONFIG", MODE_PRIVATE).edit();
         editor.putString("HUELLA",huella);
@@ -136,6 +141,10 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("IS_ADMIN",IS_ADMIN);
         editor.apply();
     }
+
+    /**
+     * Mètode per carregar les preferencies
+     */
     public void cargarPreferencias(){
         SharedPreferences prefs = getSharedPreferences("HUELLA_CONFIG", MODE_PRIVATE);
         huella = prefs.getString("HUELLA", null);
@@ -148,6 +157,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Mètode per obtenir les dades de el treballador logejat. Les obtindrem al recollir el resultat de la consulta
+     * @param cursor a obrir per obtenir les dades.
+     */
     public void mouCursor(Cursor cursor) {
         if (cursor.moveToFirst()) {
             do {
@@ -161,13 +175,25 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Clase per descarregar les dades mitjançant Asyntask
+     */
     private class descargarDades extends AsyncTask<String, ArrayList,String> {
+        /**
+         * Mètode que s'executarà un cop acabi la tasca de background
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             db.tanca();
         }
 
+        /**
+         * Mètode que s'executarà en segon plà
+         * @param urls
+         * @return
+         */
         protected String doInBackground(String... urls) {
 
             if (isConnect.isPortOpen(IP, PORT, 100)){
@@ -198,10 +224,11 @@ public class LoginActivity extends AppCompatActivity {
             }
             return null;
         }
-
-
     }
 
+    /**
+     * Mètode onResume de LoginActivity
+     */
     @Override
     protected void onResume() {
         super.onResume();

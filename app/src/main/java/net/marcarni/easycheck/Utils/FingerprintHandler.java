@@ -1,7 +1,7 @@
 package net.marcarni.easycheck.Utils;
 
 /**
- * Created by Carlos on 03/12/2017.
+ * @author Carlos Alberto Castro Cañabate
  */
 
 import android.Manifest;
@@ -28,6 +28,11 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         this.context = context;
     }
 
+    /**
+     * Mètode per autentificar l'imprenta digital
+     * @param fingerprintManager fingerprintManager,
+     * @param cryptoObject cryptoObject
+     */
     public void startAuthentication(FingerprintManager fingerprintManager, FingerprintManager.CryptoObject cryptoObject) {
         CancellationSignal cenCancellationSignal = new CancellationSignal();
         if(ActivityCompat.checkSelfPermission(context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED)
@@ -37,12 +42,19 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     }
 
+    /**
+     * Mètode per mostrar missatge al no autentificar l'imprenta digital
+     */
     @Override
     public void onAuthenticationFailed() {
         super.onAuthenticationFailed();
-        Toast.makeText(context, "Error al leer la huella dactilar!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Error al llegir la imprenta digital!", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Mètode per gestionar les accions a realitzar un  cop autentificada l'imprenta digital
+     * @param result de l'autentificació.
+     */
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         super.onAuthenticationSucceeded(result);

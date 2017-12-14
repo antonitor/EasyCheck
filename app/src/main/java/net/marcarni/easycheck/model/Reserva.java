@@ -7,8 +7,8 @@ package net.marcarni.easycheck.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 /**
- *
  * @author Carlos Alberto Castro Cañabate
  */
 public class Reserva implements Serializable {

@@ -42,6 +42,9 @@ public class FingerPrint {
         activarFingerPrint();
     }
 
+    /**
+     * Mètode per activar l'imprenta Digital
+     */
     public void activarFingerPrint() {
         KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(KEYGUARD_SERVICE);
         FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(FINGERPRINT_SERVICE);
@@ -69,7 +72,10 @@ public class FingerPrint {
         }
     }
 
-
+    /**
+     * Mètode per encriptar la key
+     * @return true si es fa satisfactoriament, false en cas contrari.
+     */
     private boolean cipherInit() {
         try {
             cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES+"/"+ KeyProperties.BLOCK_MODE_CBC+"/"+ KeyProperties.ENCRYPTION_PADDING_PKCS7);
@@ -112,6 +118,9 @@ public class FingerPrint {
 
     }
 
+    /**
+     * Mètode per generar la Key
+     */
     private void genKey() {
         try {
             keyStore = KeyStore.getInstance("AndroidKeyStore");

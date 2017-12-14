@@ -23,25 +23,13 @@ import java.util.List;
 
 public class DescargaTreballador {
 
-    //    private static final String BASE_URL = "easycheck.hopto.org";
 
     public static ArrayList<Treballador> treballadors;
 
-    /**
-     * Mètode principal
-     * @param args
-     */
-   /* public static void main(String[] args) {
-        DescargaTreballador test = new DescargaTreballador();
-    }
-    /**
-     * Constructor
-     */
-  /*  public DescargaTreballador() {
-        treballadors = (ArrayList<Treballador>) obtenirTreballadorsDelServer();
-    }*/
+
     /**
      * Mètode per obtenir els treballadors del server.
+     * @param URL url
      * @return  llista de traballadors.
      */
     public static  List<Treballador> obtenirTreballadorsDelServer(String URL) {
@@ -55,6 +43,10 @@ public class DescargaTreballador {
 
         return llistaDeTreballadors;
     }
+    /**
+     * Mètode per obtenir els treballadors del server. sense Parametre
+     * @return  llista de traballadors.
+     */
     public static List<Treballador> obtenirTreballadorsDelServer() {
         String json = "";
         URL url = NetUtils.buildUrl(LoginActivity.IP, LoginActivity.PORT, "/easycheckapi/treballador", null);

@@ -21,7 +21,6 @@ import java.util.List;
 
 public class DescargaServei {
 
-    //    private static final String BASE_URL = "easycheck.hopto.org";
 
     public static ArrayList<Servei> serveis;
     private static Gson gson = new Gson();
@@ -55,6 +54,11 @@ public class DescargaServei {
         ArrayList<Servei> llista = gson.fromJson(json, tipusLlista);
         return llista;
     }
+    /**
+     * Mètode per obtenir la llista de serveis
+     * @param localhost
+     * @return llista de serveis
+     */
     public static List<Servei> obtenirServeisDelServer(String localhost) {
         String json = "";
         URL url = NetUtils.buildUrl(localhost, LoginActivity.PORT, "/easycheckapi/servei", null);

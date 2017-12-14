@@ -33,6 +33,9 @@ import java.util.Calendar;
 import static net.marcarni.easycheck.R.id.cancelar_filtros;
 import static net.marcarni.easycheck.R.id.seleccionar_hora;
 
+/**
+ * @author Carlos Alberto Castro Cañabate
+ */
 public class ConsultaServeisActivity extends MenuAppCompatActivity implements View.OnClickListener,View.OnLongClickListener {
 
     private static final int DATE_PICKER_REQUEST = 22;
@@ -64,12 +67,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         editToolbar.inflateMenu(R.menu.toolbar_menu);
         spinnerTreballadors = (Spinner) findViewById(R.id.spinner_de_treballadors);
 
-
-        /**
-         * Created by Maria Remedios Ortega
-         * Instanciació del Recycler i de l'arrayList
-         */
-
         myDataset = new ArrayList<>();
         headerAdapter_consulta = new HeaderAdapter_Consulta(myDataset);
 
@@ -77,9 +74,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         db.obre();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_consulta);
 
-        /**
-         @author Carlos Alberto Castro
-         */
         Cursor cursor;
         if (isAdmin.equals("1")){
             cursor = getCursorSpinner(db.RetornaTotsElsTreballadors());
@@ -99,9 +93,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         spinnerTreballadors.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        /**
-         * @author Carlos Alberto Castro Cañabate
-         */
         (findViewById(R.id.cancelar_filtros)).setOnClickListener(this);
         (findViewById(R.id.seleccionar_data)).setOnClickListener(this);
         (findViewById(R.id.seleccionar_data)).setOnLongClickListener(this);
@@ -114,10 +105,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
             spinnerTreballadors.setVisibility(View.VISIBLE);
         }
 
-        /**
-         *  Implementat by Maria
-         *  Afegim Recycler, adaptador i comprovem si es administrador
-         */
 
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -131,7 +118,7 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         }
     }
     /**
-       @author Carlos Alberto Castro
+     * Metode per obtenir la columna que mostrarem a l'spiner quan entri un treballador no admin
      */
     private Cursor getCursorTreballador() {
         MatrixCursor cursor = new MatrixCursor(new String[]{"_id", "nom"});
@@ -140,7 +127,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * @author Carlos Alberto Castro Cañabate
      * Mètode per gestionar l'esdeveniment onClick
      * @param view que interacturarà
      */
@@ -166,7 +152,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * @author Carlos Alberto Castro Cañabate
      * Mètode per gestionar l'esdeveniment onLongClick
      * @param view que interacturarà
      * @return false
@@ -204,7 +189,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * Created by Antoni Torres Marí
      *
      * Torna el cursor afegint-li una línia extra amb _id = 0 i nom "Tots"
      * @param cursor cursor al que se li afegeix la nova línia
@@ -218,7 +202,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * @author Carlos Alberto Castro Cañabate
      * Mètode per carregar Llistats amb la data y Hora + (treballador opcionalment)
      */
     public void carregarHoraTreballador() {
@@ -239,7 +222,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * @author Carlos Alberto Castro Cañabate
      * Mètode per carregar Llistats amb la data + (treballador opcionalment)
      */
     public void carregarDataTreballador() {
@@ -259,7 +241,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
         db.tanca();
     }
     /**
-     * @author Carlos Alberto Castro Cañabate
      * Mètode per carregar Llistats de tots el treballadors (sense cap filtre)
      */
     public void llistatSenseFiltre() {
@@ -274,8 +255,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
         /**
-         * @author Carlos Alberto Castro Cañabate
-         *
          * Mètode per fer una acció una vegada seleccionat un treballador a l'spinner de treballadors.
          * @param adapterView adaptador
          * @param view spinner
@@ -339,7 +318,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * @author Carlos Alberto Castro Cañabate
      * Mètode per afegir entrada al dataset
      * @param cursor que conté les dades
      * @return myDataset
@@ -363,7 +341,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
 
 
     /**
-     * @author Maria Remedios Ortega
      * Mètode per obrir el TimePickerDialog, seleccionar la hora i retornarla
      * per consulta posterior.
      */
@@ -388,7 +365,6 @@ public class ConsultaServeisActivity extends MenuAppCompatActivity implements Vi
     }
 
     /**
-     * @author Carlos Alberto Castro Cañabate
      * Mètode per obrir el DataPickerDialog
      */
     public void PickerData(){
