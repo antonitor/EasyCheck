@@ -8,7 +8,9 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
-import android.widget.Toast;
+
+import net.marcarni.easycheck.R;
+import net.marcarni.easycheck.eines.Missatges;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -53,13 +55,13 @@ public class FingerPrint {
             return;
         }
         if (!fingerprintManager.isHardwareDetected())
-            Toast.makeText(context, "Autentificació d'emprenta digial no permessa", Toast.LENGTH_SHORT).show();
+            Missatges.AlertMissatge("ERROR EMPRENTA DIGITAL", "Autentificació d'emprenta digial no permessa", R.drawable.ic_problem, context);
         else {
             if (!fingerprintManager.hasEnrolledFingerprints())
-                Toast.makeText(context, "Has de registrar con a mínim una emprenta digital al teu dispositiu", Toast.LENGTH_SHORT).show();
+                Missatges.AlertMissatge("ERROR EMPRENTA DIGITAL", "Has de registrar con a mínim una emprenta digital al teu dispositiu", R.drawable.ic_problem, context);
             else {
                 if (!keyguardManager.isKeyguardSecure())
-                    Toast.makeText(context, "Seguretat de pantalla de bloqueig no habilitat en  configuració", Toast.LENGTH_SHORT).show();
+                    Missatges.AlertMissatge("ERROR EMPRENTA DIGITAL","Seguretat de pantalla de bloqueig no habilitat en  configuració", R.drawable.ic_problem, context);
                 else
                     genKey();
 

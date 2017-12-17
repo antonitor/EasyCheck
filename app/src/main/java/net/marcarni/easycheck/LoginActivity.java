@@ -22,6 +22,7 @@ import net.marcarni.easycheck.Utils.DescargaReserva;
 import net.marcarni.easycheck.Utils.DescargaServei;
 import net.marcarni.easycheck.Utils.DescargaTreballador;
 import net.marcarni.easycheck.Utils.FingerPrint;
+import net.marcarni.easycheck.eines.Missatges;
 import net.marcarni.easycheck.eines.isConnect;
 import net.marcarni.easycheck.model.Client;
 import net.marcarni.easycheck.model.Reserva;
@@ -71,10 +72,19 @@ public class LoginActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-                loginCorrecte = ferLogin();
-                if (loginCorrecte){
-                    startActivity(mDniIntent);
+                if (textPassword.getText().toString().length()==0 && textUserName.getText().toString().length()==0){
+                    Missatges.AlertMissatge("ERROR LOGIN", "No has introduït cap camp", R.drawable.ic_problem, LoginActivity.this);
+                } else if (textUserName.getText().toString().length()==0){
+                    Missatges.AlertMissatge("ERROR LOGIN", "No has introduït username", R.drawable.ic_problem, LoginActivity.this);
+                } else if (textPassword.getText().toString().length()==0){
+                    Missatges.AlertMissatge("ERROR LOGIN", "No has introduït password", R.drawable.ic_problem, LoginActivity.this);
+                } else {
+                    loginCorrecte = ferLogin();
+                    if (loginCorrecte){
+                        startActivity(mDniIntent);
+                    }
                 }
+
             }
         });
     }
@@ -123,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginCorrecte=true;
             }
         } else {
-            Toast.makeText(this,"Login Incorrecto!", Toast.LENGTH_SHORT).show();
+            Missatges.AlertMissatge("ERROR LOGIN", "Login incorrecte", R.drawable.ic_problem, LoginActivity.this);
             loginCorrecte=false;
         }
         db.tanca();
